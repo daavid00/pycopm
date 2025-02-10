@@ -57,6 +57,8 @@ def test_complex():
             "max",
             "-m",
             "all",
+            "-u",
+            "opm",
         ],
         check=True,
     )
@@ -106,6 +108,8 @@ def test_complex():
             "1",
             "-m",
             "all",
+            "-u",
+            "opm",
         ],
         check=True,
     )
