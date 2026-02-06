@@ -345,7 +345,7 @@ def handle_dimens(dic, nrwo):
     if nrwo == "DIMENS":
         dic["dimens"] = True
         dic["lol"].append(nrwo)
-        dic["lol"].append(f"{dic['nx']} {dic['ny']} {dic['nz']} /")
+        dic["lol"].append(f"{dic['nx']} {dic['ny']*(dic['dual']+1)+dic['dual']} {dic['nz']} /")
         return True
     if dic["dimens"]:
         edit = nrwo.split()
@@ -690,6 +690,9 @@ def handle_grid_props(dic, nrwo):
         for name in dic["base"] + dic["grids"] + dic["mults"]:
             dic["lol"].append("INCLUDE")
             dic["lol"].append(f"'{dic['label']}{name.upper()}.INC' /\n")
+        if dic["dual"]:
+            dic["lol"].append("INCLUDE")
+            dic["lol"].append(f"'{dic['label']}NNC.INC' /\n")
         return True
     if dic["removeg"]:
         if handle_fault(dic, nrwo):

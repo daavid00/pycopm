@@ -21,6 +21,7 @@ from pycopm.utils.mapping_methods import (
     coarsening_dir,
     handle_pv,
     handle_cp_grid,
+    handle_dual,
     handle_refinement,
     handle_clusters,
     handle_vicinity,
@@ -321,6 +322,8 @@ def create_deck(dic):
             if dic["pvcorr"] == 1:
                 handle_pv(dic, clusmin, clusmax, rmv)
             handle_cp_grid(dic)
+            if dic['dual']:
+                handle_dual(dic)
         write_grid(dic)
         write_props(dic)
         with open(
@@ -421,9 +424,10 @@ def create_deck(dic):
             print("\nThis is needed for the nnctrans, please wait.\n")
             os.chdir(dic["fol"])
             os.system(f"{dic['flow']} {dic['fol']}/{dic['write']}.DATA {dic['flags']}")
-            dic["ogrid"] = OpmFile(dic["write"] + ".EGRID")
-            if dic["ogrid"].count("NNC1") and dic["trans"] > 0:
+            if OpmFile(dic["write"] + ".EGRID").count("NNC1") and dic["trans"] > 0:
                 handle_nnc_trans(dic)
+            elif OpmFile(dic["deck"] + ".EGRID").count("NNC1") and dic["trans"] > 0:
+                assign_nnc_trans(dic)
             else:
                 print("\nNo nnctrans found.")
         print(
@@ -484,7 +488,7 @@ def initialize_variables(dic):
                 dic["mults"] += [name]
     for name in ["multnum", "fluxnum"]:
         if dic["ini"].count(name.upper()):
-            if np.max(dic["ini"][name.upper()]) > 1:
+            if np.max(dic["ini"][name.upper()]) > 1 or np.min(dic["ini"][name.upper()]) < 1:
                 dic["grids"] += [name]
     for name in ["thconr", "disperc"]:
         if dic["ini"].count(name.upper()):
@@ -538,6 +542,128 @@ def initialize_variables(dic):
                 dic["rptrst"] += [name]
 
 
+def assign_nnc_trans(dic):
+    """
+    Add the nnc from input to the coarsened model (no nncs in coarsened model)
+
+    Args:
+        dic (dict): Global dictionary
+
+    Returns:
+        dic (dict): Modified global dictionary
+
+    """
+    temp = OpmFile(dic["deck"] + ".EGRID")
+    coa = OpmFile(dic["write"] + ".INIT")
+    rnnc1 = np.array(temp["NNC1"])
+    rnnc2 = np.array(temp["NNC2"])
+    rnnct = np.array(dic["ini"]["TRANNNC"])
+    refpv = np.array(dic["ini"]["PORV"])
+    coapv = np.array(coa["PORV"])
+    ref_dz = np.zeros(len(refpv))
+    ref_dz[refpv > 0] = np.array(dic["ini"]["DZ"])
+    dic["cdz"] = np.zeros(len(coapv))
+    dic["coa_tranx"] = np.zeros(len(coapv))
+    dic["coa_trany"] = np.zeros(len(coapv))
+    dic["coa_tranx"][coapv > 0] = np.array(coa["TRANX"])
+    dic["coa_trany"][coapv > 0] = np.array(coa["TRANY"])
+    dic["cdz"][coapv > 0] = np.array(coa["DZ"])
+    nxy = dic["nx"]*dic["ny"]
+    if dic["dual"]:
+        ndxy = dic["nx"] * (2*dic["ny"]+1)
+        for name in ["coa_tranx", "coa_trany", "cdz"]:
+            tmp = []
+            for k in range(dic["nz"]):
+                tmp += list(dic[name][k*ndxy:k*ndxy+nxy])
+            dic[name] = tmp.copy()
+    dic["coa_editnnc"] = []
+    dic["nnct"] = [[[] for _ in range(dic["yn"])] for _ in range(dic["xn"])]
+    for r1, r2, trn in zip(rnnc1, rnnc2, rnnct):
+        rijk1 = dic["grid"].ijk_from_global_index(r1 - 1)
+        rijk2 = dic["grid"].ijk_from_global_index(r2 - 1)
+        if dic["kc"][rijk1[2] + 1] == dic["kc"][rijk2[2] + 1] and (
+            rijk1[0] != rijk2[0] or rijk1[1] != rijk2[1]
+        ):
+            if rijk1[0] + 1 == rijk2[0]:
+                ind = (
+                    (dic["ic"][rijk1[0] + 1] - 1)
+                    + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
+                    + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                )
+                if dic["cdz"][ind] > 0:
+                    dic["coa_tranx"][ind] += trn #* ref_dz[r1 - 1] / dic["cdz"][ind]
+            elif rijk1[1] + 1 == rijk2[1]:
+                ind = (
+                    (dic["ic"][rijk1[0] + 1] - 1)
+                    + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
+                    + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                )
+                if dic["cdz"][ind] > 0:
+                    dic["coa_trany"][ind] += trn #* ref_dz[r1 - 1] / dic["cdz"][ind]
+            elif rijk1[0] == rijk2[0] + 1:
+                ind = (
+                    (dic["ic"][rijk2[0] + 1] - 1)
+                    + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
+                    + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                )
+                if dic["cdz"][ind] > 0:
+                    dic["coa_tranx"][ind] += trn #* ref_dz[r2 - 1] / dic["cdz"][ind]
+            elif rijk1[1] == rijk2[1] + 1:
+                ind = (
+                    (dic["ic"][rijk2[0] + 1] - 1)
+                    + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
+                    + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                )
+                if dic["cdz"][ind] > 0:
+                    dic["coa_trany"][ind] += trn #* ref_dz[r2 - 1] / dic["cdz"][ind]
+    if dic["dual"]:
+        tmp0 = [0.0 for _ in range (dic["nx"] * (1+dic["ny"]))]
+        for name in ["tranx", "trany"]:
+            tmp = []
+            for i in range(dic["nz"]):
+                tmp += dic[f"coa_{name}"][i*nxy:(i+1)*nxy]
+                tmp += tmp0
+            dic[f"coa_{name}"] = tmp.copy()
+    for name in ["tranx", "trany"]:
+        dic[f"coa_{name}"] = [f"{val:E} " for val in dic[f"coa_{name}"]]
+        dic[f"coa_{name}"] = compact_format("".join(dic[f"coa_{name}"]).split())
+        dic[f"coa_{name}"].insert(0, name.upper() + "\n")
+        dic[f"coa_{name}"].insert(
+            0,
+            "-- This file was generated by pycopm https://github.com/cssr-tools/pycopm\n",
+        )
+        dic[f"coa_{name}"].append("/")
+        with open(
+            f"{dic['label']}{name.upper()}.INC",
+            "w",
+            encoding="utf8",
+        ) as file:
+            file.write("".join(dic[f"coa_{name}"]))
+    if dic["coa_editnnc"]:
+        nncdeck, withlines = [], False
+        with open(dic["write"] + ".DATA", "r", encoding=dic["encoding"]) as file:
+            for row in csv.reader(file):
+                nrwo = str(row)[2:-2].strip()
+                nncdeck.append(nrwo)
+                if withlines:
+                    nncdeck.append("INCLUDE")
+                    nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
+                    withlines = False
+                elif nrwo == "EDIT":
+                    if not dic["lines"]:
+                        nncdeck.append("INCLUDE")
+                        nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
+                    else:
+                        withlines = True
+        with open(
+            f"{dic['fol']}/{dic['write']}.DATA",
+            "w",
+            encoding="utf8",
+        ) as file:
+            for row in nncdeck:
+                file.write(row + "\n")
+
+
 def handle_nnc_trans(dic):
     """
     Map the trans from the non-neighbouring connections
@@ -549,28 +675,6 @@ def handle_nnc_trans(dic):
         dic (dict): Modified global dictionary
 
     """
-    nncdeck, withlines = [], False
-    with open(dic["write"] + ".DATA", "r", encoding=dic["encoding"]) as file:
-        for row in csv.reader(file):
-            nrwo = str(row)[2:-2].strip()
-            nncdeck.append(nrwo)
-            if withlines:
-                nncdeck.append("INCLUDE")
-                nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
-                withlines = False
-            elif nrwo == "EDIT":
-                if not dic["lines"]:
-                    nncdeck.append("INCLUDE")
-                    nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
-                else:
-                    withlines = True
-    with open(
-        f"{dic['fol']}/{dic['write']}.DATA",
-        "w",
-        encoding="utf8",
-    ) as file:
-        for row in nncdeck:
-            file.write(row + "\n")
     temp = OpmFile(dic["deck"] + ".EGRID")
     coa = OpmFile(dic["write"] + ".INIT")
     coag = OpmFile(dic["write"] + ".EGRID")
@@ -583,14 +687,26 @@ def handle_nnc_trans(dic):
     coag = OpmGrid(dic["write"] + ".EGRID")
     refpv = np.array(dic["ini"]["PORV"])
     coapv = np.array(coa["PORV"])
-    coa_dz = np.zeros(len(coapv))
     ref_dz = np.zeros(len(refpv))
+    ref_dz[refpv > 0] = np.array(dic["ini"]["DZ"])
+    dic["cdz"] = np.zeros(len(coapv))
     dic["coa_tranx"] = np.zeros(len(coapv))
     dic["coa_trany"] = np.zeros(len(coapv))
     dic["coa_tranx"][coapv > 0] = np.array(coa["TRANX"])
     dic["coa_trany"][coapv > 0] = np.array(coa["TRANY"])
-    coa_dz[coapv > 0] = np.array(coa["DZ"])
-    ref_dz[refpv > 0] = np.array(dic["ini"]["DZ"])
+    dic["cdz"][coapv > 0] = np.array(coa["DZ"])
+    nxy = dic["nx"]*dic["ny"]
+    if dic["dual"]:
+        ndxy = dic["nx"] * (2*dic["ny"]+1)
+        for name in ["coa_tranx", "coa_trany", "cdz"]:
+            tmp = []
+            tmp1 = []
+            for k in range(dic["nz"]):
+                tmp += list(dic[name][k*ndxy:k*ndxy+nxy])
+                tmp1 += list(dic[name][k*ndxy+nxy+dic["nx"]:k*ndxy+2*nxy+dic["nx"]])
+            dic[name] = tmp.copy()
+            if name in ["coa_tranx", "coa_trany"]:
+                dic[name[4:]+"dual"] = tmp1.copy()
     dic["coa_editnnc"] = []
     dic["nnct"] = [[[] for _ in range(dic["yn"])] for _ in range(dic["xn"])]
     indel = []
@@ -606,32 +722,36 @@ def handle_nnc_trans(dic):
                     + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
                     + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
                 )
-                if coa_dz[ind] > 0:
-                    dic["coa_tranx"][ind] += trn * ref_dz[r1 - 1] / coa_dz[ind]
+                if dic["cdz"][ind] > 0:
+                    mlt = ref_dz[r1 - 1] / dic["cdz"][ind] if dic["patchy"] else 1.0
+                    dic["coa_tranx"][ind] += trn * mlt
             elif rijk1[1] + 1 == rijk2[1]:
                 ind = (
                     (dic["ic"][rijk1[0] + 1] - 1)
                     + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
                     + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
                 )
-                if coa_dz[ind] > 0:
-                    dic["coa_trany"][ind] += trn * ref_dz[r1 - 1] / coa_dz[ind]
+                if dic["cdz"][ind] > 0:
+                    mlt = ref_dz[r1 - 1] / dic["cdz"][ind] if dic["patchy"] else 1.0
+                    dic["coa_trany"][ind] += trn * mlt
             elif rijk1[0] == rijk2[0] + 1:
                 ind = (
                     (dic["ic"][rijk2[0] + 1] - 1)
                     + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
                     + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
                 )
-                if coa_dz[ind] > 0:
-                    dic["coa_tranx"][ind] += trn * ref_dz[r2 - 1] / coa_dz[ind]
+                if dic["cdz"][ind] > 0:
+                    mlt = ref_dz[r2 - 1] / dic["cdz"][ind] if dic["patchy"] else 1.0
+                    dic["coa_tranx"][ind] += trn * mlt
             elif rijk1[1] == rijk2[1] + 1:
                 ind = (
                     (dic["ic"][rijk2[0] + 1] - 1)
                     + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
                     + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
                 )
-                if coa_dz[ind] > 0:
-                    dic["coa_trany"][ind] += trn * ref_dz[r2 - 1] / coa_dz[ind]
+                if dic["cdz"][ind] > 0:
+                    mlt = ref_dz[r2 - 1] / dic["cdz"][ind] if dic["patchy"] else 1.0
+                    dic["coa_trany"][ind] += trn * mlt
         else:
             dic["nnct"][rijk1[0]][rijk1[1]].append([rijk1[2], rijk2[2], trn])
     print("Processing the transmissibilities")
@@ -642,6 +762,8 @@ def handle_nnc_trans(dic):
             ijk2 = coag.ijk_from_global_index(n2 - 1)
             fip1, fip2 = ijk1[2] + 1, ijk2[2] + 1
             rtran, found, indel = 0, 0, []
+            if (ijk1[1] >= dic["yn"]):
+                continue
             if fip1 != fip2 and (ijk1[0] != ijk2[0] or ijk1[1] != ijk2[1]):
                 for i, val in enumerate(dic["nnct"][ijk1[0]][ijk1[1]]):
                     rfip1 = dic["kc"][val[0] + 1]
@@ -660,8 +782,19 @@ def handle_nnc_trans(dic):
                     f"{ijk1[0]+1} {ijk1[1]+1} {ijk1[2]+1} {ijk2[0]+1} "
                     f"{ijk2[1]+1} {ijk2[2]+1} {mult} /"
                 )
+    if dic["dual"]:
+        tmp0 = [0.0 for _ in range (dic["nx"])]
+        for name in ["tranx", "trany"]:
+            tmp = []
+            for i in range(dic["nz"]):
+                tmp += dic[f"coa_{name}"][i*nxy:(i+1)*nxy]
+                tmp += tmp0
+                tmp += dic[name+"dual"][i*nxy:(i+1)*nxy]
+            dic[f"coa_{name}"] = tmp.copy()
     for name in ["tranx", "trany", "editnnc"]:
         if name == "editnnc":
+            if not dic[f"coa_{name}"]:
+                continue
             dic[f"coa_{name}"] = [f"{val}\n" for val in dic[f"coa_{name}"]]
         else:
             dic[f"coa_{name}"] = [f"{val:E} " for val in dic[f"coa_{name}"]]
@@ -678,6 +811,29 @@ def handle_nnc_trans(dic):
             encoding="utf8",
         ) as file:
             file.write("".join(dic[f"coa_{name}"]))
+    if dic["coa_editnnc"]:
+        nncdeck, withlines = [], False
+        with open(dic["write"] + ".DATA", "r", encoding=dic["encoding"]) as file:
+            for row in csv.reader(file):
+                nrwo = str(row)[2:-2].strip()
+                nncdeck.append(nrwo)
+                if withlines:
+                    nncdeck.append("INCLUDE")
+                    nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
+                    withlines = False
+                elif nrwo == "EDIT":
+                    if not dic["lines"]:
+                        nncdeck.append("INCLUDE")
+                        nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
+                    else:
+                        withlines = True
+        with open(
+            f"{dic['fol']}/{dic['write']}.DATA",
+            "w",
+            encoding="utf8",
+        ) as file:
+            for row in nncdeck:
+                file.write(row + "\n")
 
 
 def write_grid(dic):
@@ -697,27 +853,26 @@ def write_grid(dic):
     )
     grid.append("-- Copyright (C) 2024-2026 NORCE Research AS\n")
     grid.append("SPECGRID\n")
-    grid.append(f"{dic['nx']} {dic['ny']} {dic['nz']} /\n")
+    grid.append(f"{dic['nx']} {dic['ny']*(dic['dual']+1)+dic['dual']} {dic['nz']} /\n")
     grid.append("COORD\n")
-    for i in range(int(len(dic["cr"]) / 6)):
-        for j in range(6):
-            tmp.append(f"{dic['cr'][i*6+j]:E} ")
+    for val in dic["cr"]:
+        tmp.append(f"{val:E} ")
     grid += compact_format("".join(tmp).split())
     grid.append("/\n")
     grid.append("ZCORN\n")
     tmp = []
-    for i in range(int(len(dic["zc"]) / 8)):
-        for j in range(8):
-            tmp.append(f"{dic['zc'][i*8+j]:E} ")
+    for val in dic["zc"]:
+        tmp.append(f"{val:E} ")
     grid += compact_format("".join(tmp).split())
     grid.append("/")
     if dic["field"] == "generic":
         grid.append("\nACTNUM\n")
         grid += compact_format(" ".join(list(map(str, dic["actnum_c"]))).split())
-        grid.append("/")
+        grid.append("/\n")
         with open(f"{dic['fol']}/{dic['label']}GRID.INC", "w", encoding="utf8") as file:
             file.write("".join(grid))
     else:
+        grid.append("\n")
         with open(
             f"{dic['fol']}/preprocessing/{dic['name']}_COARSER.GRDECL",
             "w",
