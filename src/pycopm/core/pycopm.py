@@ -44,6 +44,8 @@ def pycopm():
     dic["vicinity"] = cmdargs["vicinity"].strip()  # Extract sub models
     dic["transform"] = cmdargs["displace"].strip()  # Apply affine transformations
     dic["explicit"] = int(cmdargs["explicit"]) == 1  # Write cell values in the SOLUTION
+    dic["patchy"] = int(cmdargs["patchy"]) == 1  # Is the model patchy?
+    dic["dual"] = int(cmdargs["dual"]) == 1  # Coarsen separating net and non-net
     for label, name, tag in zip(["", "r"], ["coarsening", "gridding"], ["coar", "ref"]):
         dic[f"{label}cijk"] = "yes"
         for i in ["x", "y", "z"]:
@@ -366,6 +368,18 @@ def load_parser():
         default=0,
         help="Set to 1 to explicitly write the cell values in the SOLUTION section in the "
         "deck ('0' by default).",
+    )
+    parser.add_argument(
+        "-patchy",
+        "--patchy",
+        default=1,
+        help="Set to 0 if the model is not patchy ('1' by default).",
+    )
+    parser.add_argument(
+        "-dual",
+        "--dual",
+        default=0,
+        help="Set to 1 to differentiate net and non-net in coarsening ('0' by default).",
     )
     return vars(parser.parse_known_args()[0])
 
