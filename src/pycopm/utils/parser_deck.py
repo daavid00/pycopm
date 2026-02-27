@@ -23,7 +23,7 @@ def process_the_deck(dic):
         dic (dict): Modified global dictionary
 
     """
-    dic["lol"], dic["lolc"] = [], []
+    dic["lol"], dic["lolc"], dic["wellcind"] = [], [], []
     dic["dimens"] = False
     dic["removeg"] = False
     dic["welspecs"] = False
@@ -1611,6 +1611,15 @@ def handle_segmented_wells(dic, nrwo):
                 else:
                     edit[3] = str(dic["kc"][int(edit[3])])
                     edit[4] = str(dic["kc"][int(edit[4])])
+                if dic["coarsening"] and dic["trans"] > 0:
+                    for n in range(int(edit[3]), int(edit[4]) + 1):
+                        ind = (
+                            int(edit[1])
+                            - 1
+                            + (int(edit[2]) - 1) * dic["nx"]
+                            + (n - 1) * dic["nx"] * dic["ny"]
+                        )
+                        dic["wellcind"].append(ind)
                 dic["lol"].append(" ".join(edit))
                 dic["edit0"] = nrwo.split()
                 return True

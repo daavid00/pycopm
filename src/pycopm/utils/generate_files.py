@@ -21,6 +21,7 @@ from pycopm.utils.mapping_methods import (
     coarsening_dir,
     handle_pv,
     handle_cp_grid,
+    handle_dual,
     handle_refinement,
     handle_clusters,
     handle_vicinity,
@@ -317,8 +318,8 @@ def create_deck(dic):
             if dic["pvcorr"] == 1:
                 handle_pv(dic, clusmin, clusmax, rmv)
             handle_cp_grid(dic)
-        write_grid(dic)
-        write_props(dic)
+        write_grid(dic, False)
+        write_props(dic, dic["nx"] * dic["ny"] * dic["nz"])
         with open(
             f"{dic['fol']}/{dic['write']}.DATA",
             "w",
@@ -424,6 +425,50 @@ def create_deck(dic):
                 handle_nnc_trans(dic)
             else:
                 print("\nNo nnctrans found.")
+        if dic["coarsening"]:
+            if dic["dual"]:
+                handle_dual(dic)
+                write_grid(dic, True)
+                write_props(dic, dic["nx"] * (2 * dic["ny"] + 1) * dic["nz"])
+                whr = dic["lol"].index(f"'{dic['label']}GRID.INC' /\n")
+                text = f"INCLUDE\n'{dic['label']}NNC.INC' /\n"
+                dic["lol"].insert(whr + 1, text)
+                whr = dic["lol"].index(f"{dic['nx']} {dic['ny']} {dic['nz']} /")
+                dic["lol"][
+                    whr
+                ] = f"{dic['nx']} {dic['ny']*(dic['dual']+1)+dic['dual']} {dic['nz']} /"
+                with open(
+                    f"{dic['fol']}/{dic['write']}.DATA",
+                    "w",
+                    encoding="utf8",
+                ) as file:
+                    for row in dic["lol"]:
+                        file.write(row + "\n")
+                dic["nncc"] += "/\n"
+                with open(
+                    f"{dic['fol']}/{dic['label']}NNC.INC",
+                    "w",
+                    encoding="utf8",
+                ) as file:
+                    file.write("".join(dic["nncc"]))
+            elif dic["nncc"] != "NNC\n":
+                whr = dic["lol"].index(f"'{dic['label']}GRID.INC' /\n")
+                text = f"INCLUDE\n'{dic['label']}NNC.INC' /\n"
+                dic["lol"].insert(whr + 1, text)
+                dic["nncc"] += "/\n"
+                with open(
+                    f"{dic['fol']}/{dic['label']}NNC.INC",
+                    "w",
+                    encoding="utf8",
+                ) as file:
+                    file.write("".join(dic["nncc"]))
+                with open(
+                    f"{dic['fol']}/{dic['write']}.DATA",
+                    "w",
+                    encoding="utf8",
+                ) as file:
+                    for row in dic["lol"]:
+                        file.write(row + "\n")
         print(
             f"\nThe generation of files succeeded, see {dic['fol']}/"
             f"{dic['write']}.DATA and {dic['fol']}/{dic['label']}*.INC\n"
@@ -432,24 +477,19 @@ def create_deck(dic):
     if dic["mode"] in ["deck_dry", "dry", "all"]:
         print("\nCall OPM Flow for a dry run of the generated model.\n")
         os.chdir(dic["fol"])
-        subprocess.run(
+        prosc = subprocess.run(
             [dic["flow"], f"{dic['write']}.DATA"] + dic["flags"].split(" "), check=False
         )
-        # It seems there is a bug for dryruns in flow, commenting the following until fixing this
-        # if prosc.returncode != 0:
-        #     print(
-        #         "\nThe dry run of the generated model "
-        #         f"{dic['fol']}/{dic['write']}.DATA failed. Check the Flow output in the "
-        #         "terminal for the error which might be possible to fix by correcting the "
-        #         f"input deck {dic['pth']}.DATA or the generated deck; otherwise, please raise an "
-        #         "issue at https://github.com/cssr-tools/pycopm/issues"
-        #     )
-        # else:
-        #     print(
-        #         "\nThe dry run of the generated model "
-        #         f"{dic['fol']}/{dic['write']}.DATA succeeded.\n"
-        #     )
-        print(f"\nThe dryrun results have been written to {dic['fol']}/")
+        if prosc.returncode != 0:
+            print(
+                "\nThe dry run of the generated model "
+                f"{dic['fol']}/{dic['write']}.DATA failed. Check the Flow output in the "
+                "terminal for the error which might be possible to fix by correcting the "
+                f"input deck {dic['pth']}.DATA or the generated deck; otherwise, please raise an "
+                "issue at https://github.com/cssr-tools/pycopm/issues"
+            )
+        else:
+            print(f"\nThe dryrun results have been written to {dic['fol']}/")
 
 
 def bool_mult(dic, nrwo, mults):
@@ -625,6 +665,28 @@ def initialize_variables(dic):
             if dic["ini"]["PERMZ"][i] != 0:
                 dic["facpermz"] = dic["ini"]["PERMZ"][i] / float(val)
                 break
+    dic["msk"] = np.ones(len(dic["porv"]))
+    if dic["dual"]:
+        dual = dic["dual"].split(" ")
+        quan = np.array(dic["ini"][dual[0].upper()])
+        dic["dual"] = 1
+        if dual[1] == "==":
+            dic["msk"][dic["porv"] > 0] = quan != float(dual[2])
+        elif dual[1] == ">=":
+            dic["msk"][dic["porv"] > 0] = quan < float(dual[2])
+        elif dual[1] == "<=":
+            dic["msk"][dic["porv"] > 0] = quan > float(dual[2])
+        elif dual[1] == "<":
+            dic["msk"][dic["porv"] > 0] = quan >= float(dual[2])
+        elif dual[1] == ">":
+            dic["msk"][dic["porv"] > 0] = quan <= float(dual[2])
+        elif dual[1] == "!=":
+            dic["msk"][dic["porv"] > 0] = quan == float(dual[2])
+        else:
+            print(f"Unknow criterium for non-net cells ({dic['dual']}).")
+            sys.exit()
+    else:
+        dic["dual"] = 0
 
 
 def handle_nnc_trans(dic):
@@ -640,132 +702,123 @@ def handle_nnc_trans(dic):
     """
     temp = OpmFile(dic["deck"] + ".EGRID")
     coa = OpmFile(dic["write"] + ".INIT")
-    editnnc = OpmFile(dic["write"] + ".EGRID").count("NNC1")
-    if editnnc:
-        nncdeck, indel, withlines = [], [], False
-        dic["coa_editnnc"] = []
-        dic["nnct"] = [[[] for _ in range(dic["yn"])] for _ in range(dic["xn"])]
-        with open(dic["write"] + ".DATA", "r", encoding=dic["encoding"]) as file:
-            for row in csv.reader(file):
-                nrwo = str(row)[2:-2].strip()
-                nncdeck.append(nrwo)
-                if withlines:
-                    nncdeck.append("INCLUDE")
-                    nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
-                    withlines = False
-                elif nrwo == "EDIT":
-                    if not dic["lines"]:
-                        nncdeck.append("INCLUDE")
-                        nncdeck.append(f"'{dic['label']}EDITNNC.INC' /\n")
-                    else:
-                        withlines = True
-        with open(
-            f"{dic['fol']}/{dic['write']}.DATA",
-            "w",
-            encoding="utf8",
-        ) as file:
-            for row in nncdeck:
-                file.write(row + "\n")
-        coag = OpmFile(dic["write"] + ".EGRID")
-        cnnc1 = np.array(coag["NNC1"])
-        cnnc2 = np.array(coag["NNC2"])
-        cnnct = np.array(coa["TRANNNC"])
-        coag = OpmGrid(dic["write"] + ".EGRID")
     rnnc1 = np.array(temp["NNC1"])
     rnnc2 = np.array(temp["NNC2"])
     rnnct = np.array(dic["ini"]["TRANNNC"])
     coapv = np.array(coa["PORV"])
-    dic["coa_tranx"] = np.zeros(len(coapv))
-    dic["coa_trany"] = np.zeros(len(coapv))
-    dic["coa_tranx"][coapv > 0] = np.array(coa["TRANX"])
-    dic["coa_trany"][coapv > 0] = np.array(coa["TRANY"])
-    for r1, r2, trn in zip(rnnc1, rnnc2, rnnct):
-        rijk1 = dic["grid"].ijk_from_global_index(r1 - 1)
-        rijk2 = dic["grid"].ijk_from_global_index(r2 - 1)
-        if dic["kc"][rijk1[2] + 1] == dic["kc"][rijk2[2] + 1] and (
-            rijk1[0] != rijk2[0] or rijk1[1] != rijk2[1]
-        ):
-            if rijk1[0] + 1 == rijk2[0]:
-                ind = (
-                    (dic["ic"][rijk1[0] + 1] - 1)
-                    + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
-                    + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
-                )
-                dic["coa_tranx"][ind] += trn
-            elif rijk1[1] + 1 == rijk2[1]:
-                ind = (
-                    (dic["ic"][rijk1[0] + 1] - 1)
-                    + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
-                    + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
-                )
-                dic["coa_trany"][ind] += trn
-            elif rijk1[0] == rijk2[0] + 1:
-                ind = (
-                    (dic["ic"][rijk2[0] + 1] - 1)
-                    + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
-                    + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
-                )
-                dic["coa_tranx"][ind] += trn
-            elif rijk1[1] == rijk2[1] + 1:
-                ind = (
-                    (dic["ic"][rijk2[0] + 1] - 1)
-                    + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
-                    + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
-                )
-                dic["coa_trany"][ind] += trn
-        elif editnnc:
-            dic["nnct"][rijk1[0]][rijk1[1]].append([rijk1[2], rijk2[2], trn])
-    if editnnc:
-        print("Processing the transmissibilities")
-        with alive_bar(len(cnnc1)) as bar_animation:
-            for n, (n1, n2) in enumerate(zip(cnnc1, cnnc2)):
-                bar_animation()
-                ijk1 = coag.ijk_from_global_index(n1 - 1)
-                ijk2 = coag.ijk_from_global_index(n2 - 1)
-                fip1, fip2 = ijk1[2] + 1, ijk2[2] + 1
-                rtran, found, indel = 0, 0, []
-                if fip1 != fip2 and (ijk1[0] != ijk2[0] or ijk1[1] != ijk2[1]):
-                    for i, val in enumerate(dic["nnct"][ijk1[0]][ijk1[1]]):
-                        rfip1 = dic["kc"][val[0] + 1]
-                        rfip2 = dic["kc"][val[1] + 1]
-                        if fip1 == rfip1 and fip2 == rfip2:
-                            rtran += val[2]
-                            found = 1
-                            indel.append(i)
-                    for ind in indel[::-1]:
-                        del dic["nnct"][ijk1[0]][ijk1[1]][ind]
-                    if found == 1:
-                        mult = rtran / cnnct[n]
-                    else:
-                        mult = 0
-                    dic["coa_editnnc"].append(
-                        f"{ijk1[0]+1} {ijk1[1]+1} {ijk1[2]+1} {ijk2[0]+1} "
-                        f"{ijk2[1]+1} {ijk2[2]+1} {mult} /"
+    dic["tranx_c"] = np.zeros(len(coapv))
+    dic["trany_c"] = np.zeros(len(coapv))
+    dic["tranx_c"][coapv > 0] = np.array(coa["TRANX"])
+    dic["trany_c"][coapv > 0] = np.array(coa["TRANY"])
+    print("Processing non-neighbouring transmissibilities (input model)")
+    with alive_bar(len(rnnct)) as bar_animation:
+        for r1, r2, trn in zip(rnnc1, rnnc2, rnnct):
+            bar_animation()
+            rijk1 = dic["grid"].ijk_from_global_index(r1 - 1)
+            rijk2 = dic["grid"].ijk_from_global_index(r2 - 1)
+            if dic["msk"][r1 - 1] != dic["msk"][r2 - 1]:
+                if dic["msk"][r1 - 1] == 1:
+                    tmp = f"{dic['ic'][rijk1[0]+1]} {dic['jc'][rijk1[1]+1]} "
+                    tmp += f"{dic['kc'][rijk1[2]+1]} {dic['ic'][rijk2[0]+1]} "
+                    tmp += (
+                        f"{dic['jc'][rijk2[1]+1]+1+dic['yn']} {dic['kc'][rijk2[2]+1]} "
                     )
-    cases = ["tranx", "trany"]
-    if editnnc:
-        cases += ["editnnc"]
+                else:
+                    tmp = f"{dic['ic'][rijk2[0]+1]} {dic['jc'][rijk2[1]+1]} "
+                    tmp += f"{dic['kc'][rijk2[2]+1]} {dic['ic'][rijk1[0]+1]} "
+                    tmp += (
+                        f"{dic['jc'][rijk1[1]+1]+1+dic['yn']} {dic['kc'][rijk1[2]+1]} "
+                    )
+                dic["nncc"] += tmp + f"{trn}" " /\n"
+            elif dic["kc"][rijk1[2] + 1] == dic["kc"][rijk2[2] + 1] and (
+                rijk1[0] != rijk2[0] or rijk1[1] != rijk2[1]
+            ):
+                if rijk1[0] + 1 == rijk2[0]:
+                    ind = (
+                        (dic["ic"][rijk1[0] + 1] - 1)
+                        + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
+                        + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                    )
+                    if dic["msk"][r1 - 1] == 0:
+                        dic["tranx_dual_c"][
+                            ind
+                        ] = f"{float(dic['tranx_dual_c'][ind])+trn}"
+                    else:
+                        dic["tranx_c"][ind] += trn
+                elif rijk1[1] == rijk2[1] + 1:
+                    ind = (
+                        (dic["ic"][rijk2[0] + 1] - 1)
+                        + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
+                        + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                    )
+                    if dic["msk"][r1 - 1] == 0:
+                        dic["trany_dual_c"][
+                            ind
+                        ] = f"{float(dic['trany_dual_c'][ind])+trn}"
+                    else:
+                        dic["trany_c"][ind] += trn
+                elif rijk1[1] + 1 == rijk2[1]:
+                    ind = (
+                        (dic["ic"][rijk1[0] + 1] - 1)
+                        + (dic["jc"][rijk1[1] + 1] - 1) * dic["nx"]
+                        + (dic["kc"][rijk1[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                    )
+                    if dic["msk"][r1 - 1] == 0:
+                        dic["trany_dual_c"][
+                            ind
+                        ] = f"{float(dic['trany_dual_c'][ind])+trn}"
+                    else:
+                        dic["trany_c"][ind] += trn
+                elif rijk1[0] == rijk2[0] + 1:
+                    ind = (
+                        (dic["ic"][rijk2[0] + 1] - 1)
+                        + (dic["jc"][rijk2[1] + 1] - 1) * dic["nx"]
+                        + (dic["kc"][rijk2[2] + 1] - 1) * dic["nx"] * dic["ny"]
+                    )
+                    if dic["msk"][r1 - 1] == 0:
+                        dic["tranx_dual_c"][
+                            ind
+                        ] = f"{float(dic['tranx_dual_c'][ind])+trn}"
+                    else:
+                        dic["tranx_c"][ind] += trn
+            else:
+                if dic["msk"][r1 - 1] == 1:
+                    tmp = f"{dic['ic'][rijk1[0]+1]} {dic['jc'][rijk1[1]+1]} "
+                    tmp += f"{dic['kc'][rijk1[2]+1]} {dic['ic'][rijk2[0]+1]} "
+                    tmp += f"{dic['jc'][rijk2[1]+1]} {dic['kc'][rijk2[2]+1]} "
+                else:
+                    tmp = (
+                        f"{dic['ic'][rijk1[0]+1]} {dic['jc'][rijk1[1]+1]+1+dic['yn']} "
+                    )
+                    tmp += f"{dic['kc'][rijk1[2]+1]} {dic['ic'][rijk2[0]+1]} "
+                    tmp += (
+                        f"{dic['jc'][rijk2[1]+1]+1+dic['yn']} {dic['kc'][rijk2[2]+1]} "
+                    )
+                dic["nncc"] += tmp + f"{trn}" " /\n"
+    cases = []
+    if not dic["dual"]:
+        cases += ["tranx", "trany"]
+    else:
+        dic["tranx_c"] = [f"{val}" for val in dic["tranx_c"]]
+        dic["trany_c"] = [f"{val}" for val in dic["trany_c"]]
     for name in cases:
-        if name == "editnnc":
-            dic[f"coa_{name}"] = [f"{val}\n" for val in dic[f"coa_{name}"]]
-        else:
-            dic[f"coa_{name}"] = [f"{val:E} " for val in dic[f"coa_{name}"]]
-            dic[f"coa_{name}"] = compact_format("".join(dic[f"coa_{name}"]).split())
-        dic[f"coa_{name}"].insert(0, name.upper() + "\n")
-        dic[f"coa_{name}"].insert(
+        dic[f"{name}_c"] = [f"{val:E} " for val in dic[f"{name}_c"]]
+        dic[f"{name}_c"] = compact_format("".join(dic[f"{name}_c"]).split())
+        dic[f"{name}_c"].insert(0, name.upper() + "\n")
+        dic[f"{name}_c"].insert(
             0,
             "-- This file was generated by pycopm https://github.com/cssr-tools/pycopm\n",
         )
-        dic[f"coa_{name}"].append("/\n")
+        dic[f"{name}_c"].append("/\n")
         with open(
             f"{dic['label']}{name.upper()}.INC",
             "w",
             encoding="utf8",
         ) as file:
-            file.write("".join(dic[f"coa_{name}"]))
+            file.write("".join(dic[f"{name}_c"]))
 
 
-def write_grid(dic):
+def write_grid(dic, dual):
     """
     Write the corner-point grid
 
@@ -783,18 +836,16 @@ def write_grid(dic):
     )
     grid.append("-- Copyright (C) 2024-2026 NORCE Research AS\n")
     grid.append("SPECGRID\n")
-    grid.append(f"{dic['nx']} {dic['ny']} {dic['nz']} /\n")
+    grid.append(f"{dic['nx']} {dic['ny']*(dual+1)+dual} {dic['nz']} /\n")
     grid.append("COORD\n")
-    for i in range(int(len(dic["cr"]) / 6)):
-        for j in range(6):
-            tmp.append(f"{dic['cr'][i*6+j]:E} ")
+    for val in dic["cr"]:
+        tmp.append(f"{val:E} ")
     grid += compact_format("".join(tmp).split())
     grid.append("/\n")
     grid.append("ZCORN\n")
     tmp = []
-    for i in range(int(len(dic["zc"]) / 8)):
-        for j in range(8):
-            tmp.append(f"{dic['zc'][i*8+j]:E} ")
+    for val in dic["zc"]:
+        tmp.append(f"{val:E} ")
     grid += compact_format("".join(tmp).split())
     grid.append("/")
     if dic["field"] == "generic":
@@ -813,7 +864,7 @@ def write_grid(dic):
             file.write("".join(grid))
 
 
-def write_props(dic):
+def write_props(dic, n):
     """
     Write the modified properties
 
@@ -825,7 +876,11 @@ def write_props(dic):
 
     """
     names = dic["props"] + dic["regions"] + dic["grids"] + dic["rptrst"] + ["porv"]
-    names = compact_perm(dic, names)
+    if dic["dual"]:
+        if n > dic["ntot"]:
+            names = compact_perm(dic, names)
+    else:
+        names = compact_perm(dic, names)
     if dic["vicinity"]:
         names += ["subtoglob"]
         fips = [f"{int(val)+1} " for val in dic["subm"]]
@@ -849,37 +904,41 @@ def write_props(dic):
             file.write("OPERNUM\n")
             file.write("".join(oprs))
             file.write("/\n")
-    print("Writing the files")
-    with alive_bar(len(names)) as bar_animation:
-        for name in names:
-            bar_animation()
-            dic[f"{name}_c"] = compact_format(dic[f"{name}_c"])
-            if "*" in dic[f"{name}_c"][0] and not (
-                dic["trans"] > 0 and name in ["tranx", "trany"]
-            ):
-                if int(dic[f"{name}_c"][0].split("*")[0]) == dic["ntot"]:
-                    whr = dic["lol"].index(f"'{dic['label']}{name.upper()}.INC' /\n")
-                    del dic["lol"][whr]
-                    del dic["lol"][whr - 1]
-                    dic["lol"].insert(
-                        whr - 1, f"{name.upper()}\n{dic[f'{name}_c'][0]}/\n"
-                    )
-                    continue
-            if name == "subtoglob":
-                dic[f"{name}_c"].insert(0, "OPERNUM\n")
-            else:
-                dic[f"{name}_c"].insert(0, f"{name.upper()}\n")
-            dic[f"{name}_c"].insert(
-                0,
-                "-- This file was generated by pycopm https://github.com/cssr-tools/pycopm\n",
-            )
-            dic[f"{name}_c"].append("/\n")
-            with open(
-                f"{dic['fol']}/{dic['label']}{name.upper()}.INC",
-                "w",
-                encoding="utf8",
-            ) as file:
-                file.write("".join(dic[f"{name}_c"]))
+    for name in names:
+        if dic["dual"] and n == dic["ntot"]:
+            tmp = compact_format(dic[f"{name}_c"][:n])
+        else:
+            tmp = compact_format(dic[f"{name}_c"])
+        if (
+            "*" in tmp[0]
+            and not (dic["trans"] > 0 and name in ["tranx", "trany"])
+            and (not dic["dual"] or n > dic["ntot"])
+        ):
+            if int(tmp[0].split("*")[0]) == n:
+                whr = dic["lol"].index(f"'{dic['label']}{name.upper()}.INC' /\n")
+                del dic["lol"][whr]
+                del dic["lol"][whr - 1]
+                dic["lol"].insert(
+                    whr - 1, f"{name.upper()}\n{n}*{tmp[0].split('*')[1]}/\n"
+                )
+                if os.path.exists(f"{dic['fol']}/{dic['label']}{name.upper()}.INC"):
+                    os.system(f"rm {dic['fol']}/{dic['label']}{name.upper()}.INC")
+                continue
+        if name == "subtoglob":
+            tmp.insert(0, "OPERNUM\n")
+        else:
+            tmp.insert(0, f"{name.upper()}\n")
+        tmp.insert(
+            0,
+            "-- This file was generated by pycopm https://github.com/cssr-tools/pycopm\n",
+        )
+        tmp.append("/\n")
+        with open(
+            f"{dic['fol']}/{dic['label']}{name.upper()}.INC",
+            "w",
+            encoding="utf8",
+        ) as file:
+            file.write("".join(tmp))
 
 
 def compact_perm(dic, names):
@@ -901,6 +960,8 @@ def compact_perm(dic, names):
         del dic["lol"][whr]
         del dic["lol"][whr]
         cpermy = True
+        if os.path.exists(f"{dic['fol']}/{dic['label']}PERMY.INC"):
+            os.system(f"rm {dic['fol']}/{dic['label']}PERMY.INC")
     if dic["facpermz"] > 0:
         delpermz = True
         for permx, permz in zip(dic["permx_c"], dic["permz_c"]):
@@ -913,6 +974,8 @@ def compact_perm(dic, names):
             del dic["lol"][whr]
             del dic["lol"][whr]
             cpermz = True
+            if os.path.exists(f"{dic['fol']}/{dic['label']}PERMZ.INC"):
+                os.system(f"rm {dic['fol']}/{dic['label']}PERMZ.INC")
     if cpermy and cpermz:
         text = "COPY\nPERMX PERMY /\nPERMX PERMZ /\n/\n"
         if abs(1 - dic["facpermz"]) > 1e-12:

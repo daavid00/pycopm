@@ -345,7 +345,7 @@ def grid_features(dic):
     """
     dic["cr"] = np.delete(dic["cr"], dic["mr"], 0)
     dic["zc"] = np.delete(dic["zc"], dic["ir"], 0)
-    write_grid(dic)
+    write_grid(dic, False)
     var = {"dic": dic}
     mytemplate = Template(
         filename=f"{dic['pat']}/template_scripts/{dic['field']}/fault.mako"

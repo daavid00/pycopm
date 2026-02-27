@@ -88,6 +88,34 @@
 <span id="pycopm-utils-generate-files-module"></span><h1>pycopm.utils.generate_files module<a class="headerlink" href="#module-pycopm.utils.generate_files" title="Link to this heading"></a></h1>
 <p>Create modified (coarser, finner, submodels, transformations) OPM files.</p>
 <dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.generate_files.bool_mult">
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">bool_mult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrwo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.bool_mult" title="Link to this definition"></a></dt>
+<dd><p>Set to True if the keyword is found</p>
+<dl>
+<dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>
+<p>nrwo (str): Entry of the deck</p>
+<p>mults (list): Name of MULT* keywords</p>
+</dd>
+<dt>Returns:</dt><dd><p>dic (dict): Modified global dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.generate_files.check_mult">
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">check_mult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.check_mult" title="Link to this definition"></a></dt>
+<dd><p>Check for MULT* to avoid writing them if only MULTFLT is used.
+We look at most for three levels of INCLUDE</p>
+<dl>
+<dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>
+<p>mults (list): Name of MULT* keywords</p>
+</dd>
+<dt>Returns:</dt><dd><p>dic (dict): Modified global dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pycopm.utils.generate_files.compact_format">
 <span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">compact_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.compact_format" title="Link to this definition"></a></dt>
 <dd><p>Use the ‘n*x’ notation to write repited values to save storage</p>
@@ -95,6 +123,19 @@
 <dt>Args:</dt><dd><p>values (list): List with the variable values</p>
 </dd>
 <dt>Returns:</dt><dd><p>values (list): List with the compacted variable values</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.generate_files.compact_perm">
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">compact_perm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">names</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.compact_perm" title="Link to this definition"></a></dt>
+<dd><p>Use COPY and MULTIPLY is PERMY and PERMZ can be generated from PERMX</p>
+<dl>
+<dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>
+<p>names (list): Properties to write the .INC</p>
+</dd>
+<dt>Returns:</dt><dd><p>names (list): Modified properties to write the .INC</p>
 </dd>
 </dl>
 </dd></dl>
@@ -136,8 +177,22 @@
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.generate_files.search_file">
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">search_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.search_file" title="Link to this definition"></a></dt>
+<dd><p>Check the file for the keywords</p>
+<dl>
+<dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>
+<p>path (str): Path to the file</p>
+<p>mults (list): Name of MULT* keywords</p>
+</dd>
+<dt>Returns:</dt><dd><p>dic (dict): Modified global dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="pycopm.utils.generate_files.write_grid">
-<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">write_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.write_grid" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">write_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.write_grid" title="Link to this definition"></a></dt>
 <dd><p>Write the corner-point grid</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>
@@ -149,7 +204,7 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="pycopm.utils.generate_files.write_props">
-<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">write_props</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.write_props" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">pycopm.utils.generate_files.</span></span><span class="sig-name descname"><span class="pre">write_props</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dic</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pycopm.utils.generate_files.write_props" title="Link to this definition"></a></dt>
 <dd><p>Write the modified properties</p>
 <dl class="simple">
 <dt>Args:</dt><dd><p>dic (dict): Global dictionary</p>

@@ -43,6 +43,15 @@ def map_properties(dic, actnum, z_t, z_b, z_b_t, v_c):
     for i in ["x", "y", "z"]:
         dic[f"{i}_tot"] = pd.Series(dic[f"d_{i}"]).groupby(dic["con"]).sum()
         dic[f"{i}a_tot"] = pd.Series(dic[f"d_a{i}"]).groupby(dic["con"]).sum()
+        dic[f"{i}_a"] = pd.Series(dic[f"d_a{i}"]).groupby(dic["con"]).sum()
+        if dic["dual"] and i == "z":
+            dic[f"{i}a_tot"] = (
+                pd.Series(dic[f"d_a{i}"] * (dic["msk"] == 1)).groupby(dic["con"]).sum()
+            )
+            dic[f"{i}a_tot_dual"] = (
+                pd.Series(dic[f"d_a{i}"] * (dic["msk"] == 0)).groupby(dic["con"]).sum()
+            )
+
     v_tot = pd.Series(v_c).groupby(dic["con"]).sum()
     if len(dic["how"]) == 1:
         if dic["how"][0] == "min":
@@ -121,164 +130,251 @@ def map_properties(dic, actnum, z_t, z_b, z_b_t, v_c):
     else:
         rmv = 0 * dz_c + 1
         dic["actnum_c"] = [int(val) for val in clust]
-    p_vs = pd.Series(dic["porv"]).groupby(dic["con"]).sum()
+    for name in ["porv", "poro", "permx", "permy", "permz"]:
+        dic[f"{name}_dual_c"] = []
+    dic["nncc"] = "NNC\n"
+    if dic["dual"]:
+        p_vs = pd.Series(dic["porv"] * (dic["msk"] == 1)).groupby(dic["con"]).sum()
+        p_dual = pd.Series(dic["porv"] * (dic["msk"] == 0)).groupby(dic["con"]).sum()
+        dic["porv_dual_c"] = [f"{val}" for val in p_dual]
+    else:
+        p_vs = pd.Series(dic["porv"]).groupby(dic["con"]).sum()
     dic["porv_c"] = [f"{val}" for val in p_vs]
     drc = dic["coardir"][0]
-    for name in dic["props"] + dic["rptrst"]:
-        if not dic["show"]:
-            c_c = pd.Series(dic[name]).groupby(dic["con"]).sum()
-            if name in ["permx", "permy"]:
-                dic[f"{name}_c"] = [
-                    f"{val/h_t:E}" if h_t * val > 0 else "0"
-                    for val, h_t in zip(c_c, dic["z_tot"])
-                ]
-            elif name == "tranx":
-                if "x" in dic["coardir"]:
-                    if dic["trans"] == 1:
-                        c_m = pd.Series(dic[name]).groupby(dic["con"]).min()
-                        dic[f"{name}_c"] = [
-                            f"{l_t/val:E}" if m_v * val > 0 else "0"
-                            for val, m_v, l_t in zip(c_c, c_m, dic[f"{drc}_tot"])
-                        ]
-                    else:
-                        # conxs = pd.Series(dic[name]).groupby(dic["con"]).agg(lambda x:
-                        # sum(max(list(x)[i],np.roll(x, 2)[i])>0 for i in
-                        # range(int(len(x)/2))) == int(len(x)/2))
-                        # conys = pd.Series(dic["trany"]).groupby(dic["con"]).agg(lambda x:
-                        # sum(max(list(x)[2*i],list(x)[2*i+1])>0 for i in range(int(len(x)/2)-1))
-                        # == int(len(x)/2)-1)
-                        c_ls = pd.Series(dic[name]).groupby(dic["con"]).mean()
-                        d_ls = pd.Series(dic[name]).groupby(dic["con"]).min()
-                        # d_ls = pd.Series(dic[f"d_x"]).groupby(dic["con"]).mean()
-                        # dic[f"{name}_c"] = [f"{val*d_l/l_t}" if val*conx*cony > 0 else "0" for
-                        # val, d_l, l_t, conx, cony in zip(c_ls, d_ls, dic[f"x_tot"], conxs, conys)]
-                        dic[f"{name}_c"] = [
-                            f"{val:E}" if d_l > 0 else "0"
-                            for val, d_l in zip(c_ls, d_ls)
-                        ]
-                else:
+    print("Coarsening continous quantities (e.g., PORO)")
+    with alive_bar(len(dic["props"] + dic["rptrst"])) as bar_animation:
+        for name in dic["props"] + dic["rptrst"]:
+            bar_animation()
+            q = dic[name].copy()
+            q[dic["msk"] == 0] = 0.0
+            q1 = dic[name].copy()
+            q1[dic["msk"] == 1] = 0.0
+            if not dic["show"]:
+                c_c = pd.Series(q).groupby(dic["con"]).sum()
+                c_c1 = pd.Series(q1).groupby(dic["con"]).sum()
+                if name in ["permx", "permy"]:
                     dic[f"{name}_c"] = [
-                        f"{val*l_a/l_t:E}" if val > 0 else "0"
-                        for val, l_a, l_t in zip(
-                            c_c, dic[f"{drc}a_tot"], dic[f"{drc}_tot"]
-                        )
+                        f"{val/h_t:E}" if h_t * val > 0 else "0"
+                        for val, h_t in zip(c_c, dic["z_tot"])
                     ]
-            elif name == "trany":
-                if "y" in dic["coardir"]:
-                    if dic["trans"] == 1:
-                        c_m = pd.Series(dic[name]).groupby(dic["con"]).min()
-                        dic[f"{name}_c"] = [
-                            f"{l_t/val:E}" if m_v * val > 0 else "0"
-                            for val, m_v, l_t in zip(c_c, c_m, dic[f"{drc}_tot"])
+                    if dic["dual"]:
+                        c_c = (
+                            pd.Series(dic[name] * (dic["msk"] == 0))
+                            .groupby(dic["con"])
+                            .sum()
+                        )
+                        dic[f"{name}_dual_c"] = [
+                            f"{val/h_t:E}" if h_t * val > 0 else "0"
+                            for val, h_t in zip(c_c, dic["za_tot_dual"])
                         ]
+                elif name == "tranx":
+                    if "x" in dic["coardir"]:
+                        if dic["trans"] == 1:
+                            c_m = pd.Series(q).groupby(dic["con"]).min()
+                            dic[f"{name}_c"] = [
+                                f"{l_t/val:E}" if m_v * val > 0 else "0"
+                                for val, m_v, l_t in zip(c_c, c_m, dic[f"{drc}_tot"])
+                            ]
+                        else:
+                            # conxs = pd.Series(q).groupby(dic["con"]).agg(lambda x:
+                            # sum(max(list(x)[i],np.roll(x, 2)[i])>0 for i in
+                            # range(int(len(x)/2))) == int(len(x)/2))
+                            # conys = pd.Series(dic["trany"]).groupby(dic["con"]).agg(lambda x:
+                            # sum(max(list(x)[2*i],list(x)[2*i+1])>0 for iinrange(int(len(x)/2)-1))
+                            # == int(len(x)/2)-1)
+                            c_ls = pd.Series(q).groupby(dic["con"]).mean()
+                            d_ls = pd.Series(q).groupby(dic["con"]).min()
+                            # d_ls = pd.Series(dic[f"d_x"]).groupby(dic["con"]).mean()
+                            # dic[f"{name}_c"] = [f"{val*d_l/l_t}" if val*conx*cony > 0 else "0" for
+                            # val,d_l,l_t,conx,cony in zip(c_ls,d_ls,dic[f"x_tot"],conxs,conys)]
+                            dic[f"{name}_c"] = [
+                                f"{val:E}" if d_l > 0 else "0"
+                                for val, d_l in zip(c_ls, d_ls)
+                            ]
                     else:
-                        # conxs = pd.Series(dic["tranx"]).groupby(dic["con"]).agg(lambda
-                        # x: sum(max(list(x)[i],np.roll(x, 2)[i])>0 for i in
-                        # range(int(len(x)/2)-1)) == int(len(x)/2)-1)
-                        # conys = pd.Series(dic[name]).groupby(dic["con"]).agg(lambda
-                        # x: sum(max(list(x)[2*i],list(x)[2*i+1])>0 for i in
-                        # range(int(len(x)/2))) == int(len(x)/2))
-                        c_ls = pd.Series(dic[name]).groupby(dic["con"]).mean()
-                        d_ls = pd.Series(dic[name]).groupby(dic["con"]).min()
-                        # d_ls = pd.Series(dic[f"d_y"]).groupby(dic["con"]).mean()
-                        # dic[f"{name}_c"] = [f"{val*d_l/l_t}" if val*conx*cony > 0
-                        # else "0" for val, d_l, l_t, conx, cony in zip(c_ls, d_ls,
-                        # dic[f"y_tot"], conxs, conys)]
                         dic[f"{name}_c"] = [
-                            f"{val:E}" if d_l > 0 else "0"
-                            for val, d_l in zip(c_ls, d_ls)
-                        ]
-                else:
-                    dic[f"{name}_c"] = [
-                        f"{val*l_a/l_t:E}" if val > 0 else "0"
-                        for val, l_a, l_t in zip(
-                            c_c, dic[f"{drc}a_tot"], dic[f"{drc}_tot"]
-                        )
-                    ]
-            elif name == "tranz":
-                if "z" in dic["coardir"]:
-                    if dic["trans"] == 1:
-                        c_m = pd.Series(dic[name]).groupby(dic["con"]).min()
-                        l_as = pd.Series(dic["d_az"]).groupby(dic["con"]).mean()
-                        c_c[: -dic["nx"] * dic["ny"]] = (
-                            (
-                                np.array(c_c[: -dic["nx"] * dic["ny"]])
-                                + np.array(c_c[dic["nx"] * dic["ny"] :])
+                            f"{val*l_a/l_t:E}" if val > 0 else "0"
+                            for val, l_a, l_t in zip(
+                                c_c, dic[f"{drc}_a"], dic[f"{drc}_tot"]
                             )
-                            * (np.array(c_m[: -dic["nx"] * dic["ny"]] > 0))
-                            * (np.array(c_m[dic["nx"] * dic["ny"] :] > 0))
-                        )
-                        dic[f"{name}_c"] = [
-                            f"{1.*l_a/(val * l_t):E}" if val > 0 else "0"
-                            for val, l_t, l_a in zip(c_c, dic[f"{drc}_tot"], l_as)
                         ]
+                        if dic["dual"]:
+                            dic[f"{name}_dual_c"] = [
+                                f"{val*l_a/l_t:E}" if val > 0 else "0"
+                                for val, l_a, l_t in zip(
+                                    c_c1, dic[f"{drc}_a"], dic[f"{drc}_tot"]
+                                )
+                            ]
+                elif name == "trany":
+                    if "y" in dic["coardir"]:
+                        if dic["trans"] == 1:
+                            c_m = pd.Series(q).groupby(dic["con"]).min()
+                            dic[f"{name}_c"] = [
+                                f"{l_t/val:E}" if m_v * val > 0 else "0"
+                                for val, m_v, l_t in zip(c_c, c_m, dic[f"{drc}_tot"])
+                            ]
+                        else:
+                            # conxs = pd.Series(dic["tranx"]).groupby(dic["con"]).agg(lambda
+                            # x: sum(max(list(x)[i],np.roll(x, 2)[i])>0 for i in
+                            # range(int(len(x)/2)-1)) == int(len(x)/2)-1)
+                            # conys = pd.Series(q).groupby(dic["con"]).agg(lambda
+                            # x: sum(max(list(x)[2*i],list(x)[2*i+1])>0 for i in
+                            # range(int(len(x)/2))) == int(len(x)/2))
+                            c_ls = pd.Series(q).groupby(dic["con"]).mean()
+                            d_ls = pd.Series(q).groupby(dic["con"]).min()
+                            # d_ls = pd.Series(dic[f"d_y"]).groupby(dic["con"]).mean()
+                            # dic[f"{name}_c"] = [f"{val*d_l/l_t}" if val*conx*cony > 0
+                            # else "0" for val, d_l, l_t, conx, cony in zip(c_ls, d_ls,
+                            # dic[f"y_tot"], conxs, conys)]
+                            dic[f"{name}_c"] = [
+                                f"{val:E}" if d_l > 0 else "0"
+                                for val, d_l in zip(c_ls, d_ls)
+                            ]
                     else:
-                        c_ls = pd.Series(dic[name]).groupby(dic["con"]).last()
-                        d_ls = pd.Series(dic["d_z"]).groupby(dic["con"]).last()
                         dic[f"{name}_c"] = [
-                            f"{val*d_l/l_t:E}" if val > 0 else "0"
-                            for val, d_l, l_t in zip(c_ls, d_ls, dic[f"{drc}_tot"])
+                            f"{val*l_a/l_t:E}" if val > 0 else "0"
+                            for val, l_a, l_t in zip(
+                                c_c, dic[f"{drc}_a"], dic[f"{drc}_tot"]
+                            )
+                        ]
+                        if dic["dual"]:
+                            dic[f"{name}_dual_c"] = [
+                                f"{val*l_a/l_t:E}" if val > 0 else "0"
+                                for val, l_a, l_t in zip(
+                                    c_c1, dic[f"{drc}_a"], dic[f"{drc}_tot"]
+                                )
+                            ]
+                elif name == "tranz":
+                    if "z" in dic["coardir"]:
+                        if dic["trans"] == 1:
+                            c_m = pd.Series(q).groupby(dic["con"]).min()
+                            l_as = pd.Series(dic["d_az"]).groupby(dic["con"]).mean()
+                            c_c[: -dic["nx"] * dic["ny"]] = (
+                                (
+                                    np.array(c_c[: -dic["nx"] * dic["ny"]])
+                                    + np.array(c_c[dic["nx"] * dic["ny"] :])
+                                )
+                                * (np.array(c_m[: -dic["nx"] * dic["ny"]] > 0))
+                                * (np.array(c_m[dic["nx"] * dic["ny"] :] > 0))
+                            )
+                            dic[f"{name}_c"] = [
+                                f"{1.*l_a/(val * l_t):E}" if val > 0 else "0"
+                                for val, l_t, l_a in zip(c_c, dic[f"{drc}_tot"], l_as)
+                            ]
+                        else:
+                            c_ls = pd.Series(q).groupby(dic["con"]).last()
+                            d_ls = pd.Series(dic["d_z"]).groupby(dic["con"]).last()
+                            dic[f"{name}_c"] = [
+                                f"{val*d_l/l_t:E}" if val > 0 else "0"
+                                for val, d_l, l_t in zip(c_ls, d_ls, dic[f"{drc}_tot"])
+                            ]
+                    else:
+                        dic[f"{name}_c"] = [
+                            f"{val*l_a/l_t:E}" if val > 0 else "0"
+                            for val, l_a, l_t in zip(
+                                c_c, dic[f"{drc}_a"], dic[f"{drc}_tot"]
+                            )
+                        ]
+                elif name == "permz":
+                    dic["permz_c"] = [
+                        f"{h_t/val:E}" if h_t * val > 0 else "0"
+                        for val, h_t in zip(c_c, dic["za_tot"])
+                    ]
+                    if dic["dual"]:
+                        c_c = (
+                            pd.Series(dic[name] * (dic["msk"] == 0))
+                            .groupby(dic["con"])
+                            .sum()
+                        )
+                        dic[f"{name}_dual_c"] = [
+                            f"{h_t/val:E}" if h_t * val > 0 else "0"
+                            for val, h_t in zip(c_c, dic["za_tot_dual"])
+                        ]
+                elif name in ["poro", "swatinit", "disperc", "thconr"] + dic["rptrst"]:
+                    dic[f"{name}_c"] = [
+                        f"{val/p_v:E}" if p_v > 0 else "0"
+                        for val, p_v in zip(c_c, p_vs)
+                    ]
+                    if dic["dual"] and name == "poro":
+                        c_c = (
+                            pd.Series(dic["poro"] * (dic["msk"] == 0))
+                            .groupby(dic["con"])
+                            .sum()
+                        )
+                        dic["poro_dual_c"] = [
+                            f"{val/p_v:E}" if p_v > 0 else "0"
+                            for val, p_v in zip(c_c, p_dual)
                         ]
                 else:
                     dic[f"{name}_c"] = [
-                        f"{val*l_a/l_t:E}" if val > 0 else "0"
-                        for val, l_a, l_t in zip(
-                            c_c, dic[f"{drc}a_tot"], dic[f"{drc}_tot"]
-                        )
+                        f"{val/v_t:E}" if v_t > 0 else "0"
+                        for val, v_t in zip(c_c, v_tot)
                     ]
-            elif name == "permz":
-                dic["permz_c"] = [
-                    f"{h_t/val:E}" if h_t * val > 0 else "0"
-                    for val, h_t in zip(c_c, dic["za_tot"])
-                ]
-            elif name in ["poro", "swatinit", "disperc", "thconr"] + dic["rptrst"]:
+            else:
+                if dic["show"] == "min":
+                    c_c = pd.Series(q).groupby(dic["con"]).min()
+                    dic[f"{name}_c"] = [f"{val:E}" for val in c_c]
+                elif dic["show"] == "max":
+                    c_c = pd.Series(q).groupby(dic["con"]).max()
+                    dic[f"{name}_c"] = [f"{val:E}" for val in c_c]
+                elif dic["show"] == "pvmean":
+                    c_c = pd.Series(q).groupby(dic["con"]).sum()
+                    dic[f"{name}_c"] = [
+                        f"{val/p_v:E}" if p_v > 0 else "0"
+                        for val, p_v in zip(c_c, p_vs)
+                    ]
+                    if dic["dual"] and name in ["poro", "permx", "permy", "permz"]:
+                        c_c = (
+                            pd.Series(dic[name] * (dic["msk"] == 0))
+                            .groupby(dic["con"])
+                            .sum()
+                        )
+                        dic[f"{name}_dual_c"] = [
+                            f"{val/p_v:E}" if p_v > 0 else "0"
+                            for val, p_v in zip(c_c, p_dual)
+                        ]
+                else:
+                    c_c = pd.Series(q).groupby(dic["con"]).sum()
+                    dic[f"{name}_c"] = [
+                        f"{val/fre:E}" if fre > 0 else "0"
+                        for val, fre in zip(c_c, freq)
+                    ]
+    if dic["coarsening"] and dic["trans"] > 0:
+        # We set the perm to zero except where the wells are, to avoid the generation
+        # of NNCs.
+        for name in ["permx", "permy", "permz"]:
+            dic[f"{name}_c"] = [
+                val if i in dic["wellcind"] else "0"
+                for i, val in enumerate(dic[f"{name}_c"])
+            ]
+    print("Coarsening discrete quantities (e.g., SATNUM)")
+    with alive_bar(len(dic["regions"] + dic["grids"])) as bar_animation:
+        for name in dic["regions"] + dic["grids"]:
+            bar_animation()
+            q = dic[name].copy()
+            default = "0"
+            if np.nanmax(q) == np.nanmin(q):
+                default = f"{np.nanmax(q)}"
+                dic[f"default{name}"] = default
+            if dic["nhow"] == "min":
+                c_c = pd.Series(q).groupby(dic["con"]).min()
                 dic[f"{name}_c"] = [
-                    f"{val/p_v:E}" if p_v > 0 else "0" for val, p_v in zip(c_c, p_vs)
+                    f"{int(val)}" if not np.isnan(val) else default for val in c_c
+                ]
+            elif dic["nhow"] == "max":
+                c_c = pd.Series(q).groupby(dic["con"]).max()
+                dic[f"{name}_c"] = [
+                    f"{int(val)}" if not np.isnan(val) else default for val in c_c
                 ]
             else:
+                c_c = (
+                    pd.Series(q)
+                    .groupby(dic["con"])
+                    .agg(lambda x: list(pd.Series.mode(x)))
+                )
                 dic[f"{name}_c"] = [
-                    f"{val/v_t:E}" if v_t > 0 else "0" for val, v_t in zip(c_c, v_tot)
+                    f"{int(val[0])}" if len(val) > 0 else default for val in c_c
                 ]
-        else:
-            if dic["show"] == "min":
-                c_c = pd.Series(dic[name]).groupby(dic["con"]).min()
-                dic[f"{name}_c"] = [f"{val:E}" for val in c_c]
-            elif dic["show"] == "max":
-                c_c = pd.Series(dic[name]).groupby(dic["con"]).max()
-                dic[f"{name}_c"] = [f"{val:E}" for val in c_c]
-            elif dic["show"] == "pvmean":
-                c_c = pd.Series(dic[name]).groupby(dic["con"]).sum()
-                dic[f"{name}_c"] = [
-                    f"{val/p_v:E}" if p_v > 0 else "0" for val, p_v in zip(c_c, p_vs)
-                ]
-            else:
-                c_c = pd.Series(dic[name]).groupby(dic["con"]).sum()
-                dic[f"{name}_c"] = [
-                    f"{val/fre:E}" if fre > 0 else "0" for val, fre in zip(c_c, freq)
-                ]
-    for name in dic["regions"] + dic["grids"]:
-        default = "0"
-        if np.nanmax(dic[name]) == np.nanmin(dic[name]):
-            default = f"{np.nanmax(dic[name])}"
-        if dic["nhow"] == "min":
-            c_c = pd.Series(dic[name]).groupby(dic["con"]).min()
-            dic[f"{name}_c"] = [
-                f"{int(val)}" if not np.isnan(val) else default for val in c_c
-            ]
-        elif dic["nhow"] == "max":
-            c_c = pd.Series(dic[name]).groupby(dic["con"]).max()
-            dic[f"{name}_c"] = [
-                f"{int(val)}" if not np.isnan(val) else default for val in c_c
-            ]
-        else:
-            c_c = (
-                pd.Series(dic[name])
-                .groupby(dic["con"])
-                .agg(lambda x: list(pd.Series.mode(x)))
-            )
-            dic[f"{name}_c"] = [
-                f"{int(val[0])}" if len(val) > 0 else default for val in c_c
-            ]
     return clusmin, clusmax, rmv
 
 
@@ -1285,6 +1381,143 @@ def handle_cp_grid(dic):
     ir = handle_zcorn(dic, ir)
     dic["zc"] = np.delete(zc, ir, 0)
     dic["cr"] = np.delete(cr, mr, 0)
+
+
+def handle_dual(dic):
+    """
+    Create the dual grid by extending it in the j-direction
+
+    Args:
+        dic (dict): Global dictionary
+
+    Returns:
+        dic (dict): Modified global dictionary
+
+    """
+    nxy = dic["nx"] * dic["ny"]
+    dic["cr"] = list(dic["cr"])
+    dy = 1.075 * max(
+        dic["cr"][-6 * (dic["nx"] + 1) + 1] - dic["cr"][1],
+        dic["cr"][-2] - dic["cr"][6 * (dic["nx"] + 1) - 2],
+    )
+    tmp = [val + dy if i % 3 == 1 else val for i, val in enumerate(dic["cr"])]
+    dic["cr"] += tmp
+    tmp = []
+    dic["zc"] = list(dic["zc"])
+    for i in range(int(len(dic["zc"]) / (4 * nxy))):
+        tmp += dic["zc"][i * 4 * nxy : (i + 1) * 4 * nxy]
+        tmp += dic["zc"][(i + 1) * 4 * nxy - 2 * dic["nx"] : (i + 1) * 4 * nxy]
+        tmp += dic["zc"][i * 4 * nxy : i * 4 * nxy + 2 * dic["nx"]]
+        tmp += dic["zc"][i * 4 * nxy : (i + 1) * 4 * nxy]
+    dic["zc"] = tmp
+    print("Handling the dual connectivity")
+    with alive_bar(nxy * dic["nz"]) as bar_animation:
+        for j in range(dic["yn"]):
+            for i in range(dic["xn"]):
+                k = 0
+                for n in range(dic["nz"]):
+                    bar_animation()
+                    trnx, trnmx, trny, trnmy, trnz = 0.0, 0.0, 0.0, 0.0, 0.0
+                    while dic["Z"][k + 1] == 2:
+                        ind = i + j * dic["xn"] + k * nxy
+                        idd = i + j * dic["xn"] + n * nxy
+                        if (
+                            dic["msk"][ind] != dic["msk"][ind + nxy]
+                            and float(dic["porv_dual_c"][idd]) > 0
+                            and float(dic["porv_c"][idd]) > 0
+                            and not np.isnan(dic["tranz"][ind])
+                        ):
+                            trnz += dic["tranz"][ind]
+                        if i < dic["xn"] - 1:
+                            if (
+                                dic["msk"][ind] == 1
+                                and dic["msk"][ind + 1] == 0
+                                and float(dic["porv_dual_c"][idd + 1]) > 0
+                                and not np.isnan(dic["tranx"][ind])
+                            ):
+                                trnx += dic["tranx"][ind]
+                        if 0 < i:
+                            if (
+                                dic["msk"][ind - 1] == 0
+                                and dic["msk"][ind] == 1
+                                and float(dic["porv_dual_c"][idd - 1]) > 0
+                                and not np.isnan(dic["tranx"][ind - 1])
+                            ):
+                                trnmx += dic["tranx"][ind - 1]
+                        if j < dic["yn"] - 1:
+                            if (
+                                dic["msk"][ind] == 1
+                                and dic["msk"][ind + dic["xn"]] == 0
+                                and float(dic["porv_dual_c"][idd + dic["xn"]]) > 0
+                                and not np.isnan(dic["trany"][ind])
+                            ):
+                                trny += dic["trany"][ind]
+                        if 0 < j:
+                            if (
+                                dic["msk"][ind - dic["xn"]] == 0
+                                and dic["msk"][ind] == 1
+                                and float(dic["porv_dual_c"][idd - dic["xn"]]) > 0
+                                and not np.isnan(dic["trany"][ind - dic["xn"]])
+                            ):
+                                trnmy += dic["trany"][ind - dic["xn"]]
+                        k += 1
+                    k += 1
+                    if trnz > 0:
+                        dic[
+                            "nncc"
+                        ] += f"{i+1} {j+1} {n+1} {i+1} {j+1+1+dic['yn']} {n+1} {trnz} /\n"
+                    if trnx > 0:
+                        dic[
+                            "nncc"
+                        ] += f"{i+1} {j+1} {n+1} {i+2} {j+1+1+dic['yn']} {n+1} {trnx} /\n"
+                    if trnmx > 0:
+                        dic[
+                            "nncc"
+                        ] += (
+                            f"{i+1} {j+1} {n+1} {i} {j+1+1+dic['yn']} {n+1} {trnmx} /\n"
+                        )
+                    if trny > 0:
+                        dic[
+                            "nncc"
+                        ] += f"{i+1} {j+1} {n+1} {i+1} {j+1+1+dic['yn']+1} {n+1} {trny} /\n"
+                    if trnmy > 0:
+                        dic[
+                            "nncc"
+                        ] += (
+                            f"{i+1} {j+1} {n+1} {i+1} {j+1+dic['yn']} {n+1} {trnmy} /\n"
+                        )
+    tmp0 = ["0" for _ in range(nxy)]
+    tmp1 = ["1" for _ in range(nxy)]
+    tmp2 = ["2" for _ in range(nxy)]
+    props = (
+        dic["props"]
+        + dic["regions"]
+        + dic["grids"]
+        + dic["rptrst"]
+        + ["porv", "actnum"]
+    )
+    for prop in props:
+        default = "0"
+        if f"default{prop}" in dic:
+            default = dic[f"default{prop}"]
+        tmp = []
+        for i in range(dic["nz"]):
+            if prop == "fluxnum":
+                tmp += tmp1
+            else:
+                tmp += dic[f"{prop}_c"][i * nxy : (i + 1) * nxy]
+            tmp += [f"{default}" for _ in range(dic["nx"])]
+            if prop == "fluxnum":
+                tmp += tmp2
+            elif prop in ["porv", "poro", "tranx", "trany"]:
+                tmp += dic[f"{prop}_dual_c"][i * nxy : (i + 1) * nxy]
+            elif prop in ["permx", "permy", "permz"]:
+                tmp += tmp0
+            elif prop in ["tranz"]:
+                tmp += [f"{default}" for _ in range(nxy)]
+            else:
+                tmp += dic[f"{prop}_c"][i * nxy : (i + 1) * nxy]
+        dic[f"{prop}_c"] = tmp
 
 
 def handle_zcorn(dic, ir):
