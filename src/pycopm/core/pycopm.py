@@ -44,6 +44,7 @@ def pycopm():
     dic["vicinity"] = cmdargs["vicinity"].strip()  # Extract sub models
     dic["transform"] = cmdargs["displace"].strip()  # Apply affine transformations
     dic["explicit"] = int(cmdargs["explicit"]) == 1  # Write cell values in the SOLUTION
+    dic["dual"] = cmdargs["dual"].strip()  # Coarsen separating net and non-net
     for label, name, tag in zip(["", "r"], ["coarsening", "gridding"], ["coar", "ref"]):
         dic[f"{label}cijk"] = "yes"
         for i in ["x", "y", "z"]:
@@ -366,6 +367,13 @@ def load_parser():
         default=0,
         help="Set to 1 to explicitly write the cell values in the SOLUTION section in the "
         "deck ('0' by default).",
+    )
+    parser.add_argument(
+        "-dual",
+        "--dual",
+        default="",
+        help="Set the criterium to differentiate net and non-net in coarsening using a static "
+        "variable, e.g., 'poro <= 0.1' ('' by default).",
     )
     return vars(parser.parse_known_args()[0])
 

@@ -57,6 +57,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#drogon">Drogon</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#norne">Norne</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#spe10">SPE10</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dual-coarsening">Dual coarsening</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#graphical-abstract">Graphical abstract</a></li>
@@ -335,6 +336,23 @@ then here we create a coarsened model by removing certain pilars in order to kee
 <figcaption>
 <p><span class="caption-text">Pore volume values for the (left) coarsened and (right) vicinity around the well INJ in the SPE10 model.</span><a class="headerlink" href="#id20" title="Link to this image"></a></p>
 </figcaption>
+</figure>
+</section>
+<section id="dual-coarsening">
+<h3>Dual coarsening<a class="headerlink" href="#dual-coarsening" title="Link to this heading"></a></h3>
+<p>The flag <strong>-dual</strong> allows to perform a coarsening by differentiating between net and non-net cells, resulting in
+two coarsened grids. For example, using the <a class="reference external" href="https://github.com/cssr-tools/pycopm/blob/main/examples/decks/MODEL6.DATA">MODEL6.DATA</a>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pycopm<span class="w"> </span>-i<span class="w"> </span>MODEL6.DATA<span class="w"> </span>-z<span class="w"> </span><span class="m">1</span>:4<span class="w"> </span>-w<span class="w"> </span>STANDARD<span class="w"> </span>-l<span class="w"> </span>S<span class="w"> </span>-t<span class="w"> </span><span class="m">2</span><span class="w"> </span>-a<span class="w"> </span>max
+pycopm<span class="w"> </span>-i<span class="w"> </span>MODEL6.DATA<span class="w"> </span>-z<span class="w"> </span><span class="m">1</span>:4<span class="w"> </span>-w<span class="w"> </span>DUAL<span class="w"> </span>-dual<span class="w"> </span><span class="s1">&#39;poro &lt;= 0.1&#39;</span><span class="w"> </span>-l<span class="w"> </span>D<span class="w"> </span>-t<span class="w"> </span><span class="m">2</span><span class="w"> </span>-a<span class="w"> </span>max
+flow<span class="w"> </span>MODEL6.DATA
+flow<span class="w"> </span>STANDARD.DATA
+flow<span class="w"> </span>DUAL.DATA
+plopm<span class="w"> </span>-i<span class="w"> </span><span class="s1">&#39;MODEL6 STANDARD DUAL&#39;</span><span class="w"> </span>-v<span class="w"> </span><span class="s1">&#39;pressure - 0pressure&#39;</span><span class="w"> </span>-subfigs<span class="w"> </span><span class="m">1</span>,3<span class="w"> </span>-delax<span class="w"> </span><span class="m">1</span><span class="w"> </span>-cbsfax<span class="w"> </span><span class="m">0</span>.1,0.95,0.8,0.02<span class="w"> </span>-d<span class="w"> </span><span class="m">12</span>,4<span class="w">  </span>-suptitle<span class="w"> </span><span class="m">0</span><span class="w"> </span>-z<span class="w"> </span><span class="m">0</span><span class="w"> </span>-clabel<span class="w"> </span><span class="s1">&#39;Pressure increase end of simulation [bar]&#39;</span><span class="w"> </span>-grid<span class="w"> </span><span class="s1">&#39;black,1e-2&#39;</span>
+</pre></div>
+</div>
+<p>This results in the following figure, where the pressure on the most right cell compares better using the dual coarsening than the standard:</p>
+<figure class="align-default">
+<img alt="_images/dual_pressure-0pressure_i%2C1%2Ck_t2.png" src="_images/dual_pressure-0pressure_i%2C1%2Ck_t2.png" />
 </figure>
 </section>
 </section>

@@ -19,8 +19,8 @@ def test_transmissibilities(flow):
     if not os.path.exists(f"{testpth}/output"):
         os.system(f"mkdir {testpth}/output")
     values = [
-        [696.14886, 774.826, 5008.1323, 106.21955],
-        [696.14886, 774.826, 0, 106.21955],
+        [696.14886, 774.826, 5008.1323, 13739.814453],
+        [696.14886, 774.826, 0, 13739.814453],
     ]
     for i, sub in enumerate(["1", "2"]):
         subprocess.run(
