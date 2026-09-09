@@ -165,25 +165,18 @@ cython_debug/
 # Python environment
 vpycopm/
 
-# DUNE
-dune-common/
-dune-geometry/
-dune-grid/
-dune-istl/
-
-# The OPM
-opm-common/
-opm-grid/
-opm-simulators/
+# OPM
+dune-*
+opm-*
 
 # pycopm
-cssr/
-developing/
-examples/configurations/drogon/drogon_coarser
-test_outputs/
-playground/
-presentation/
-prototyping/
-project/
-studies/
+/cssr/
+/developing/
+/examples/configurations/drogon/drogon_coarser
+/test_outputs/
+/playground/
+/presentation/
+/prototyping/
+/project/
+/studies/
 .vscode/

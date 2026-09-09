@@ -19,7 +19,7 @@ def get_time_simulation():
                 solData.append(row)
             with open("time_sim.txt", 'w') as file:
                 file.write(f'{float(solData[-23][-1])}')
-        except:
+        except ValueError:
             print(f'Problem with the DBG file')
 
 if __name__ == "__main__":

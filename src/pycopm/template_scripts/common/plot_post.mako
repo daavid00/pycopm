@@ -16,6 +16,14 @@ from opm.io.ecl import EGrid as OpmGrid
 from opm.io.ecl import EclFile as OpmFile
 from opm.io.ecl import ESmry as OpmSummary
 
+from pycopm.utils.terminal import (
+    pycopm_error,
+    pycopm_info,
+    pycopm_tip,
+    pycopm_success,
+    pycopm_warning,
+)
+
 
 def visualizeData():
     """Visualize ensemble time series, saturation functions, parameters, and diagnostics."""
@@ -426,7 +434,6 @@ def visualizeData():
     normalized_mean = plot_cumulative(fcum, rfcum, field_types, "Cumulative final mass [%]", "cumulative_mismatch_mass_normalized", [19.06, 4.88], normalize=total_mass, mass_labels=True) if total_mass else np.nan
     goal = 4.88 - normalized_mean
 
-    print(f"\nThe postprocessing files have been written to {postprocessing}")
     errors_file = postprocessing / "errors.txt"
     with errors_file.open("w", encoding="utf8") as stream:
         if num_realizations > 1:
@@ -445,14 +452,16 @@ def visualizeData():
             single_error = error_ens[0][0] if np.isfinite(error_ens[0][0]) else np.nan
             stream.write(f"Mismatch (standard simulation from opm-test deck): {error_standard:.4e}\n")
             stream.write(f"Mismatch (single simulation): {single_error:.4e}\n")
-    print(errors_file.read_text(encoding="utf8"), end="")
+    pycopm_info("")
+    print(errors_file.read_text(encoding="utf8")[:-2])
     %if model_name=='drogon':
-    print(f"Difference (webviz - pycopm): {goal:.2f} (a positive number (percentage) is the goal)")
-    print(f"See {postprocessing}/cumulative_mismatch_mass_normalized_ite-{selected_iterations[-1]}.png\n")
+    pycopm_info(f"difference (webviz - pycopm): {goal:.2f} (a positive number (percentage) is the goal), "
+        f"see {postprocessing}/cumulative_mismatch_mass_normalized_ite-{selected_iterations[-1]}.png")
     if goal <= 0:
-        print("To improve the goal, for example, run a history-matching study (mode = 'ert') and increase the number")
-        print("of ensembles (mep), iterations (--weights), distribution type/intervals, or change the random seed (rds).\n")
+        pycopm_tip("to improve the goal, for example, run a history-matching study (mode = 'ert') and increase the number "
+        "of ensembles (mep), iterations (--weights), distribution type/intervals, or change the random seed (rds).")
     %endif
+    pycopm_success(f"the postprocessing files have been written to ", postprocessing, [])
 
 
 if __name__ == "__main__":

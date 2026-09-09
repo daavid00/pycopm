@@ -1,0 +1,1481 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>pycopm.utils.coarsening module &#8212; pycopm documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=d109aa7d" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../_static/documentation_options.js?v=602b4562"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=eef4a3d2"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/pycopm.utils.coarsening';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="pycopm.utils.files_writer module" href="pycopm.utils.files_writer.html" />
+    <link rel="prev" title="pycopm.utils package" href="pycopm.utils.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.4" />
+    <meta name="docbuild:last-update" content="2026-09-09"/>
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="pycopm documentation - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="pycopm documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../related.html">
+    Related projects
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class=" current active">
+  <a class="nav-link dropdown-item nav-internal" href="../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../contributing.html">
+    Contributing
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../related.html">
+    Related projects
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../contributing.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item pst-sidebar-collapse"><button id="pst-collapse-sidebar-button" aria-expanded="true" aria-controls="pst-primary-sidebar">
+  <svg class="pst-icon" role="img" aria-hidden="true" focusable="false" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+    <path fill="currentColor" d="M3 15.5C2.36232 15.5 1.74874 15.2564 1.28478 14.8189C0.820828 14.3815 0.541576 13.7832 0.504167 13.1467L0.5 13L0.5 3C0.499965 2.36232 0.743605 1.74874 1.18107 1.28478C1.61854 0.820828 2.21676 0.541576 2.85333 0.504167L3 0.5L13 0.5C13.6377 0.499965 14.2513 0.743605 14.7152 1.18107C15.1792 1.61854 15.4584 2.21676 15.4958 2.85333L15.5 3L15.5 13C15.5 13.6377 15.2564 14.2513 14.8189 14.7152C14.3815 15.1792 13.7832 15.4584 13.1467 15.4958L13 15.5L3 15.5ZM3 13.8333L10.5 13.8333L10.5 2.16667L3 2.16667C2.79589 2.16669 2.59889 2.24163 2.44636 2.37726C2.29383 2.5129 2.19638 2.69979 2.1725 2.9025L2.16667 3L2.16667 13C2.16669 13.2041 2.24163 13.4011 2.37726 13.5536C2.5129 13.7062 2.69979 13.8036 2.9025 13.8275L3 13.8333ZM6.65583 10.325L6.5775 10.2558L4.91083 8.58917C4.76735 8.44567 4.68116 8.25476 4.66843 8.05223C4.65569 7.84971 4.71729 7.6495 4.84167 7.48917L4.91083 7.41083L6.5775 5.74417C6.72747 5.59471 6.9287 5.50794 7.14032 5.50148C7.35194 5.49502 7.55809 5.56935 7.7169 5.70937C7.8757 5.8494 7.97525 6.04463 7.99533 6.25539C8.01541 6.46616 7.95451 6.67667 7.825 6.84417L7.75583 6.9225L6.67917 8L7.75583 9.0775C7.89931 9.22099 7.98551 9.41191 7.99824 9.61443C8.01097 9.81695 7.94938 10.0172 7.825 10.1775L7.75583 10.2558C7.61234 10.3993 7.42142 10.4855 7.2189 10.4982C7.01638 10.511 6.81617 10.4494 6.65583 10.325Z"/>
+  </svg>
+  <span class="pst-collapse-sidebar-label">Collapse Sidebar</span>
+  <span class="pst-expand-sidebar-label">Expand Sidebar</span>
+</button></div>
+        <div class="sidebar-primary-item">
+
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">pycopm</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="pycopm.html">pycopm package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="pycopm.core.html">pycopm.core package</a></li>
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="pycopm.utils.html">pycopm.utils package</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l4 current active"><a class="current reference internal" href="#">pycopm.utils.coarsening module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.files_writer.html">pycopm.utils.files_writer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.generate_decks.html">pycopm.utils.generate_decks module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.input_values.html">pycopm.utils.input_values module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.parser_deck.html">pycopm.utils.parser_deck module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.refinement.html">pycopm.utils.refinement module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.runs_executer.html">pycopm.utils.runs_executer module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.terminal.html">pycopm.utils.terminal module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.transformation.html">pycopm.utils.transformation module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="pycopm.utils.vicinity.html">pycopm.utils.vicinity module</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../api.html" class="nav-link">Python API</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">pycopm</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="pycopm.html" class="nav-link">pycopm package</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="pycopm.utils.html" class="nav-link">pycopm.utils package</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pycopm.utils.coarsening module</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-pycopm.utils.coarsening">
+<span id="pycopm-utils-coarsening-module"></span><h1>pycopm.utils.coarsening module<a class="headerlink" href="#module-pycopm.utils.coarsening" title="Link to this heading">#</a></h1>
+<p>Coarsen corner-point grids and aggregate reservoir properties.</p>
+<p>The module supports deck-based coarsening and the TOML workflows used to
+generate reduced Norne and Drogon models.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">CoarseningMaps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cell_groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarsened_axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">matrix_mask</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vertical_transfer_enabled</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_to_coarse</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nnc_text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'NNC\n'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_tranx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarse_trany</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual_tranx</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual_trany</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual_defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#CoarseningMaps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Store mappings and intermediate values used during coarsening.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>y</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>z</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>cell_groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>coarsened_axes</strong> (<em>str</em>)</p></li>
+<li><p><strong>matrix_mask</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>vertical_transfer_enabled</strong> (<em>bool</em>)</p></li>
+<li><p><strong>reference_to_coarse</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>nnc_text</strong> (<em>str</em>)</p></li>
+<li><p><strong>coarse_tranx</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>coarse_trany</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>dual_tranx</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>dual_trany</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>dual_defaults</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>float</em><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.x">
+<span class="sig-name descname"><span class="pre">x</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.x" title="Link to this definition">#</a></dt>
+<dd><p>Axis array marking boundaries removed by coarsening in the x direction.
+Values greater than one identify intervals merged with the preceding
+interval.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.y">
+<span class="sig-name descname"><span class="pre">y</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.y" title="Link to this definition">#</a></dt>
+<dd><p>Axis array marking boundaries removed by coarsening in the y direction.
+Values greater than one identify intervals merged with the preceding
+interval.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.z">
+<span class="sig-name descname"><span class="pre">z</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.z" title="Link to this definition">#</a></dt>
+<dd><p>Axis array marking boundaries removed by coarsening in the z direction.
+Values greater than one identify intervals merged with the preceding
+interval.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.cell_groups">
+<span class="sig-name descname"><span class="pre">cell_groups</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.cell_groups" title="Link to this definition">#</a></dt>
+<dd><p>One-based coarse-cell identifier for each original cell, flattened in
+<code class="docutils literal notranslate"><span class="pre">(z,</span> <span class="pre">y,</span> <span class="pre">x)</span></code> order.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.coarsened_axes">
+<span class="sig-name descname"><span class="pre">coarsened_axes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.coarsened_axes" title="Link to this definition">#</a></dt>
+<dd><p>Concatenated names of the coarsened axes, for example <code class="docutils literal notranslate"><span class="pre">&quot;xz&quot;</span></code>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.matrix_mask">
+<span class="sig-name descname"><span class="pre">matrix_mask</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.matrix_mask" title="Link to this definition">#</a></dt>
+<dd><p>Per-cell mask separating matrix cells (one) from fracture or non-net
+cells (zero) in dual-porosity models.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.vertical_transfer_enabled">
+<span class="sig-name descname"><span class="pre">vertical_transfer_enabled</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.vertical_transfer_enabled" title="Link to this definition">#</a></dt>
+<dd><p>Whether vertical matrix-fracture transfer connections are retained.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.reference_to_coarse">
+<span class="sig-name descname"><span class="pre">reference_to_coarse</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.reference_to_coarse" title="Link to this definition">#</a></dt>
+<dd><p>Coarse-cell identifier for each reference-grid cell, populated while
+properties are coarsened.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.nnc_text">
+<span class="sig-name descname"><span class="pre">nnc_text</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.nnc_text" title="Link to this definition">#</a></dt>
+<dd><p>NNC include-file content accumulated while mapping non-neighbouring and
+matrix-fracture connections.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.coarse_tranx">
+<span class="sig-name descname"><span class="pre">coarse_tranx</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.coarse_tranx" title="Link to this definition">#</a></dt>
+<dd><p>Horizontal x-direction transmissibilities for the matrix or
+single-porosity coarse grid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.coarse_trany">
+<span class="sig-name descname"><span class="pre">coarse_trany</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.coarse_trany" title="Link to this definition">#</a></dt>
+<dd><p>Horizontal y-direction transmissibilities for the matrix or
+single-porosity coarse grid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.dual_tranx">
+<span class="sig-name descname"><span class="pre">dual_tranx</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.dual_tranx" title="Link to this definition">#</a></dt>
+<dd><p>Horizontal x-direction transmissibilities for the fracture continuum of
+a dual-porosity grid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.dual_trany">
+<span class="sig-name descname"><span class="pre">dual_trany</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">NDArray</span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.dual_trany" title="Link to this definition">#</a></dt>
+<dd><p>Horizontal y-direction transmissibilities for the fracture continuum of
+a dual-porosity grid.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.CoarseningMaps.dual_defaults">
+<span class="sig-name descname"><span class="pre">dual_defaults</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#pycopm.utils.coarsening.CoarseningMaps.dual_defaults" title="Link to this definition">#</a></dt>
+<dd><p>Default property values inserted into separator rows of the extended
+dual-porosity grid.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.create_coarsening_maps">
+<span class="sig-name descname"><span class="pre">create_coarsening_maps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmdargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#create_coarsening_maps"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.create_coarsening_maps" title="Link to this definition">#</a></dt>
+<dd><p>Create axis mappings and assign original cells to coarse cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration whose output dimensions are updated.</p>
+</dd>
+<dt><strong>cmdargs</strong></dt><dd><p>Command arguments containing <code class="docutils literal notranslate"><span class="pre">coarsening</span></code>, <code class="docutils literal notranslate"><span class="pre">x_coarsening</span></code>,
+<code class="docutils literal notranslate"><span class="pre">y_coarsening</span></code>, and <code class="docutils literal notranslate"><span class="pre">z_coarsening</span></code>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>CoarseningMaps</dt><dd><p>Axis mappings, cell groups, and dual-porosity masks.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>cmdargs</strong> (<em>Namespace</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#pycopm.utils.coarsening.CoarseningMaps" title="pycopm.utils.coarsening.CoarseningMaps"><em>CoarseningMaps</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_sum">
+<span class="sig-name descname"><span class="pre">_grouped_sum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_sum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_sum" title="Link to this definition">#</a></dt>
+<dd><p>Return the sum of values for each one-based group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_count">
+<span class="sig-name descname"><span class="pre">_grouped_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_count"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_count" title="Link to this definition">#</a></dt>
+<dd><p>Return the number of non-NaN values for each one-based group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_min">
+<span class="sig-name descname"><span class="pre">_grouped_min</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_min"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_min" title="Link to this definition">#</a></dt>
+<dd><p>Return the minimum value for each one-based group, ignoring NaNs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_max">
+<span class="sig-name descname"><span class="pre">_grouped_max</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_max"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_max" title="Link to this definition">#</a></dt>
+<dd><p>Return the maximum value for each one-based group, ignoring NaNs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_mean">
+<span class="sig-name descname"><span class="pre">_grouped_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_mean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_mean" title="Link to this definition">#</a></dt>
+<dd><p>Return the mean value for each one-based group, ignoring NaNs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_first">
+<span class="sig-name descname"><span class="pre">_grouped_first</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_first"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_first" title="Link to this definition">#</a></dt>
+<dd><p>Return the first non-NaN value for each one-based group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_last">
+<span class="sig-name descname"><span class="pre">_grouped_last</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_last"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_last" title="Link to this definition">#</a></dt>
+<dd><p>Return the last non-NaN value for each one-based group.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>size</strong> (<em>int</em><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._grouped_mode">
+<span class="sig-name descname"><span class="pre">_grouped_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group_codes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_groups</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_grouped_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._grouped_mode" title="Link to this definition">#</a></dt>
+<dd><p>Return the smallest mode for each zero-based group, ignoring NaNs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>group_codes</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>number_groups</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.coarsen_properties">
+<span class="sig-name descname"><span class="pre">coarsen_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarsening</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified_deck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wellcind</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#coarsen_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.coarsen_properties" title="Link to this definition">#</a></dt>
+<dd><p>Aggregate reservoir properties onto the coarsened grid.</p>
+<p>Continuous properties use their configured or property-specific aggregation;
+discrete properties use <code class="docutils literal notranslate"><span class="pre">min</span></code>, <code class="docutils literal notranslate"><span class="pre">max</span></code>, or <code class="docutils literal notranslate"><span class="pre">mode</span></code>. The function writes
+property include files and updates output pore volume and active cells.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration and source INIT or restart properties.</p>
+</dd>
+<dt><strong>coarsening</strong></dt><dd><p>Cell groups and masks created by <a class="reference internal" href="#pycopm.utils.coarsening.create_coarsening_maps" title="pycopm.utils.coarsening.create_coarsening_maps"><code class="xref py py-func docutils literal notranslate"><span class="pre">create_coarsening_maps()</span></code></a>.</p>
+</dd>
+<dt><strong>modified_deck</strong></dt><dd><p>Deck lines updated with generated property includes.</p>
+</dd>
+<dt><strong>wellcind</strong></dt><dd><p>Coarse-cell indices containing well completions.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>cluster_minimum, cluster_maximum, removal_mask, generated_files</dt><dd><p>Activity summaries, the mask used to remove depth-jump cells,
+and the generated include file names.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>coarsening</strong> (<a class="reference internal" href="#pycopm.utils.coarsening.CoarseningMaps" title="pycopm.utils.coarsening.CoarseningMaps"><em>CoarseningMaps</em></a>)</p></li>
+<li><p><strong>modified_deck</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>wellcind</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[<em>NDArray</em>, <em>NDArray</em>, <em>NDArray</em>, list[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._interleave_dual_property">
+<span class="sig-name descname"><span class="pre">_interleave_dual_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">property_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dual_values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_interleave_dual_property"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._interleave_dual_property" title="Link to this definition">#</a></dt>
+<dd><p>Interleave property and dual-property layers with separator rows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>property_values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>dual_values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>nx</strong> (<em>int</em>)</p></li>
+<li><p><strong>nz</strong> (<em>int</em>)</p></li>
+<li><p><strong>default_value</strong> (<em>float</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._find_include_statement">
+<span class="sig-name descname"><span class="pre">_find_include_statement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">modified_deck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_line</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_find_include_statement"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._find_include_statement" title="Link to this definition">#</a></dt>
+<dd><p>Return the list interval containing an INCLUDE statement.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>modified_deck</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>include_line</strong> (<em>str</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._compact_permeability_properties">
+<span class="sig-name descname"><span class="pre">_compact_permeability_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permy</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">permz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">modified_deck</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_compact_permeability_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._compact_permeability_properties" title="Link to this definition">#</a></dt>
+<dd><p>Use COPY and MULTIPLY if PERMY and PERMZ can be generated from PERMX.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>permx</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>permy</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>permz</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>modified_deck</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.redistribute_removed_pore_volume">
+<span class="sig-name descname"><span class="pre">redistribute_removed_pore_volume</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">con</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_minimum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_maximum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removal_mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#redistribute_removed_pore_volume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.redistribute_removed_pore_volume" title="Link to this definition">#</a></dt>
+<dd><p>Redistribute pore volume from removed coarse cells.</p>
+<p>Pore volume is divided among the nearest active neighbours without changing
+the total pore volume.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration whose <code class="docutils literal notranslate"><span class="pre">output_porv</span></code> is updated.</p>
+</dd>
+<dt><strong>con</strong></dt><dd><p>One-based coarse-cell identifier for each original cell.</p>
+</dd>
+<dt><strong>cluster_minimum, cluster_maximum</strong></dt><dd><p>Aggregated activity values used to identify changed clusters.</p>
+</dd>
+<dt><strong>removal_mask</strong></dt><dd><p>Mask identifying retained coarse cells.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>con</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>cluster_minimum</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>cluster_maximum</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>removal_mask</strong> (<em>NDArray</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._find_active_neighbors">
+<span class="sig-name descname"><span class="pre">_find_active_neighbors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">neighbor_indices</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ijk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_find_active_neighbors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._find_active_neighbors" title="Link to this definition">#</a></dt>
+<dd><p>Find active neighbouring cells for pore-volume redistribution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>neighbor_indices</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>)</p></li>
+<li><p><strong>cluster_id</strong> (<em>int</em>)</p></li>
+<li><p><strong>distance</strong> (<em>int</em>)</p></li>
+<li><p><strong>offset</strong> (<em>int</em>)</p></li>
+<li><p><strong>ijk</strong> (<em>list</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._global_index_to_ijk">
+<span class="sig-name descname"><span class="pre">_global_index_to_ijk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_index</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_global_index_to_ijk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._global_index_to_ijk" title="Link to this definition">#</a></dt>
+<dd><p>Return the i, j, and k indices from a zero-based global cell index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>global_index</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[int, int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.coarsen_corner_point_grid">
+<span class="sig-name descname"><span class="pre">coarsen_corner_point_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarsening</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#coarsen_corner_point_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.coarsen_corner_point_grid" title="Link to this definition">#</a></dt>
+<dd><p>Remove selected pillars and ZCORN surfaces from the grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration containing the original corner-point grid.</p>
+</dd>
+<dt><strong>coarsening</strong></dt><dd><p>Axis mappings defining the removed rows, columns, and layers.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>coord, zcorn</dt><dd><p>Coarsened arrays when dual porosity is enabled; otherwise empty arrays.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>coarsening</strong> (<a class="reference internal" href="#pycopm.utils.coarsening.CoarseningMaps" title="pycopm.utils.coarsening.CoarseningMaps"><em>CoarseningMaps</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[<em>NDArray</em>, <em>NDArray</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.build_dual_porosity_grid">
+<span class="sig-name descname"><span class="pre">build_dual_porosity_grid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarsening</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#build_dual_porosity_grid"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.build_dual_porosity_grid" title="Link to this definition">#</a></dt>
+<dd><p>Extend a coarsened grid with a second porosity continuum.</p>
+<p>The matrix and fracture grids are separated in the j direction, and their
+connections are added to <code class="docutils literal notranslate"><span class="pre">coarsening.nnc_text</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration for the coarsened model.</p>
+</dd>
+<dt><strong>coarsening</strong></dt><dd><p>Coarsening data containing continuum masks and transmissibilities.</p>
+</dd>
+<dt><strong>cr, zc</strong></dt><dd><p>Coarsened <code class="docutils literal notranslate"><span class="pre">COORD</span></code> and <code class="docutils literal notranslate"><span class="pre">ZCORN</span></code> arrays.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>coord, zcorn</dt><dd><p>Extended dual-porosity grid arrays.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>coarsening</strong> (<a class="reference internal" href="#pycopm.utils.coarsening.CoarseningMaps" title="pycopm.utils.coarsening.CoarseningMaps"><em>CoarseningMaps</em></a>)</p></li>
+<li><p><strong>cr</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>zc</strong> (<em>NDArray</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>tuple[<em>NDArray</em>, <em>NDArray</em>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._collect_removed_zcorn_indices">
+<span class="sig-name descname"><span class="pre">_collect_removed_zcorn_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coa_z</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">removal_indices</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_collect_removed_zcorn_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._collect_removed_zcorn_indices" title="Link to this definition">#</a></dt>
+<dd><p>Add the ZCORN indices removed by vertical coarsening.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>coa_z</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>removal_indices</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.map_nnc_transmissibilities">
+<span class="sig-name descname"><span class="pre">map_nnc_transmissibilities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dck</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coarsening</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#map_nnc_transmissibilities"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.map_nnc_transmissibilities" title="Link to this definition">#</a></dt>
+<dd><p>Map original non-neighbouring transmissibilities to the coarse grid.</p>
+<p>Connections that become Cartesian neighbours are accumulated in <code class="docutils literal notranslate"><span class="pre">TRANX</span></code> or
+<code class="docutils literal notranslate"><span class="pre">TRANY</span></code>; remaining connections are written as NNC records.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dck</strong></dt><dd><p>Deck configuration and source NNC data.</p>
+</dd>
+<dt><strong>coarsening</strong></dt><dd><p>Coarse mapping updated with transmissibilities and NNC text.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>generated_files</dt><dd><p>Names of the written include files.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dck</strong> (<em>ConfigViaDeck</em>)</p></li>
+<li><p><strong>coarsening</strong> (<a class="reference internal" href="#pycopm.utils.coarsening.CoarseningMaps" title="pycopm.utils.coarsening.CoarseningMaps"><em>CoarseningMaps</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.create_coarsening_map">
+<span class="sig-name descname"><span class="pre">create_coarsening_map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#create_coarsening_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.create_coarsening_map" title="Link to this definition">#</a></dt>
+<dd><p>Map each fine-grid cell to a one-based coarse-cell identifier.</p>
+<p>The output dimensions and original-to-output axis mappings in <code class="docutils literal notranslate"><span class="pre">cfg</span></code> are also
+updated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cfg</strong></dt><dd><p>TOML configuration containing the axis coarsening arrays.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>NDArray</dt><dd><p>One-based coarse-cell identifier for every fine-grid cell.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<em>ConfigViaTOML</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._group_minimum_zero_based">
+<span class="sig-name descname"><span class="pre">_group_minimum_zero_based</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_groups</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_group_minimum_zero_based"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._group_minimum_zero_based" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>number_groups</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._group_maximum_zero_based">
+<span class="sig-name descname"><span class="pre">_group_maximum_zero_based</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_groups</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_group_maximum_zero_based"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._group_maximum_zero_based" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>number_groups</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._group_sum_zero_based">
+<span class="sig-name descname"><span class="pre">_group_sum_zero_based</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groups</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">number_groups</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_group_sum_zero_based"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._group_sum_zero_based" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>values</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>groups</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>number_groups</strong> (<em>int</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening._read_satnum">
+<span class="sig-name descname"><span class="pre">_read_satnum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">actnum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nxyz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">satnum_opm</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#_read_satnum"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening._read_satnum" title="Link to this definition">#</a></dt>
+<dd><p>Read or generate fine-grid SATNUM values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cfg</strong></dt><dd><p>TOML configuration controlling the SATNUM source.</p>
+</dd>
+<dt><strong>actnum</strong></dt><dd><p>Fine-grid active-cell mask.</p>
+</dd>
+<dt><strong>nxyz</strong></dt><dd><p>Number of fine-grid cells.</p>
+</dd>
+<dt><strong>satnum_opm</strong></dt><dd><p>SATNUM values read from the reference INIT file.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>NDArray</dt><dd><p>SATNUM value for every fine-grid cell.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>ConfigViaTOML</em>)</p></li>
+<li><p><strong>actnum</strong> (<em>NDArray</em>)</p></li>
+<li><p><strong>nxyz</strong> (<em>int</em>)</p></li>
+<li><p><strong>satnum_opm</strong> (<em>NDArray</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>NDArray</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pycopm.utils.coarsening.coarsen_and_write_properties">
+<span class="sig-name descname"><span class="pre">coarsen_and_write_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coa_map</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/pycopm/utils/coarsening.html#coarsen_and_write_properties"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#pycopm.utils.coarsening.coarsen_and_write_properties" title="Link to this definition">#</a></dt>
+<dd><p>Aggregate and write properties for a TOML-generated model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>cfg</strong></dt><dd><p>TOML configuration and reference-case settings.</p>
+</dd>
+<dt><strong>coa_map</strong></dt><dd><p>One-based fine-to-coarse cell mapping.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><dl class="simple">
+<dt>int</dt><dd><p>Highest generated SATNUM value, used as the number of saturation tables.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cfg</strong> (<em>ConfigViaTOML</em>)</p></li>
+<li><p><strong>coa_map</strong> (<em>NDArray</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="pycopm.utils.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">pycopm.utils package</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="pycopm.utils.files_writer.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">pycopm.utils.files_writer module</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps</span></code></a><ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.x"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.x</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.y"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.y</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.z"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.z</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.cell_groups"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.cell_groups</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.coarsened_axes"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.coarsened_axes</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.matrix_mask"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.matrix_mask</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.vertical_transfer_enabled"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.vertical_transfer_enabled</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.reference_to_coarse"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.reference_to_coarse</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.nnc_text"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.nnc_text</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.coarse_tranx"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.coarse_tranx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.coarse_trany"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.coarse_trany</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.dual_tranx"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.dual_tranx</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.dual_trany"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.dual_trany</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.CoarseningMaps.dual_defaults"><code class="docutils literal notranslate"><span class="pre">CoarseningMaps.dual_defaults</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.create_coarsening_maps"><code class="docutils literal notranslate"><span class="pre">create_coarsening_maps()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_sum"><code class="docutils literal notranslate"><span class="pre">_grouped_sum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_count"><code class="docutils literal notranslate"><span class="pre">_grouped_count()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_min"><code class="docutils literal notranslate"><span class="pre">_grouped_min()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_max"><code class="docutils literal notranslate"><span class="pre">_grouped_max()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_mean"><code class="docutils literal notranslate"><span class="pre">_grouped_mean()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_first"><code class="docutils literal notranslate"><span class="pre">_grouped_first()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_last"><code class="docutils literal notranslate"><span class="pre">_grouped_last()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._grouped_mode"><code class="docutils literal notranslate"><span class="pre">_grouped_mode()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.coarsen_properties"><code class="docutils literal notranslate"><span class="pre">coarsen_properties()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._interleave_dual_property"><code class="docutils literal notranslate"><span class="pre">_interleave_dual_property()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._find_include_statement"><code class="docutils literal notranslate"><span class="pre">_find_include_statement()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._compact_permeability_properties"><code class="docutils literal notranslate"><span class="pre">_compact_permeability_properties()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.redistribute_removed_pore_volume"><code class="docutils literal notranslate"><span class="pre">redistribute_removed_pore_volume()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._find_active_neighbors"><code class="docutils literal notranslate"><span class="pre">_find_active_neighbors()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._global_index_to_ijk"><code class="docutils literal notranslate"><span class="pre">_global_index_to_ijk()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.coarsen_corner_point_grid"><code class="docutils literal notranslate"><span class="pre">coarsen_corner_point_grid()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.build_dual_porosity_grid"><code class="docutils literal notranslate"><span class="pre">build_dual_porosity_grid()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._collect_removed_zcorn_indices"><code class="docutils literal notranslate"><span class="pre">_collect_removed_zcorn_indices()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.map_nnc_transmissibilities"><code class="docutils literal notranslate"><span class="pre">map_nnc_transmissibilities()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.create_coarsening_map"><code class="docutils literal notranslate"><span class="pre">create_coarsening_map()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._group_minimum_zero_based"><code class="docutils literal notranslate"><span class="pre">_group_minimum_zero_based()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._group_maximum_zero_based"><code class="docutils literal notranslate"><span class="pre">_group_maximum_zero_based()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._group_sum_zero_based"><code class="docutils literal notranslate"><span class="pre">_group_sum_zero_based()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening._read_satnum"><code class="docutils literal notranslate"><span class="pre">_read_satnum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pycopm.utils.coarsening.coarsen_and_write_properties"><code class="docutils literal notranslate"><span class="pre">coarsen_and_write_properties()</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  
+  <div class="tocsection editthispage">
+    <a href="https://github.com/cssr-tools/pycopm/edit/main/docs/text/api/pycopm.utils.coarsening.rst">
+      <i class="fa-solid fa-pencil"></i>
+      
+      
+        
+          Edit on GitHub
+        
+      
+    </a>
+  </div>
+</div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/pycopm.utils.coarsening.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, NORCE Research AS.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

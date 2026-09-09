@@ -186,7 +186,6 @@ def _include_contains_endbox(dck: ConfigViaDeck, nrwo: str) -> bool:
     deck_path = Path(f"{dck.input_deck_name}.DATA").absolute()
     include_path = (deck_path.parent / include_text).absolute()
     if not include_path.exists():
-        print(f"Include not found: {include_path}")
         return False
     with include_path.open("r", encoding=dck.deck_encoding) as include_file:
         for row in csv.reader(include_file):
@@ -1696,8 +1695,6 @@ def _scan_deck_file(
                 resolved_include = Path(os.path.normpath(base_directory / include_path))
                 if resolved_include.exists():
                     includes.append(str(resolved_include))
-                else:
-                    print(f"Include not found: {resolved_include}")
                 include_pending = False
                 continue
             mults = _mark_multiplier_keyword(deck_line, mults)

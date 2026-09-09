@@ -29,6 +29,14 @@ from pycopm.utils.files_writer import write_coarsened_model_files
 from pycopm.utils.generate_decks import create_deck
 from pycopm.utils.input_values import create_deck_config, load_toml_config
 from pycopm.utils.runs_executer import generate_postprocessing_plots, run_simulations
+from pycopm.utils.terminal import (
+    cli_correct_value,
+    cli_error_value,
+    cli_info_value,
+    pycopm_error,
+    pycopm_info,
+    pycopm_success,
+)
 
 
 def main(argv: list[str] | None = None) -> None:
@@ -145,7 +153,10 @@ def main(argv: list[str] | None = None) -> None:
         int(cmdargs.significant_digits),
     )
     cfg.flow_command = _check_flow(cmdargs.flow_command, cfg.flow_command, input_file)
-    print(f"\npycopm is generating the input files for {cfg.model_name}, please wait.")
+    pycopm_info(
+        f"generating the input files for {cli_info_value(cfg.model_name)}, "
+        "please wait..."
+    )
 
     for folder in ["preprocessing", "parameters", "jobs", "observations"]:
         (output_folder / folder).mkdir(parents=True, exist_ok=True)
@@ -169,9 +180,10 @@ def main(argv: list[str] | None = None) -> None:
     )
     destination_include = output_folder / "preprocessing" / include_folder
     shutil.copytree(source_include, destination_include, dirs_exist_ok=True)
-    print(f"\nThe generated files have been written to {cfg.output_directory}")
+    pycopm_success("input files required by ERT written to ", cfg.output_directory, [])
     if cfg.execution_mode in ["single-run", "ert"]:
-        print("\nRunning the simulations, please wait.")
+
+        pycopm_info("running ERT, please wait...")
         # Run OPM Flow or the selected ERT workflow
         run_simulations(cfg)
 
@@ -207,7 +219,7 @@ def _parse_arguments(argv: list[str] | None = None) -> argparse.Namespace:
         "--input_deck_path",
         type=str.strip,
         default="input.toml",
-        help="The base name of the toml configuration file or the name of the deck",
+        help="The base name of the TOML configuration file or the name of the deck",
     )
     parser.add_argument(
         "-o",
@@ -448,14 +460,14 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     input_file = cmdargs.input_deck_path
     # Select the workflow from the input filename extension
     if not input_file.endswith((".DATA", ".toml")):
-        print(
-            f"\nInvalid extension for input file '-i {input_file}', "
-            "valid extensions are .DATA or .toml\n"
+        pycopm_error(
+            f"invalid extension {cli_error_value(f'-i {input_file}')}, valid extensions "
+            f"are {cli_correct_value('.DATA')} or {cli_correct_value('.toml')}."
         )
-        raise SystemExit(1)
     if not cmdargs.output_directory:
-        print("\nInvalid value for '-o', the output folder cannot be empty.\n")
-        raise SystemExit(1)
+        pycopm_error(
+            f"invalid value {cli_error_value('-o')}, the output folder cannot be empty."
+        )
     # Only -i, -o, -f, and -precision apply to TOML configuration files
     if input_file.endswith(".toml"):
         data_options = {
@@ -491,12 +503,11 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
             if getattr(cmdargs, name) != default
         ]
         if invalid_options:
-            print(
-                "\nInvalid option for a toml configuration file; only '-i', '-o', "
+            pycopm_error(
+                "invalid option for a TOML configuration file; only '-i', '-o', "
                 "'-f', and '-precision' can be used. Invalid options: "
-                f"{', '.join(invalid_options)}.\n"
+                f"{', '.join(invalid_options)}."
             )
-            raise SystemExit(1)
         return
     # Verify the complete Flow command, including any launcher and arguments
     try:
@@ -504,8 +515,9 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     except ValueError:
         flow_arguments = []
     if not flow_arguments:
-        print(f"\nInvalid OPM flow command '-f {cmdargs.flow_command}'.\n")
-        raise SystemExit(1)
+        pycopm_error(
+            f"invalid OPM Flow command {cli_error_value(f'-f {cmdargs.flow_command}')}."
+        )
     try:
         flow_result = subprocess.run(
             [*flow_arguments, "-h"],
@@ -516,11 +528,10 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     except OSError:
         flow_result = None
     if flow_result is None or flow_result.returncode != 0:
-        print(
-            f"\nThe OPM flow executable '-f {cmdargs.flow_command}' "
-            "is not available or not working.\n"
+        pycopm_error(
+            f"the OPM Flow executable '-f {cmdargs.flow_command}' "
+            "is not available or not working."
         )
-        raise SystemExit(1)
     coarsening = cmdargs.coarsening
     x_coarsening = cmdargs.x_coarsening
     y_coarsening = cmdargs.y_coarsening
@@ -537,46 +548,39 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     has_refinement = bool(refinement or directional_refinement)
     # General and directional coarsening options are mutually exclusive
     if coarsening and directional_coarsening:
-        print(
-            "\nInvalid combination, either set '-c' or the '-x', '-y', and '-z' "
-            "flags.\n"
+        pycopm_error(
+            "invalid combination, either set '-c' or the '-x', '-y', and '-z' flags."
         )
-        raise SystemExit(1)
     # General and directional refinement options are mutually exclusive
     if refinement and directional_refinement:
-        print(
-            "\nInvalid combination, either set '-g' or the '-rx', '-ry', and "
-            "'-rz' flags.\n"
+        pycopm_error(
+            "invalid combination, either set '-g' or the '-rx', '-ry', and "
+            "'-rz' flags."
         )
-        raise SystemExit(1)
     # Coarsening and refinement are mutually exclusive
     if has_coarsening and has_refinement:
-        print("\nInvalid combination, either set coarsening or refinement options.\n")
-        raise SystemExit(1)
+        pycopm_error(
+            "invalid combination, either set coarsening or refinement options."
+        )
     # Vicinity extraction, transformation, and refinement are mutually exclusive
     if vicinity and transformation:
-        print("\nInvalid combination, either set '-v' or '-d'.\n")
-        raise SystemExit(1)
+        pycopm_error("invalid combination, either set '-v' or '-d'.")
     if vicinity and has_refinement:
-        print("\nInvalid combination, either set '-v' or refinement options.\n")
-        raise SystemExit(1)
+        pycopm_error("invalid combination, either set '-v' or refinement options.")
     if transformation and has_refinement:
-        print("\nInvalid combination, either set '-d' or refinement options.\n")
-        raise SystemExit(1)
+        pycopm_error("invalid combination, either set '-d' or refinement options.")
     # Validate uniform coarsening and refinement levels
     level_pattern = re.compile(r"\d+,\d+,\d+")
     if coarsening and not level_pattern.fullmatch(coarsening):
-        print(
-            f"\nInvalid value '-c {coarsening}', expected three non-negative "
-            "integers separated by commas, e.g., '-c 2,2,1'.\n"
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-c {coarsening}')}, expected three non-negative "
+            f"integers separated by commas, {cli_correct_value('e.g., -c 2,2,1')}."
         )
-        raise SystemExit(1)
     if refinement and not level_pattern.fullmatch(refinement):
-        print(
-            f"\nInvalid value '-g {refinement}', expected three non-negative "
-            "integers separated by commas, e.g., '-g 2,2,1'.\n"
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-g {refinement}')}, expected three non-negative "
+            f"integers separated by commas, {cli_correct_value('e.g., -g 2,2,1')}."
         )
-        raise SystemExit(1)
     # Validate directional coarsening arrays, indices, and ranges
     coarsening_array_pattern = re.compile(r"\d+(?:,\d+)*")
     coarsening_group_pattern = re.compile(
@@ -591,23 +595,21 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
             coarsening_array_pattern.fullmatch(value)
             or coarsening_group_pattern.fullmatch(value)
         ):
-            print(
-                f"\nInvalid value '{option} {value}', expected a non-negative "
+            pycopm_error(
+                f"invalid value {cli_error_value(f'{option} {value}')}, expected a non-negative "
                 "coarsening array or positive indices and ranges separated by "
-                "commas.\n"
+                "commas."
             )
-            raise SystemExit(1)
         if ":" in value:
             for entry in value.split(","):
                 if ":" not in entry:
                     continue
                 start, end = (int(index) for index in entry.split(":"))
                 if start > end:
-                    print(
-                        f"\nInvalid range '{entry}' in '{option} {value}', "
-                        "the end must not be smaller than the start.\n"
+                    pycopm_error(
+                        f"invalid range '{entry}' in '{option} {value}', "
+                        "the end must not be smaller than the start."
                     )
-                    raise SystemExit(1)
     # Validate directional refinement arrays
     refinement_array_pattern = re.compile(r"\d+(?:,\d+)*")
     for option, value in [
@@ -616,11 +618,10 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
         ("-rz", z_refinement),
     ]:
         if value and not refinement_array_pattern.fullmatch(value):
-            print(
-                f"\nInvalid value '{option} {value}', expected non-negative "
-                "integers separated by commas.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'{option} {value}')}, expected non-negative "
+                "integers separated by commas."
             )
-            raise SystemExit(1)
     # Validate aggregation methods
     aggregation_options = [
         ("-a", "active_cell_methods", ["min", "max", "mode"]),
@@ -636,58 +637,64 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
         value = getattr(cmdargs, name).strip()
         methods = value.split(",") if value else []
         if any(method not in valid_methods for method in methods):
-            print(
-                f"\nInvalid value '{option} {value}', valid values are "
-                f"{', '.join(valid_methods)}.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'{option} {value}')}, valid values are "
+                f"{cli_correct_value(', '.join(valid_methods))}."
             )
-            raise SystemExit(1)
         if len(methods) > 1 and not z_groups:
-            print(
-                f"\nInvalid value '{option} {value}', multiple aggregation "
-                "methods require range coarsening with '-z'.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'{option} {value}')}, multiple aggregation "
+                "methods require range coarsening with '-z'."
             )
-            raise SystemExit(1)
         if len(methods) > 1 and len(methods) != len(z_groups):
-            print(
-                f"\nInvalid value '{option} {value}', expected one aggregation "
-                "method for each index or range provided with '-z'.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'{option} {value}')}, expected one aggregation "
+                "method for each index or range provided with '-z'."
             )
-            raise SystemExit(1)
     # Options controlling property aggregation require coarsening
     if not has_coarsening:
         if cmdargs.active_cell_methods != "mode":
-            print("\nInvalid combination, '-a' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-a')} can only be used with coarsening."
+            )
         if cmdargs.discrete_aggregation_method != "mode":
-            print("\nInvalid combination, '-n' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-n')} can only be used with coarsening."
+            )
         if cmdargs.continuous_aggregation_method:
-            print("\nInvalid combination, '-s' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-s')} can only be used with coarsening."
+            )
         if cmdargs.transmissibility_coarsening_method != "0":
-            print("\nInvalid combination, '-t' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-t')} can only be used with coarsening."
+            )
         if cmdargs.jump_thresholds:
-            print("\nInvalid combination, '-j' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-j')} can only be used with coarsening."
+            )
         if cmdargs.dual_porosity_criterion:
-            print("\nInvalid combination, '-dual' can only be used with coarsening.\n")
-            raise SystemExit(1)
+            pycopm_error(
+                f"invalid combination, {cli_error_value('-dual')} can only be used with coarsening."
+            )
     # Fluid-in-place correction is not supported for extracted submodels
     if vicinity and cmdargs.correct_fluid_in_place == "1":
-        print("\nInvalid combination, '-q' cannot be used with '-v'.\n")
-        raise SystemExit(1)
+        pycopm_error(
+            f"invalid combination, {cli_error_value('-q')} cannot be used "
+            "with {cli_error_value('-v')}."
+        )
     # Validate pore-volume correction combinations
     pore_volume_correction = cmdargs.pore_volume_correction
     if pore_volume_correction == "1" and not (has_coarsening or vicinity):
-        print("\nInvalid combination, '-p 1' requires coarsening or '-v'.\n")
-        raise SystemExit(1)
-    if pore_volume_correction in ["2", "3", "4"] and not vicinity:
-        print(
-            f"\nInvalid combination, '-p {pore_volume_correction}' can only be "
-            "used with '-v'.\n"
+        pycopm_error(
+            f"invalid combination, {cli_error_value('-p 1')} requires coarsening or "
+            f"{cli_correct_value('-v')}."
         )
-        raise SystemExit(1)
+    if pore_volume_correction in ["2", "3", "4"] and not vicinity:
+        pycopm_error(
+            f"invalid combination, {cli_error_value(f'-p {pore_volume_correction}')} can only be "
+            "used with '-v'."
+        )
     # Validate the jump thresholds
     jump_thresholds = cmdargs.jump_thresholds
     if jump_thresholds:
@@ -696,22 +703,20 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
         except ValueError:
             jump_values = []
         if not jump_values or any(value <= 0 for value in jump_values):
-            print(
-                f"\nInvalid value '-j {jump_thresholds}', expected positive "
-                "numbers separated by commas.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'-j {jump_thresholds}')}, expected positive "
+                "numbers separated by commas."
             )
-            raise SystemExit(1)
     # Validate requested input-model indices
     requested_ijk = cmdargs.requested_ijk
     if requested_ijk and not re.fullmatch(
         r"[1-9]\d*\s*,\s*[1-9]\d*\s*,\s*[1-9]\d*",
         requested_ijk,
     ):
-        print(
-            f"\nInvalid value '-ijk {requested_ijk}', expected three positive "
-            "indices separated by commas, e.g., '-ijk 1,2,3'.\n"
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-ijk {requested_ijk}')}, expected three positive "
+            f"indices separated by commas, {cli_correct_value('e.g., -ijk 1,2,3')}."
         )
-        raise SystemExit(1)
     # Validate coordinate transformations
     number = r"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?"
     vector_transformation = re.fullmatch(
@@ -723,20 +728,18 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
         transformation,
     )
     if transformation and not (vector_transformation or rotation_transformation):
-        print(
-            f"\nInvalid value '-d {transformation}', expected "
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-d {transformation}')}, expected "
             "'translate [x,y,z]', 'scale [x,y,z]', or 'rotatexy', 'rotatexz', "
-            "or 'rotateyz' followed by an angle.\n"
+            "or 'rotateyz' followed by an angle."
         )
-        raise SystemExit(1)
     if vector_transformation and vector_transformation.group(1) == "scale":
         coordinates = re.findall(number, transformation)
         if any(float(value) == 0 for value in coordinates):
-            print(
-                f"\nInvalid value '-d {transformation}', scale values cannot be "
-                "zero.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'-d {transformation}')}, scale values cannot be "
+                "zero."
             )
-            raise SystemExit(1)
     # Validate vicinity extraction specifications
     region_vicinity = re.fullmatch(
         r"[A-Za-z][A-Za-z0-9_]*\s+[1-9]\d*(?:\s*,\s*[1-9]\d*)*",
@@ -758,33 +761,30 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     if vicinity and not (
         region_vicinity or polygon_vicinity or box_vicinity or diamond_vicinity
     ):
-        print(
-            f"\nInvalid value '-v {vicinity}', expected a region selection, an "
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-v {vicinity}')}, expected a region selection, an "
             "'xypolygon' specification, or a well followed by 'box', "
-            "'diamond', or 'diamondxy'.\n"
+            "'diamond', or 'diamondxy'."
         )
-        raise SystemExit(1)
     if polygon_vicinity:
         polygon_points = re.findall(polygon_point, vicinity)
         first_point = re.findall(number, polygon_points[0])
         last_point = re.findall(number, polygon_points[-1])
         if first_point != last_point:
-            print(
-                f"\nInvalid value '-v {vicinity}', the first and last "
-                "xypolygon points must be equal.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'-v {vicinity}')}, the first and last "
+                "xypolygon points must be equal."
             )
-            raise SystemExit(1)
     if box_vicinity:
         intervals = re.findall(
             r"\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]",
             vicinity,
         )
         if any(int(start) > int(end) for start, end in intervals):
-            print(
-                f"\nInvalid value '-v {vicinity}', the end of each box interval "
-                "must not be smaller than its start.\n"
+            pycopm_error(
+                f"invalid value {cli_error_value(f'-v {vicinity}')}, the end of each box interval "
+                "must not be smaller than its start."
             )
-            raise SystemExit(1)
     # Validate the dual-porosity criterion
     dual_porosity_criterion = cmdargs.dual_porosity_criterion
     dual_criterion_pattern = re.compile(
@@ -795,12 +795,11 @@ def _check_cmdargs(cmdargs: argparse.Namespace) -> None:
     if dual_porosity_criterion and not dual_criterion_pattern.fullmatch(
         dual_porosity_criterion
     ):
-        print(
-            f"\nInvalid value '-dual {dual_porosity_criterion}', expected a "
+        pycopm_error(
+            f"invalid value {cli_error_value(f'-dual {dual_porosity_criterion}')}, expected a "
             "static property criterion such as 'poro <= 0.1', optionally "
-            "followed by ', vertical TF = 0'.\n"
+            "followed by ', vertical TF = 0'."
         )
-        raise SystemExit(1)
 
 
 def _check_flow(flow_cmdargs: str, flow_toml: str, input_file: str) -> str:
@@ -828,11 +827,10 @@ def _check_flow(flow_cmdargs: str, flow_toml: str, input_file: str) -> str:
         next((value for value in shlex.split(flow_toml) if "flow" in value), False)
     )
     if not flowpth:
-        print(
-            f"\nflow is not included in the configuration file {input_file}.\n"
-            "See the pycopm documentation.\n"
+        pycopm_error(
+            f"flow is not included in the configuration file {cli_error_value(input_file)}. "
+            "see the pycopm documentation."
         )
-        raise SystemExit(1)
 
     toml_command = shlex.split(flowpth) + ["-h"]
     flag_command = shlex.split(flow_cmdargs) + ["-h"]
@@ -855,15 +853,14 @@ def _check_flow(flow_cmdargs: str, flow_toml: str, input_file: str) -> str:
     flag_ok = flow_exists(flag_command)
 
     if not (toml_ok or flag_ok):
-        print(
-            f"\nThe OPM flow executable '{flowpth}' is not found; "
-            "try to install it following the pycopm documentation.\nIf it was "
+        pycopm_error(
+            f"the OPM Flow executable '{flowpth}' is not found; "
+            "try to install it following the pycopm documentation. If it was "
             "built from source, then either add the folder location to your path, "
-            "or write the path\nto flow in the toml configuration file "
-            "(e.g., flow = '/home/pycopm/build/opm-simulators/bin/flow'),\n"
-            "or using the command flag -f or --flow.\n"
+            "or write the path to flow in the TOML configuration file "
+            "(e.g., flow = '/home/pycopm/build/opm-simulators/bin/flow'), "
+            "or using the command flag -f or --flow."
         )
-        raise SystemExit(1)
     if toml_ok:
         flow_command = flow_toml
     else:

@@ -9,4 +9,4 @@ if [ ! -f "$WHR" ]; then
 fi
 . tests/scripts/initialize_output_folders.sh $OUT
 pycopm -i $WHR -c 5,4,1 -a min -m all -o $OUT
-plopm -i "$OUT/STATOIL_FEASIBILITY_SIM_MODEL_WITH_DEPLETION_KROSS_INJ_SECTOR_20_PREP_PYCOPM_DRYRUN $OUT/STATOIL_FEASIBILITY_SIM_MODEL_WITH_DEPLETION_KROSS_INJ_SECTOR_20_PYCOPM" -cnum 7 -s ,,1 -v poro -subfigs 1,2 -save smeaheia -t 'Smeaheia  Coarsened Smeaheia' -delax 1 -xunits km -xformat .0f -yunits km -yformat .0f -d 10,7 -suptitle 0 -c cet_rainbow_bgyrm_35_85_c69 -cbsfax 0.1,0.95,0.8,0.02 -cformat .2f -o $OUT -save smeaheia
+plopm -i "$OUT/STATOIL_FEASIBILITY_SIM_MODEL_WITH_DEPLETION_KROSS_INJ_SECTOR_20_PREP_PYCOPM_DRYRUN $OUT/STATOIL_FEASIBILITY_SIM_MODEL_WITH_DEPLETION_KROSS_INJ_SECTOR_20_PYCOPM" -cbn 7 -s ,,1 -v poro -sg 1,2 -fn smeaheia -t 'Smeaheia  Coarsened Smeaheia' -rdl 1 -xu km -xf .0f -yu km -yf .0f -fs 10,7 -st 0 -c cet_rainbow_bgyrm_35_85_c69 -cbp 0.1,0.95,0.8,0.02 -cbf .2f -o $OUT -fn smeaheia

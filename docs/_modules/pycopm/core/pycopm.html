@@ -1,0 +1,1467 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pycopm.core.pycopm &#8212; pycopm documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d109aa7d" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=602b4562"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=eef4a3d2"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pycopm/core/pycopm';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.4" />
+    <meta name="docbuild:last-update" content="2026-09-09"/>
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="pycopm documentation - Home"/>
+    <img src="../../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="pycopm documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../related.html">
+    Related projects
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../contributing.html">
+    Contributing
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../related.html">
+    Related projects
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pycopm.core.pycopm</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pycopm.core.pycopm</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-FileCopyrightText: 2024-2026 NORCE Research AS</span>
+<span class="c1"># SPDX-License-Identifier: GPL-3.0</span>
+<span class="c1"># pylint: disable=R0912,R0914,R0915</span>
+
+<span class="sd">"""Command-line entry point and top-level workflow coordination for pycopm.</span>
+
+<span class="sd">pycopm supports two input workflows:</span>
+
+<span class="sd">* OPM ``.DATA`` decks can be coarsened, refined, transformed, or reduced to a</span>
+<span class="sd">  submodel.</span>
+<span class="sd">* TOML configurations generate coarsened Norne or Drogon cases and can</span>
+<span class="sd">  optionally run OPM Flow or ERT studies.</span>
+
+<span class="sd">This module parses and validates command-line arguments, selects the appropriate</span>
+<span class="sd">workflow, and coordinates its major processing steps. The numerical and</span>
+<span class="sd">file-generation details are implemented in the utility modules.</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shlex</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.coarsening</span><span class="w"> </span><span class="kn">import</span> <span class="n">coarsen_and_write_properties</span><span class="p">,</span> <span class="n">create_coarsening_map</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.files_writer</span><span class="w"> </span><span class="kn">import</span> <span class="n">write_coarsened_model_files</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.generate_decks</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_deck</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.input_values</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_deck_config</span><span class="p">,</span> <span class="n">load_toml_config</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.runs_executer</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_postprocessing_plots</span><span class="p">,</span> <span class="n">run_simulations</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.terminal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">cli_correct_value</span><span class="p">,</span>
+    <span class="n">cli_error_value</span><span class="p">,</span>
+    <span class="n">cli_info_value</span><span class="p">,</span>
+    <span class="n">pycopm_error</span><span class="p">,</span>
+    <span class="n">pycopm_info</span><span class="p">,</span>
+    <span class="n">pycopm_success</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../../api/pycopm.core.pycopm.html#pycopm.core.pycopm.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Run the deck-based or TOML-based pycopm workflow.</span>
+
+<span class="sd">    OPM ``.DATA`` decks can be coarsened, refined, transformed, or reduced to</span>
+<span class="sd">    a submodel. TOML configurations generate coarsened Norne or Drogon cases</span>
+<span class="sd">    and can optionally run OPM Flow or ERT studies.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    argv</span>
+<span class="sd">        Command-line arguments. If omitted, arguments are read from</span>
+<span class="sd">        ``sys.argv``.</span>
+
+<span class="sd">    Other Parameters</span>
+<span class="sd">    ----------------</span>
+<span class="sd">    -i, --input_deck_path</span>
+<span class="sd">        Input ``.DATA`` deck or TOML configuration file.</span>
+<span class="sd">    -o, --output_directory</span>
+<span class="sd">        Directory for generated decks, include files, and simulation results.</span>
+<span class="sd">    -f, --flow_command</span>
+<span class="sd">        Command or path used to run OPM Flow.</span>
+<span class="sd">    -m, --execution_mode</span>
+<span class="sd">        Deck-processing stages to run: ``prep``, ``deck``, ``dry``,</span>
+<span class="sd">        ``prep_deck``, ``deck_dry``, or ``all``.</span>
+<span class="sd">    -v, --vicinity_specification</span>
+<span class="sd">        Submodel selection based on region values, an xy polygon, or a</span>
+<span class="sd">        well-centred ``box``, ``diamond``, or ``diamondxy`` neighbourhood.</span>
+<span class="sd">    -c, --coarsening</span>
+<span class="sd">        Uniform coarsening factors in the x, y, and z directions.</span>
+<span class="sd">    -x, --x_coarsening</span>
+<span class="sd">        Cell-specific coarsening specification along the x axis.</span>
+<span class="sd">    -y, --y_coarsening</span>
+<span class="sd">        Cell-specific coarsening specification along the y axis.</span>
+<span class="sd">    -z, --z_coarsening</span>
+<span class="sd">        Cell-specific coarsening specification along the z axis.</span>
+<span class="sd">    -g, --refinement</span>
+<span class="sd">        Uniform numbers of additional cells along the x, y, and z axes.</span>
+<span class="sd">    -rx, --x_refinement</span>
+<span class="sd">        Number of additional cells for each original x interval.</span>
+<span class="sd">    -ry, --y_refinement</span>
+<span class="sd">        Number of additional cells for each original y interval.</span>
+<span class="sd">    -rz, --z_refinement</span>
+<span class="sd">        Number of additional cells for each original z interval.</span>
+<span class="sd">    -a, --active_cell_methods</span>
+<span class="sd">        Aggregation method for active-cell values: ``min``, ``max``, or</span>
+<span class="sd">        ``mode``.</span>
+<span class="sd">    -n, --discrete_aggregation_method</span>
+<span class="sd">        Aggregation method for discrete properties: ``min``, ``max``, or</span>
+<span class="sd">        ``mode``.</span>
+<span class="sd">    -s, --continuous_aggregation_method</span>
+<span class="sd">        Aggregation method for continuous properties: ``min``, ``max``,</span>
+<span class="sd">        ``mean``, or pore-volume-weighted mean (``pvmean``). If omitted,</span>
+<span class="sd">        property-specific physical aggregation is used.</span>
+<span class="sd">    -p, --pore_volume_correction</span>
+<span class="sd">        Pore-volume correction method. The available values are ``0`` through</span>
+<span class="sd">        ``4``; supported methods depend on the selected workflow.</span>
+<span class="sd">    -q, --correct_fluid_in_place</span>
+<span class="sd">        Set to ``1`` to adjust pore volume to match the initial oil and gas in</span>
+<span class="sd">        place of the input model.</span>
+<span class="sd">    -t, --transmissibility_coarsening_method</span>
+<span class="sd">        Transmissibility coarsening method: ``0``, ``1``, or ``2``.</span>
+<span class="sd">    -r, --completion_removal_level</span>
+<span class="sd">        Level of COMPDAT data removed after coarsening: ``0``, ``1``, or</span>
+<span class="sd">        ``2``.</span>
+<span class="sd">    -j, --jump_thresholds</span>
+<span class="sd">        Positive depth-jump thresholds used to prevent unwanted connections</span>
+<span class="sd">        between cells grouped during coarsening.</span>
+<span class="sd">    -w, --output_deck_name</span>
+<span class="sd">        Name of the generated OPM deck.</span>
+<span class="sd">    -l, --include_prefix</span>
+<span class="sd">        Prefix added to generated include filenames.</span>
+<span class="sd">    -e, --deck_encoding</span>
+<span class="sd">        Character encoding used to read the input deck: ``ISO-8859-1`` or</span>
+<span class="sd">        ``utf8``.</span>
+<span class="sd">    -ijk, --requested_ijk</span>
+<span class="sd">        One-based input-grid ``i,j,k`` indices to map to the modified grid.</span>
+<span class="sd">    -d, --grid_transformation</span>
+<span class="sd">        Coordinate transformation: ``translate [x,y,z]``, ``scale [x,y,z]``,</span>
+<span class="sd">        or ``rotatexy``, ``rotatexz``, or ``rotateyz`` followed by an angle</span>
+<span class="sd">        in degrees.</span>
+<span class="sd">    -explicit, --write_explicit_solution</span>
+<span class="sd">        Set to ``1`` to write initial solution properties explicitly instead</span>
+<span class="sd">        of retaining EQUIL initialization.</span>
+<span class="sd">    -dual, --dual_porosity_criterion</span>
+<span class="sd">        Static-property criterion used to separate matrix and fracture or</span>
+<span class="sd">        non-net cells during coarsening.</span>
+<span class="sd">    -precision, --significant_digits</span>
+<span class="sd">        Number of significant digits used when writing floating-point values.</span>
+<span class="sd">        Set to ``0`` to preserve machine precision.</span>
+<span class="sd">    """</span>
+    <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span>
+    <span class="n">cmdargs</span> <span class="o">=</span> <span class="n">_parse_arguments</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span>
+    <span class="n">_check_cmdargs</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+    <span class="n">output_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">output_directory</span><span class="p">)</span><span class="o">.</span><span class="n">expanduser</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">input_deck_path</span>
+    <span class="n">output_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Process a DATA deck by coarsening, refining, extracting, or transforming it</span>
+    <span class="k">if</span> <span class="n">input_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".DATA"</span><span class="p">):</span>
+        <span class="n">dck</span> <span class="o">=</span> <span class="n">create_deck_config</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">)</span>
+        <span class="n">create_deck</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># Process a TOML file by generating a coarsened Norne or Drogon project</span>
+
+    <span class="c1"># Load the TOML configuration and derive the reference-model settings</span>
+    <span class="n">resource_directory</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="p">)</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">load_toml_config</span><span class="p">(</span>
+        <span class="n">input_file</span><span class="p">,</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_folder</span><span class="p">),</span>
+        <span class="n">resource_directory</span><span class="p">,</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">significant_digits</span><span class="p">),</span>
+    <span class="p">)</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">flow_command</span> <span class="o">=</span> <span class="n">_check_flow</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="n">input_file</span><span class="p">)</span>
+    <span class="n">pycopm_info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"generating the input files for </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">model_name</span><span class="p">)</span><span class="si">}</span><span class="s2">, "</span>
+        <span class="s2">"please wait..."</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">folder</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"preprocessing"</span><span class="p">,</span> <span class="s2">"parameters"</span><span class="p">,</span> <span class="s2">"jobs"</span><span class="p">,</span> <span class="s2">"observations"</span><span class="p">]:</span>
+        <span class="p">(</span><span class="n">output_folder</span> <span class="o">/</span> <span class="n">folder</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Build the coarse grid and map fine cells to coarse cells</span>
+    <span class="n">coarsening_map</span> <span class="o">=</span> <span class="n">create_coarsening_map</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+    <span class="c1"># Aggregate and write the properties for the coarse grid</span>
+    <span class="n">number_tables</span> <span class="o">=</span> <span class="n">coarsen_and_write_properties</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">coarsening_map</span><span class="p">)</span>
+
+    <span class="c1"># Render the Flow, ERT, observation, parameter, and job files</span>
+    <span class="n">write_coarsened_model_files</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">number_tables</span><span class="p">)</span>
+
+    <span class="c1"># Copy the model-specific INCLUDE files required by the generated deck</span>
+    <span class="n">include_folder</span> <span class="o">=</span> <span class="s2">"include"</span> <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_name</span> <span class="o">==</span> <span class="s2">"drogon"</span> <span class="k">else</span> <span class="s2">"INCLUDE"</span>
+    <span class="n">source_include</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Path</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">resource_directory</span><span class="p">)</span>
+        <span class="o">/</span> <span class="s2">"reference_simulation"</span>
+        <span class="o">/</span> <span class="n">cfg</span><span class="o">.</span><span class="n">model_name</span>
+        <span class="o">/</span> <span class="n">include_folder</span>
+    <span class="p">)</span>
+    <span class="n">destination_include</span> <span class="o">=</span> <span class="n">output_folder</span> <span class="o">/</span> <span class="s2">"preprocessing"</span> <span class="o">/</span> <span class="n">include_folder</span>
+    <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">source_include</span><span class="p">,</span> <span class="n">destination_include</span><span class="p">,</span> <span class="n">dirs_exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">pycopm_success</span><span class="p">(</span><span class="s2">"input files required by ERT written to "</span><span class="p">,</span> <span class="n">cfg</span><span class="o">.</span><span class="n">output_directory</span><span class="p">,</span> <span class="p">[])</span>
+    <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">execution_mode</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"single-run"</span><span class="p">,</span> <span class="s2">"ert"</span><span class="p">]:</span>
+
+        <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"running ERT, please wait..."</span><span class="p">)</span>
+        <span class="c1"># Run OPM Flow or the selected ERT workflow</span>
+        <span class="n">run_simulations</span><span class="p">(</span><span class="n">cfg</span><span class="p">)</span>
+
+        <span class="c1"># Generate the postprocessing plots after the simulations</span>
+        <span class="n">generate_postprocessing_plots</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">monotonic</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span><span class="p">,</span> <span class="n">number_tables</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_parse_arguments">
+<a class="viewcode-back" href="../../../api/pycopm.core.pycopm.html#pycopm.core.pycopm._parse_arguments">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_parse_arguments</span><span class="p">(</span><span class="n">argv</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Parse supported command-line arguments.</span>
+
+<span class="sd">    Unknown arguments are left unprocessed for compatibility with external</span>
+<span class="sd">    launchers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    argv</span>
+<span class="sd">        Command-line arguments. If omitted, arguments are read from ``sys.argv``.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict[str, str]</span>
+<span class="sd">        Arguments keyed by their destination names."""</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentDefaultsHelpFormatter</span><span class="p">,</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">"Tailor a geological model and optionally run simulations "</span>
+        <span class="s2">"using OPM Flow. All options can be used with DATA decks, while only "</span>
+        <span class="s2">"-i, -o, -f, and -precision apply to TOML configuration files. See the "</span>
+        <span class="s2">"online documentation for examples and detailed option descriptions: "</span>
+        <span class="s2">"https://cssr-tools.github.io/pycopm/introduction.html#overview"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-i"</span><span class="p">,</span>
+        <span class="s2">"--input_deck_path"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"input.toml"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"The base name of the TOML configuration file or the name of the deck"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-o"</span><span class="p">,</span>
+        <span class="s2">"--output_directory"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"."</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"The base name of the output folder"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-f"</span><span class="p">,</span>
+        <span class="s2">"--flow_command"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"flow"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Set path to flow executable"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-m"</span><span class="p">,</span>
+        <span class="s2">"--execution_mode"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"prep"</span><span class="p">,</span> <span class="s2">"deck"</span><span class="p">,</span> <span class="s2">"dry"</span><span class="p">,</span> <span class="s2">"prep_deck"</span><span class="p">,</span> <span class="s2">"deck_dry"</span><span class="p">,</span> <span class="s2">"all"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"prep_deck"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Parts of pycopm to run"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-v"</span><span class="p">,</span>
+        <span class="s2">"--vicinity_specification"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"The location to extract the sub model which can be assigned by "</span>
+        <span class="s2">"region values (e.g., 'fipnum 2,4'), by a polygon given the xy locations "</span>
+        <span class="s2">"in meters (e.g., 'xypolygon [0,0] [30,0] [30,30] [0,0]'), or by the name "</span>
+        <span class="s2">"of the well and three different options for the neighbourhood: box, "</span>
+        <span class="s2">"diamond, and diamondxy (e.g., 'welln box [-1,1] [-2,2] [0,3]')"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-c"</span><span class="p">,</span>
+        <span class="s2">"--coarsening"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Level of coarsening in the x, y, and z dir"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-x"</span><span class="p">,</span>
+        <span class="s2">"--x_coarsening"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of x coarsening"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-y"</span><span class="p">,</span>
+        <span class="s2">"--y_coarsening"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of y coarsening"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-z"</span><span class="p">,</span>
+        <span class="s2">"--z_coarsening"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of z coarsening"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-g"</span><span class="p">,</span>
+        <span class="s2">"--refinement"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Level of grid refinement in the x, y, and z dir"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-rx"</span><span class="p">,</span>
+        <span class="s2">"--x_refinement"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of x refinement"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-ry"</span><span class="p">,</span>
+        <span class="s2">"--y_refinement"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of y refinement"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-rz"</span><span class="p">,</span>
+        <span class="s2">"--z_refinement"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Array of z refinement"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-a"</span><span class="p">,</span>
+        <span class="s2">"--active_cell_methods"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"mode"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select aggregation method (min, max, or mode) for the active "</span>
+        <span class="s2">"cells (for coarsening in the z direction separate by commas to "</span>
+        <span class="s2">"specify an approach per layer)"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-n"</span><span class="p">,</span>
+        <span class="s2">"--discrete_aggregation_method"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"mode"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select aggregation method for the discrete variables (min, max, mode)"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-s"</span><span class="p">,</span>
+        <span class="s2">"--continuous_aggregation_method"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select aggregation method for the continuous variables (min, max, mean, "</span>
+        <span class="s2">"pvmean; by default these are property/direction dependent, e.g., harmonic "</span>
+        <span class="s2">"average for permeability"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-p"</span><span class="p">,</span>
+        <span class="s2">"--pore_volume_correction"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"0"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select pore volume correction approach"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-q"</span><span class="p">,</span>
+        <span class="s2">"--correct_fluid_in_place"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"0"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Adjust the pv to the initial FGIP and FOIP"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-t"</span><span class="p">,</span>
+        <span class="s2">"--transmissibility_coarsening_method"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"0"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select coarsening method for transmissibilities"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-r"</span><span class="p">,</span>
+        <span class="s2">"--completion_removal_level"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"2"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select COMPDAT entries to remove after coarsening"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-j"</span><span class="p">,</span>
+        <span class="s2">"--jump_thresholds"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Parameter to avoid creation of neighbouring connections after coarsening"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-w"</span><span class="p">,</span>
+        <span class="s2">"--output_deck_name"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Name of the generated deck"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-l"</span><span class="p">,</span>
+        <span class="s2">"--include_prefix"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"PYCOPM_"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Added text before each generated .INC"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-e"</span><span class="p">,</span>
+        <span class="s2">"--deck_encoding"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"ISO-8859-1"</span><span class="p">,</span> <span class="s2">"utf8"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"ISO-8859-1"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Encoding to read the deck"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-ijk"</span><span class="p">,</span>
+        <span class="s2">"--requested_ijk"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Returns the modified indices given as entry the 'i,j,k' indices"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-d"</span><span class="p">,</span>
+        <span class="s2">"--grid_transformation"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Select transformation method (e.g, 'translate [10,-5,4]', "</span>
+        <span class="s2">"'scale [1,2,3]', or 'rotatexy 45')"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-explicit"</span><span class="p">,</span>
+        <span class="s2">"--write_explicit_solution"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">"0"</span><span class="p">,</span> <span class="s2">"1"</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"0"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Set to 1 to explicitly write the cell values in the SOLUTION section"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-dual"</span><span class="p">,</span>
+        <span class="s2">"--dual_porosity_criterion"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Set the criterium to differentiate net and non-net in coarsening using a static "</span>
+        <span class="s2">"variable. To remove the vertical transfer function (FT) between net and not-net cells, "</span>
+        <span class="s2">"add to the command ', vertical TF = 0', e.g., 'poro &lt;= 0.1' (which includes vertical TF) "</span>
+        <span class="s2">"or 'poro &lt;= 0.1, vertical TF = 0'"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">"-precision"</span><span class="p">,</span>
+        <span class="s2">"--significant_digits"</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">"7"</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">"Set the number of significant digits used when writing floating-point values, or 0 "</span>
+        <span class="s2">"to use machine precision"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">(</span><span class="n">argv</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_check_cmdargs">
+<a class="viewcode-back" href="../../../api/pycopm.core.pycopm.html#pycopm.core.pycopm._check_cmdargs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_cmdargs</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Validate command-line arguments and incompatible operations.</span>
+
+<span class="sd">    The checks cover input type, Flow availability, coarsening and refinement</span>
+<span class="sd">    syntax, aggregation methods, vicinity selections, transformations, and</span>
+<span class="sd">    options restricted to particular workflows.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cmdargs</span>
+<span class="sd">        Parsed arguments returned by :func:`_parse_arguments`.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        If an argument is invalid or an incompatible combination is requested."""</span>
+    <span class="n">input_file</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">input_deck_path</span>
+    <span class="c1"># Select the workflow from the input filename extension</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">input_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">((</span><span class="s2">".DATA"</span><span class="p">,</span> <span class="s2">".toml"</span><span class="p">)):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid extension </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-i </span><span class="si">{</span><span class="n">input_file</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, valid extensions "</span>
+            <span class="sa">f</span><span class="s2">"are </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'.DATA'</span><span class="p">)</span><span class="si">}</span><span class="s2"> or </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'.toml'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">output_directory</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-o'</span><span class="p">)</span><span class="si">}</span><span class="s2">, the output folder cannot be empty."</span>
+        <span class="p">)</span>
+    <span class="c1"># Only -i, -o, -f, and -precision apply to TOML configuration files</span>
+    <span class="k">if</span> <span class="n">input_file</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">".toml"</span><span class="p">):</span>
+        <span class="n">data_options</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">"-m"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"execution_mode"</span><span class="p">,</span> <span class="s2">"prep_deck"</span><span class="p">),</span>
+            <span class="s2">"-v"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"vicinity_specification"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-c"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"coarsening"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-x"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"x_coarsening"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-y"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"y_coarsening"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-z"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"z_coarsening"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-g"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"refinement"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-rx"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"x_refinement"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-ry"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"y_refinement"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-rz"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"z_refinement"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-a"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"active_cell_methods"</span><span class="p">,</span> <span class="s2">"mode"</span><span class="p">),</span>
+            <span class="s2">"-n"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"discrete_aggregation_method"</span><span class="p">,</span> <span class="s2">"mode"</span><span class="p">),</span>
+            <span class="s2">"-s"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"continuous_aggregation_method"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-p"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"pore_volume_correction"</span><span class="p">,</span> <span class="s2">"0"</span><span class="p">),</span>
+            <span class="s2">"-q"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"correct_fluid_in_place"</span><span class="p">,</span> <span class="s2">"0"</span><span class="p">),</span>
+            <span class="s2">"-t"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"transmissibility_coarsening_method"</span><span class="p">,</span> <span class="s2">"0"</span><span class="p">),</span>
+            <span class="s2">"-r"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"completion_removal_level"</span><span class="p">,</span> <span class="s2">"2"</span><span class="p">),</span>
+            <span class="s2">"-j"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"jump_thresholds"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-w"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"output_deck_name"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-l"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"include_prefix"</span><span class="p">,</span> <span class="s2">"PYCOPM_"</span><span class="p">),</span>
+            <span class="s2">"-e"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"deck_encoding"</span><span class="p">,</span> <span class="s2">"ISO-8859-1"</span><span class="p">),</span>
+            <span class="s2">"-ijk"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"requested_ijk"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-d"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"grid_transformation"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+            <span class="s2">"-explicit"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"write_explicit_solution"</span><span class="p">,</span> <span class="s2">"0"</span><span class="p">),</span>
+            <span class="s2">"-dual"</span><span class="p">:</span> <span class="p">(</span><span class="s2">"dual_porosity_criterion"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span>
+        <span class="p">}</span>
+        <span class="n">invalid_options</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">option</span>
+            <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span> <span class="ow">in</span> <span class="n">data_options</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span> <span class="o">!=</span> <span class="n">default</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">invalid_options</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="s2">"invalid option for a TOML configuration file; only '-i', '-o', "</span>
+                <span class="s2">"'-f', and '-precision' can be used. Invalid options: "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">invalid_options</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="k">return</span>
+    <span class="c1"># Verify the complete Flow command, including any launcher and arguments</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">flow_arguments</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">flow_command</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">flow_arguments</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">flow_arguments</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid OPM Flow command </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-f </span><span class="si">{</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">flow_command</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">flow_result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="o">*</span><span class="n">flow_arguments</span><span class="p">,</span> <span class="s2">"-h"</span><span class="p">],</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+            <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+        <span class="n">flow_result</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">flow_result</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">flow_result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"the OPM Flow executable '-f </span><span class="si">{</span><span class="n">cmdargs</span><span class="o">.</span><span class="n">flow_command</span><span class="si">}</span><span class="s2">' "</span>
+            <span class="s2">"is not available or not working."</span>
+        <span class="p">)</span>
+    <span class="n">coarsening</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">coarsening</span>
+    <span class="n">x_coarsening</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">x_coarsening</span>
+    <span class="n">y_coarsening</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">y_coarsening</span>
+    <span class="n">z_coarsening</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">z_coarsening</span>
+    <span class="n">refinement</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">refinement</span>
+    <span class="n">x_refinement</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">x_refinement</span>
+    <span class="n">y_refinement</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">y_refinement</span>
+    <span class="n">z_refinement</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">z_refinement</span>
+    <span class="n">vicinity</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">vicinity_specification</span>
+    <span class="n">transformation</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">grid_transformation</span>
+    <span class="n">directional_coarsening</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">x_coarsening</span><span class="p">,</span> <span class="n">y_coarsening</span><span class="p">,</span> <span class="n">z_coarsening</span><span class="p">])</span>
+    <span class="n">directional_refinement</span> <span class="o">=</span> <span class="nb">any</span><span class="p">([</span><span class="n">x_refinement</span><span class="p">,</span> <span class="n">y_refinement</span><span class="p">,</span> <span class="n">z_refinement</span><span class="p">])</span>
+    <span class="n">has_coarsening</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">coarsening</span> <span class="ow">or</span> <span class="n">directional_coarsening</span><span class="p">)</span>
+    <span class="n">has_refinement</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">refinement</span> <span class="ow">or</span> <span class="n">directional_refinement</span><span class="p">)</span>
+    <span class="c1"># General and directional coarsening options are mutually exclusive</span>
+    <span class="k">if</span> <span class="n">coarsening</span> <span class="ow">and</span> <span class="n">directional_coarsening</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="s2">"invalid combination, either set '-c' or the '-x', '-y', and '-z' flags."</span>
+        <span class="p">)</span>
+    <span class="c1"># General and directional refinement options are mutually exclusive</span>
+    <span class="k">if</span> <span class="n">refinement</span> <span class="ow">and</span> <span class="n">directional_refinement</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="s2">"invalid combination, either set '-g' or the '-rx', '-ry', and "</span>
+            <span class="s2">"'-rz' flags."</span>
+        <span class="p">)</span>
+    <span class="c1"># Coarsening and refinement are mutually exclusive</span>
+    <span class="k">if</span> <span class="n">has_coarsening</span> <span class="ow">and</span> <span class="n">has_refinement</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="s2">"invalid combination, either set coarsening or refinement options."</span>
+        <span class="p">)</span>
+    <span class="c1"># Vicinity extraction, transformation, and refinement are mutually exclusive</span>
+    <span class="k">if</span> <span class="n">vicinity</span> <span class="ow">and</span> <span class="n">transformation</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span><span class="s2">"invalid combination, either set '-v' or '-d'."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">vicinity</span> <span class="ow">and</span> <span class="n">has_refinement</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span><span class="s2">"invalid combination, either set '-v' or refinement options."</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">transformation</span> <span class="ow">and</span> <span class="n">has_refinement</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span><span class="s2">"invalid combination, either set '-d' or refinement options."</span><span class="p">)</span>
+    <span class="c1"># Validate uniform coarsening and refinement levels</span>
+    <span class="n">level_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+,\d+,\d+"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">coarsening</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">level_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">coarsening</span><span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-c </span><span class="si">{</span><span class="n">coarsening</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected three non-negative "</span>
+            <span class="sa">f</span><span class="s2">"integers separated by commas, </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'e.g., -c 2,2,1'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">refinement</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">level_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">refinement</span><span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-g </span><span class="si">{</span><span class="n">refinement</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected three non-negative "</span>
+            <span class="sa">f</span><span class="s2">"integers separated by commas, </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'e.g., -g 2,2,1'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="c1"># Validate directional coarsening arrays, indices, and ranges</span>
+    <span class="n">coarsening_array_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+(?:,\d+)*"</span><span class="p">)</span>
+    <span class="n">coarsening_group_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"[1-9]\d*(?::[1-9]\d*)?(?:,[1-9]\d*(?::[1-9]\d*)?)*"</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">"-x"</span><span class="p">,</span> <span class="n">x_coarsening</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"-y"</span><span class="p">,</span> <span class="n">y_coarsening</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"-z"</span><span class="p">,</span> <span class="n">z_coarsening</span><span class="p">),</span>
+    <span class="p">]:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+            <span class="n">coarsening_array_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="n">coarsening_group_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected a non-negative "</span>
+                <span class="s2">"coarsening array or positive indices and ranges separated by "</span>
+                <span class="s2">"commas."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">":"</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">entry</span> <span class="ow">in</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">":"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">entry</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">entry</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="n">end</span><span class="p">:</span>
+                    <span class="n">pycopm_error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"invalid range '</span><span class="si">{</span><span class="n">entry</span><span class="si">}</span><span class="s2">' in '</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">', "</span>
+                        <span class="s2">"the end must not be smaller than the start."</span>
+                    <span class="p">)</span>
+    <span class="c1"># Validate directional refinement arrays</span>
+    <span class="n">refinement_array_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">"\d+(?:,\d+)*"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">"-rx"</span><span class="p">,</span> <span class="n">x_refinement</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"-ry"</span><span class="p">,</span> <span class="n">y_refinement</span><span class="p">),</span>
+        <span class="p">(</span><span class="s2">"-rz"</span><span class="p">,</span> <span class="n">z_refinement</span><span class="p">),</span>
+    <span class="p">]:</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">refinement_array_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected non-negative "</span>
+                <span class="s2">"integers separated by commas."</span>
+            <span class="p">)</span>
+    <span class="c1"># Validate aggregation methods</span>
+    <span class="n">aggregation_options</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s2">"-a"</span><span class="p">,</span> <span class="s2">"active_cell_methods"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">,</span> <span class="s2">"mode"</span><span class="p">]),</span>
+        <span class="p">(</span><span class="s2">"-n"</span><span class="p">,</span> <span class="s2">"discrete_aggregation_method"</span><span class="p">,</span> <span class="p">[</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">,</span> <span class="s2">"mode"</span><span class="p">]),</span>
+        <span class="p">(</span>
+            <span class="s2">"-s"</span><span class="p">,</span>
+            <span class="s2">"continuous_aggregation_method"</span><span class="p">,</span>
+            <span class="p">[</span><span class="s2">"min"</span><span class="p">,</span> <span class="s2">"max"</span><span class="p">,</span> <span class="s2">"mean"</span><span class="p">,</span> <span class="s2">"pvmean"</span><span class="p">],</span>
+        <span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">z_groups</span> <span class="o">=</span> <span class="n">z_coarsening</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span> <span class="k">if</span> <span class="s2">":"</span> <span class="ow">in</span> <span class="n">z_coarsening</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">option</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">valid_methods</span> <span class="ow">in</span> <span class="n">aggregation_options</span><span class="p">:</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cmdargs</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">methods</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)</span> <span class="k">if</span> <span class="n">value</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_methods</span> <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, valid values are "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">valid_methods</span><span class="p">))</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">z_groups</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, multiple aggregation "</span>
+                <span class="s2">"methods require range coarsening with '-z'."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">methods</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">z_groups</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">option</span><span class="si">}</span><span class="s1"> </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected one aggregation "</span>
+                <span class="s2">"method for each index or range provided with '-z'."</span>
+            <span class="p">)</span>
+    <span class="c1"># Options controlling property aggregation require coarsening</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">has_coarsening</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">active_cell_methods</span> <span class="o">!=</span> <span class="s2">"mode"</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-a'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">discrete_aggregation_method</span> <span class="o">!=</span> <span class="s2">"mode"</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-n'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">continuous_aggregation_method</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-s'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">transmissibility_coarsening_method</span> <span class="o">!=</span> <span class="s2">"0"</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-t'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">jump_thresholds</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-j'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">dual_porosity_criterion</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-dual'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be used with coarsening."</span>
+            <span class="p">)</span>
+    <span class="c1"># Fluid-in-place correction is not supported for extracted submodels</span>
+    <span class="k">if</span> <span class="n">vicinity</span> <span class="ow">and</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">correct_fluid_in_place</span> <span class="o">==</span> <span class="s2">"1"</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-q'</span><span class="p">)</span><span class="si">}</span><span class="s2"> cannot be used "</span>
+            <span class="s2">"with {cli_error_value('-v')}."</span>
+        <span class="p">)</span>
+    <span class="c1"># Validate pore-volume correction combinations</span>
+    <span class="n">pore_volume_correction</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">pore_volume_correction</span>
+    <span class="k">if</span> <span class="n">pore_volume_correction</span> <span class="o">==</span> <span class="s2">"1"</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">has_coarsening</span> <span class="ow">or</span> <span class="n">vicinity</span><span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-p 1'</span><span class="p">)</span><span class="si">}</span><span class="s2"> requires coarsening or "</span>
+            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'-v'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">pore_volume_correction</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">"2"</span><span class="p">,</span> <span class="s2">"3"</span><span class="p">,</span> <span class="s2">"4"</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">vicinity</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid combination, </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-p </span><span class="si">{</span><span class="n">pore_volume_correction</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2"> can only be "</span>
+            <span class="s2">"used with '-v'."</span>
+        <span class="p">)</span>
+    <span class="c1"># Validate the jump thresholds</span>
+    <span class="n">jump_thresholds</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">jump_thresholds</span>
+    <span class="k">if</span> <span class="n">jump_thresholds</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">jump_values</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">jump_thresholds</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)]</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="n">jump_values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">jump_values</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">jump_values</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-j </span><span class="si">{</span><span class="n">jump_thresholds</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected positive "</span>
+                <span class="s2">"numbers separated by commas."</span>
+            <span class="p">)</span>
+    <span class="c1"># Validate requested input-model indices</span>
+    <span class="n">requested_ijk</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">requested_ijk</span>
+    <span class="k">if</span> <span class="n">requested_ijk</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"[1-9]\d*\s*,\s*[1-9]\d*\s*,\s*[1-9]\d*"</span><span class="p">,</span>
+        <span class="n">requested_ijk</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-ijk </span><span class="si">{</span><span class="n">requested_ijk</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected three positive "</span>
+            <span class="sa">f</span><span class="s2">"indices separated by commas, </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'e.g., -ijk 1,2,3'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+        <span class="p">)</span>
+    <span class="c1"># Validate coordinate transformations</span>
+    <span class="n">number</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">"[-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?"</span>
+    <span class="n">vector_transformation</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">rf</span><span class="s2">"(translate|scale)\s+\[\s*</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">\s*,\s*</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">\s*,\s*"</span> <span class="sa">rf</span><span class="s2">"</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">\s*\]"</span><span class="p">,</span>
+        <span class="n">transformation</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">rotation_transformation</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">rf</span><span class="s2">"(rotatexy|rotatexz|rotateyz)\s+</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">transformation</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">transformation</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">vector_transformation</span> <span class="ow">or</span> <span class="n">rotation_transformation</span><span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-d </span><span class="si">{</span><span class="n">transformation</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected "</span>
+            <span class="s2">"'translate [x,y,z]', 'scale [x,y,z]', or 'rotatexy', 'rotatexz', "</span>
+            <span class="s2">"or 'rotateyz' followed by an angle."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">vector_transformation</span> <span class="ow">and</span> <span class="n">vector_transformation</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"scale"</span><span class="p">:</span>
+        <span class="n">coordinates</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">transformation</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-d </span><span class="si">{</span><span class="n">transformation</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, scale values cannot be "</span>
+                <span class="s2">"zero."</span>
+            <span class="p">)</span>
+    <span class="c1"># Validate vicinity extraction specifications</span>
+    <span class="n">region_vicinity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"[A-Za-z][A-Za-z0-9_]*\s+[1-9]\d*(?:\s*,\s*[1-9]\d*)*"</span><span class="p">,</span>
+        <span class="n">vicinity</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">polygon_point</span> <span class="o">=</span> <span class="sa">rf</span><span class="s2">"\[\s*</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">\s*,\s*</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">\s*\]"</span>
+    <span class="n">polygon_vicinity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">rf</span><span class="s2">"xypolygon(?:\s+</span><span class="si">{</span><span class="n">polygon_point</span><span class="si">}</span><span class="s2">)</span><span class="se">{{</span><span class="s2">4,</span><span class="se">}}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">vicinity</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">box_vicinity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"\S+\s+box(?:\s+\[\s*-?\d+\s*,\s*-?\d+\s*\])</span><span class="si">{3}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">vicinity</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">diamond_vicinity</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="sa">r</span><span class="s2">"\S+\s+(?:diamond|diamondxy)\s+\d+"</span><span class="p">,</span>
+        <span class="n">vicinity</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">vicinity</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span>
+        <span class="n">region_vicinity</span> <span class="ow">or</span> <span class="n">polygon_vicinity</span> <span class="ow">or</span> <span class="n">box_vicinity</span> <span class="ow">or</span> <span class="n">diamond_vicinity</span>
+    <span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-v </span><span class="si">{</span><span class="n">vicinity</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected a region selection, an "</span>
+            <span class="s2">"'xypolygon' specification, or a well followed by 'box', "</span>
+            <span class="s2">"'diamond', or 'diamondxy'."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">polygon_vicinity</span><span class="p">:</span>
+        <span class="n">polygon_points</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">polygon_point</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">)</span>
+        <span class="n">first_point</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">polygon_points</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">last_point</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">number</span><span class="p">,</span> <span class="n">polygon_points</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">first_point</span> <span class="o">!=</span> <span class="n">last_point</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-v </span><span class="si">{</span><span class="n">vicinity</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, the first and last "</span>
+                <span class="s2">"xypolygon points must be equal."</span>
+            <span class="p">)</span>
+    <span class="k">if</span> <span class="n">box_vicinity</span><span class="p">:</span>
+        <span class="n">intervals</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span>
+            <span class="sa">r</span><span class="s2">"\[\s*(-?\d+)\s*,\s*(-?\d+)\s*\]"</span><span class="p">,</span>
+            <span class="n">vicinity</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">start</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">int</span><span class="p">(</span><span class="n">end</span><span class="p">)</span> <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">intervals</span><span class="p">):</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-v </span><span class="si">{</span><span class="n">vicinity</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, the end of each box interval "</span>
+                <span class="s2">"must not be smaller than its start."</span>
+            <span class="p">)</span>
+    <span class="c1"># Validate the dual-porosity criterion</span>
+    <span class="n">dual_porosity_criterion</span> <span class="o">=</span> <span class="n">cmdargs</span><span class="o">.</span><span class="n">dual_porosity_criterion</span>
+    <span class="n">dual_criterion_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+        <span class="sa">rf</span><span class="s2">"[A-Za-z][A-Za-z0-9_]*\s*(?:&lt;=|&gt;=|==|!=|&lt;|&gt;)\s*</span><span class="si">{</span><span class="n">number</span><span class="si">}</span><span class="s2">"</span>
+        <span class="sa">r</span><span class="s2">"(?:\s*,\s*vertical\s+TF\s*=\s*0)?"</span><span class="p">,</span>
+        <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">dual_porosity_criterion</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">dual_criterion_pattern</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span>
+        <span class="n">dual_porosity_criterion</span>
+    <span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"invalid value </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'-dual </span><span class="si">{</span><span class="n">dual_porosity_criterion</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">, expected a "</span>
+            <span class="s2">"static property criterion such as 'poro &lt;= 0.1', optionally "</span>
+            <span class="s2">"followed by ', vertical TF = 0'."</span>
+        <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_check_flow">
+<a class="viewcode-back" href="../../../api/pycopm.core.pycopm.html#pycopm.core.pycopm._check_flow">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_check_flow</span><span class="p">(</span><span class="n">flow_cmdargs</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">flow_toml</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_file</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Select an available OPM Flow command for a TOML workflow.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    flow_cmdargs</span>
+<span class="sd">        Flow command supplied through the command line.</span>
+<span class="sd">    flow_toml</span>
+<span class="sd">        Flow command read from the TOML configuration.</span>
+<span class="sd">    input_file</span>
+<span class="sd">        TOML filename used in validation messages.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    str</span>
+<span class="sd">        The selected Flow command.</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        If neither command identifies a working Flow executable."""</span>
+    <span class="n">flowpth</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+        <span class="nb">next</span><span class="p">((</span><span class="n">value</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">flow_toml</span><span class="p">)</span> <span class="k">if</span> <span class="s2">"flow"</span> <span class="ow">in</span> <span class="n">value</span><span class="p">),</span> <span class="kc">False</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">flowpth</span><span class="p">:</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"flow is not included in the configuration file </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="n">input_file</span><span class="p">)</span><span class="si">}</span><span class="s2">. "</span>
+            <span class="s2">"see the pycopm documentation."</span>
+        <span class="p">)</span>
+
+    <span class="n">toml_command</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">flowpth</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"-h"</span><span class="p">]</span>
+    <span class="n">flag_command</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">flow_cmdargs</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"-h"</span><span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">flow_exists</span><span class="p">(</span><span class="n">command</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span>
+                <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                    <span class="n">command</span><span class="p">,</span>
+                    <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">,</span>
+                    <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+                    <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">returncode</span>
+                <span class="o">==</span> <span class="mi">0</span>
+            <span class="p">)</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+    <span class="n">toml_ok</span> <span class="o">=</span> <span class="n">flow_exists</span><span class="p">(</span><span class="n">toml_command</span><span class="p">)</span>
+    <span class="n">flag_ok</span> <span class="o">=</span> <span class="n">flow_exists</span><span class="p">(</span><span class="n">flag_command</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">toml_ok</span> <span class="ow">or</span> <span class="n">flag_ok</span><span class="p">):</span>
+        <span class="n">pycopm_error</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"the OPM Flow executable '</span><span class="si">{</span><span class="n">flowpth</span><span class="si">}</span><span class="s2">' is not found; "</span>
+            <span class="s2">"try to install it following the pycopm documentation. If it was "</span>
+            <span class="s2">"built from source, then either add the folder location to your path, "</span>
+            <span class="s2">"or write the path to flow in the TOML configuration file "</span>
+            <span class="s2">"(e.g., flow = '/home/pycopm/build/opm-simulators/bin/flow'), "</span>
+            <span class="s2">"or using the command flag -f or --flow."</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">toml_ok</span><span class="p">:</span>
+        <span class="n">flow_command</span> <span class="o">=</span> <span class="n">flow_toml</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">command_parts</span> <span class="o">=</span> <span class="n">shlex</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">flow_cmdargs</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">command_parts</span><span class="p">):</span>
+            <span class="k">if</span> <span class="s2">"flow"</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">command_parts</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">flow_cmdargs</span>
+                <span class="k">break</span>
+        <span class="n">flow_command</span> <span class="o">=</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">command_parts</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">flow_command</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, NORCE Research AS.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
