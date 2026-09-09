@@ -100,7 +100,7 @@ def create_refinement_maps(
 
 def refine_properties(
     dck: ConfigViaDeck, refinement: RefinementMaps, modified_deck: list[str]
-) -> None:
+) -> list[str]:
     """Map reservoir properties onto the refined grid.
 
     Properties are copied to generated cells. ``PORV`` is divided equally among
@@ -113,7 +113,13 @@ def refine_properties(
     refinement
         Refinement maps created by :func:`create_refinement_maps`.
     modified_deck
-        Deck lines updated with generated property includes."""
+        Deck lines updated with generated property includes.
+
+    Returns
+    -------
+    generated_files
+        Names of the written include files."""
+    generated_files = []
     number_values = dck.output_nx * dck.output_ny * dck.output_nz
     property_names = (
         dck.props_keywords
@@ -168,6 +174,7 @@ def refine_properties(
             )
             if property_name == "porv":
                 dck.output_actnum = (refined_values > 0).astype(int)
+            generated_files.append(f"{dck.include_prefix}{property_name.upper()}.INC")
             write_property_inc(
                 dck,
                 property_name,
@@ -176,6 +183,7 @@ def refine_properties(
                 modified_deck,
                 True,
             )
+    return generated_files
 
 
 def create_coord_axis_map(

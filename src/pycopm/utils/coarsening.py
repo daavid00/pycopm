@@ -35,6 +35,7 @@ from pycopm.utils.files_writer import (
     write_reference_to_coarse_map,
 )
 from pycopm.utils.input_values import parse_axis_modifications
+from pycopm.utils.terminal import pycopm_error, pycopm_info
 
 
 @dataclass(slots=True)
@@ -148,7 +149,7 @@ def create_coarsening_maps(
         elif comparison_operator == "!=":
             matrix_mask[active_cells] = property_values == comparison_value
         else:
-            raise ValueError(f"Unknown criterion for non-net cells: {dual_criterion}")
+            pycopm_error(f"unknown criterion for non-net cells: {dual_criterion}")
     directions = ("x", "y", "z")
     original_sizes = (
         dck.original_nx,
@@ -411,7 +412,7 @@ def coarsen_properties(
     coarsening: CoarseningMaps,
     modified_deck: list[str],
     wellcind: list[int],
-) -> tuple[NDArray, NDArray, NDArray]:
+) -> tuple[NDArray, NDArray, NDArray, list[str]]:
     """Aggregate reservoir properties onto the coarsened grid.
 
     Continuous properties use their configured or property-specific aggregation;
@@ -431,8 +432,10 @@ def coarsen_properties(
 
     Returns
     -------
-    cluster_minimum, cluster_maximum, removal_mask
-        Activity summaries and the mask used to remove depth-jump cells."""
+    cluster_minimum, cluster_maximum, removal_mask, generated_files
+        Activity summaries, the mask used to remove depth-jump cells,
+        and the generated include file names."""
+    generated_files = []
     actnum = np.zeros(dck.original_cell_count, dtype=int)
     top_depths = np.full(dck.original_cell_count, np.nan)
     base_depths = np.full(dck.original_cell_count, np.nan)
@@ -626,7 +629,7 @@ def coarsen_properties(
         dual_pore_volume = np.array([], dtype=float)
     dck.output_porv = matrix_pore_volume
 
-    print("Coarsening continuous quantities (e.g., PORO)")
+    pycopm_info("coarsening continuous quantities (e.g., PORO)")
     number_values = dck.output_nx * dck.output_ny * dck.output_nz
     dual_properties = ("porv", "poro", "tranx", "trany", "tranz")
     zero_dual_properties = ("permx", "permy", "permz")
@@ -1190,6 +1193,7 @@ def coarsen_properties(
             )
             if property_inlined:
                 continue
+            generated_files.append(f"{dck.include_prefix}{property_name.upper()}.INC")
             if dck.dual_porosity_criterion and property_name in [
                 "poro",
                 "tranz",
@@ -1236,13 +1240,17 @@ def coarsen_properties(
             False,
             "_DUAL_TMP_PYCOPM",
         )
-    _compact_permeability_properties(dck, permx, permy, permz, modified_deck)
+    removed = _compact_permeability_properties(dck, permx, permy, permz, modified_deck)
+    if "PERMY" in removed:
+        generated_files.remove(f"{dck.include_prefix}PERMY.INC")
+    if "PERMZ" in removed:
+        generated_files.remove(f"{dck.include_prefix}PERMZ.INC")
     show_progress = sys.stdout.isatty()
     if show_progress:
         bar_ctx = alive_bar(len(dck.regions_keywords + dck.grids_keywords), bar="fish")
     else:
         bar_ctx = nullcontext()
-    print("Coarsening discrete quantities (e.g., SATNUM)")
+    pycopm_info("coarsening discrete quantities (e.g., SATNUM)")
     with bar_ctx as bar_animation:
         for property_name in dck.regions_keywords + dck.grids_keywords:
             if show_progress:
@@ -1310,6 +1318,7 @@ def coarsen_properties(
                 modified_deck,
                 not dck.dual_porosity_criterion,
             )
+            generated_files.append(f"{dck.include_prefix}{property_name.upper()}.INC")
             if property_inlined:
                 continue
             if dck.dual_porosity_criterion:
@@ -1339,7 +1348,9 @@ def coarsen_properties(
 
     write_reference_to_coarse_map(dck, np.array(coarsening.reference_to_coarse))
 
-    return cluster_minimum, cluster_maximum, removal_mask
+    generated_files.append(f"{dck.original_deck_name}_OPERNUM_PYCOPM_REFTOCOA.INC")
+
+    return cluster_minimum, cluster_maximum, removal_mask, generated_files
 
 
 def _interleave_dual_property(
@@ -1401,8 +1412,9 @@ def _compact_permeability_properties(
     permy: NDArray,
     permz: NDArray,
     modified_deck: list[str],
-) -> None:
+) -> list[str]:
     """Use COPY and MULTIPLY if PERMY and PERMZ can be generated from PERMX."""
+    removed: list[str] = []
     copy_permy = np.array_equal(permx, permy)
     copy_permz = False
     output_path = Path(dck.output_directory)
@@ -1425,7 +1437,7 @@ def _compact_permeability_properties(
         include_line = f"'{dck.include_prefix}PERMZ.INC' /\n"
         include_statements.append(_find_include_statement(modified_deck, include_line))
     if not include_statements:
-        return
+        return removed
     insertion_index = min(start_index for start_index, _ in include_statements)
     for start_index, end_index in sorted(include_statements, reverse=True):
         del modified_deck[start_index:end_index]
@@ -1449,11 +1461,14 @@ def _compact_permeability_properties(
         permy_path.unlink(missing_ok=True)
         permy_path = output_path / f"{dck.include_prefix}PERMY_DUAL_TMP_PYCOPM.INC"
         permy_path.unlink(missing_ok=True)
+        removed.append("PERMY")
     if copy_permz:
         permz_path = output_path / f"{dck.include_prefix}PERMZ.INC"
         permz_path.unlink(missing_ok=True)
         permz_path = output_path / f"{dck.include_prefix}PERMZ_DUAL_TMP_PYCOPM.INC"
         permz_path.unlink(missing_ok=True)
+        removed.append("PERMZ")
+    return removed
 
 
 def redistribute_removed_pore_volume(
@@ -1514,8 +1529,8 @@ def redistribute_removed_pore_volume(
                 distance = 0
                 offset += 1
         if not neighbor_indices:
-            raise ValueError(
-                "No active cell found to receive pore volume from "
+            pycopm_error(
+                "no active cell found to receive pore volume from "
                 f"cluster {cluster_id}"
             )
         pore_volume_increment = grouped_pore_volume[cluster_id] / len(neighbor_indices)
@@ -1721,7 +1736,7 @@ def build_dual_porosity_grid(
         bar_ctx = alive_bar(cells_per_layer * dck.output_nz, bar="fish")
     else:
         bar_ctx = nullcontext()
-    print("Handling the dual connectivity")
+    pycopm_info("processing the dual connectivity")
     with bar_ctx as bar_animation:
         for row_index in range(dck.original_ny):
             for column_index in range(dck.original_nx):
@@ -1924,7 +1939,9 @@ def _collect_removed_zcorn_indices(
     return removal_indices
 
 
-def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -> None:
+def map_nnc_transmissibilities(
+    dck: ConfigViaDeck, coarsening: CoarseningMaps
+) -> list[str]:
     """Map original non-neighbouring transmissibilities to the coarse grid.
 
     Connections that become Cartesian neighbours are accumulated in ``TRANX`` or
@@ -1935,7 +1952,13 @@ def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -
     dck
         Deck configuration and source NNC data.
     coarsening
-        Coarse mapping updated with transmissibilities and NNC text."""
+        Coarse mapping updated with transmissibilities and NNC text.
+
+    Returns
+    -------
+    generated_files
+        Names of the written include files."""
+    generated_files = []
     output_directory = Path(dck.output_directory)
     original_grid = OpmFile(f"{dck.input_deck_name}.EGRID")
     coarsened_init = OpmFile(str(output_directory / f"{dck.output_deck_name}.INIT"))
@@ -1958,7 +1981,6 @@ def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -
     first_cell_indices = first_connection_cells[:connection_count] - 1
     second_cell_indices = second_connection_cells[:connection_count] - 1
     connection_transmissibilities = connection_transmissibilities[:connection_count]
-    original_cell_count = dck.original_nx * dck.original_ny * dck.original_nz
     coarsened_porv = np.asarray(coarsened_init["PORV"], dtype=float).reshape(-1)
     tranx_c = np.zeros(coarsened_porv.size, dtype=float)
     trany_c = np.zeros(coarsened_porv.size, dtype=float)
@@ -2011,8 +2033,6 @@ def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -
     second_output_j = output_j_map[second_cell_j]
     second_output_k = output_k_map[second_cell_k]
     coarsening_mask = np.asarray(coarsening.matrix_mask).reshape(-1)
-    if coarsening_mask.size < original_cell_count:
-        raise ValueError("The coarsening mask is smaller than the original grid")
     first_cell_mask = coarsening_mask[first_cell_indices]
     second_cell_mask = coarsening_mask[second_cell_indices]
     different_continuum = first_cell_mask != second_cell_mask
@@ -2132,12 +2152,12 @@ def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -
         bar_ctx = alive_bar(connection_count, bar="fish")
     else:
         bar_ctx = nullcontext()
-    print("Handling the dual connectivity")
-    print("Processing non-neighbouring transmissibilities (input model)")
+    pycopm_info("processing non-neighbouring transmissibilities NNC (input model)")
     with bar_ctx as bar_animation:
         if show_progress and connection_count:
             bar_animation(connection_count)
     if not dck.dual_porosity_criterion:
+        generated_files.append(f"{dck.include_prefix}TRANX.INC")
         property_path = output_directory / f"{dck.include_prefix}TRANX.INC"
         write_property(property_path, "TRANX", tranx_c, num_dig)
         property_path = output_directory / f"{dck.include_prefix}TRANY.INC"
@@ -2145,6 +2165,7 @@ def map_nnc_transmissibilities(dck: ConfigViaDeck, coarsening: CoarseningMaps) -
     else:
         coarsening.coarse_tranx = tranx_c
         coarsening.coarse_trany = trany_c
+    return generated_files
 
 
 def create_coarsening_map(cfg: ConfigViaTOML) -> NDArray:
@@ -2281,8 +2302,6 @@ def _read_satnum(
         satnum = np.load(reference_folder / "satnum.npy")
     elif cfg.satnum_generation_method > 0:
         satnum_files = {1: "satnum_5.out", 3: "satnum_60.out"}
-        if cfg.satnum_generation_method not in satnum_files:
-            raise ValueError("satnum_generation_method must be 0, 1, or 3")
         satnum_values = []
         with open(
             reference_folder / satnum_files[cfg.satnum_generation_method],
@@ -2320,7 +2339,7 @@ def coarsen_and_write_properties(cfg: ConfigViaTOML, coa_map: NDArray) -> int:
         / cfg.model_name
         / cfg.reference_case_name
     )
-    print("Coarsening and writing the static properties")
+    pycopm_info("coarsening and writing the static properties")
     preprocessing_path = Path(cfg.output_directory) / "preprocessing"
     num_cells = cfg.output_nx * cfg.output_ny * cfg.output_nz
     num_dig = cfg.significant_digits

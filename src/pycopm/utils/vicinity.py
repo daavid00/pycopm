@@ -366,7 +366,7 @@ def create_vicinity_maps(dck: ConfigViaDeck) -> VicinityMaps:
 
 def map_vicinity_properties(
     dck: ConfigViaDeck, vicinity: VicinityMaps, modified_deck: list[str]
-) -> None:
+) -> list[str]:
     """Map reservoir properties into the submodel bounding box.
 
     Cells inside the bounding box but outside the selection are written as
@@ -379,7 +379,13 @@ def map_vicinity_properties(
     vicinity
         Selection and bounds created by :func:`create_vicinity_maps`.
     modified_deck
-        Deck lines updated with generated property includes."""
+        Deck lines updated with generated property includes.
+
+    Returns
+    -------
+    generated_files
+        Names of the written include files."""
+    generated_files = []
     submodel_cells = dck.output_nx * dck.output_ny * dck.output_nz
     dck.original_active_cell_mask = np.asarray(dck.original_porv) > 0
     vicinity.active_counts = np.zeros(dck.output_nz)
@@ -449,7 +455,9 @@ def map_vicinity_properties(
                 modified_deck,
                 True,
             )
+            generated_files.append(f"{dck.include_prefix}{property_name.upper()}.INC")
     dck.output_actnum = (np.asarray(dck.output_porv) > 0).astype(int)
+    return generated_files
 
 
 def extract_vicinity_grid(dck: ConfigViaDeck, vicinity: VicinityMaps) -> None:

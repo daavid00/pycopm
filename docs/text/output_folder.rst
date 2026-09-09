@@ -1,8 +1,8 @@
-=============
+.. _output-folder:
+
 Output folder
 =============
-
-Via configuration files 
+Legacy TOML workflow 
 -----------------------
 As described in the :doc:`introduction <./introduction>`, in the early development of **pycopm** 
 the focus was on history matching studies using `ERT <https://ert.readthedocs.io/en/latest/>`_ for the 
@@ -19,12 +19,12 @@ on the drogon model.
 The generate ert.ert file can be run directly calling ERT for further studies, and some useful plots and files
 are generated in the postprocessing folder. The OPM simulation results can be visualized using `ResInsight <https://resinsight.org>`_.
 
-Via an OPM Flow input deck
---------------------------
+Deck-based workflow (recommended)
+---------------------------------
 The current development of **pycopm** focuses on creating modified models, i.e., all needed input files to run OPM Flow, by using the input deck and 
 defining the approach (grid refinement, grid coarsening, submodels, and transformations including scalings, rotations, and translations).
 
-The following screenshot shows the input deck and generated files in the selected output folder (coarser for this example) after executing **pycopm** on the :ref:`generic`
+The following screenshot shows the input deck and generated files in the selected output folder (coarser for this example) after executing **pycopm** on the :doc:`examples`
 
 .. figure:: figs/output_generic.png
 

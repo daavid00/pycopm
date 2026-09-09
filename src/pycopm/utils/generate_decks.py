@@ -39,6 +39,15 @@ from pycopm.utils.refinement import (
     refine_grid,
     refine_properties,
 )
+from pycopm.utils.terminal import (
+    cli_correct_value,
+    cli_error_value,
+    cli_info_value,
+    pycopm_error,
+    pycopm_info,
+    pycopm_success,
+    pycopm_warning,
+)
 from pycopm.utils.transformation import (
     transform_grid,
     transform_properties,
@@ -67,9 +76,9 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
         Parsed command arguments used to build coarsening or refinement maps."""
     output_directory = Path(dck.output_directory)
     source_deck = Path(f"{dck.input_deck_path}.DATA")
+    generated_files = []
     if dck.requested_ijk[0]:
         dck.requested_ijk = [int(value) for value in dck.requested_ijk[0].split(",")]
-        dck.execution_mode = "deck"
     if not dck.output_deck_name:
         dck.output_deck_name = f"{dck.input_deck_name}_PYCOPM"
     flags_dry_run = (
@@ -96,10 +105,10 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
                 "".join(f"{deck_line}\n" for deck_line in modified_deck),
                 encoding="utf8",
             )
-            print(
-                f"\nTemporal {dry_run_deck.name} from {source_deck} for the initial "
-                "run to generate the grid (.EGRID), static (.INIT), and initial "
-                "(.UNRST) properties\n"
+            pycopm_info(
+                f"temporary {cli_info_value(dry_run_deck.name)} created from "
+                f"{cli_info_value(str(source_deck))} for the initial run that generates "
+                "the grid (.EGRID), static (.INIT), and initial (.UNRST) properties."
             )
             subprocess.run(
                 [
@@ -114,12 +123,16 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
             )
             dry_run_deck.unlink(missing_ok=True)
             copy2(source_deck, dry_run_deck)
-            print(f"\nCloning {source_deck} to {dry_run_deck.name} \n")
+            pycopm_info(
+                f"cloning {cli_info_value(str(source_deck))} to "
+                f"{cli_info_value(dry_run_deck.name)}."
+            )
         else:
             copy2(source_deck, dry_run_deck)
-            print(
-                f"\nCloning {source_deck} to {dry_run_deck.name} for the initial "
-                "dry run to generate the grid (.EGRID) and static (.INIT) properties\n"
+            pycopm_info(
+                f"cloning {cli_info_value(str(source_deck))} to "
+                f"{cli_info_value(dry_run_deck.name)} for the initial dry run that "
+                "generates the grid (.EGRID) and static (.INIT) properties."
             )
             subprocess.run(
                 [dck.flow_command, dry_run_deck.name, *flags_dry_run.split()],
@@ -130,25 +143,27 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
             output_file = output_directory / f"{dry_run_name}{output_type}"
             if not output_file.is_file():
                 if output_type == ".INIT":
-                    print(
-                        f"\nThe {output_file} is not found, try adding the keyword INIT "
-                        f"in the GRID section in the original deck {dck.input_deck_name}.DATA\n"
+                    pycopm_error(
+                        f"required file {cli_error_value(str(output_file))} was not found; "
+                        f"add {cli_correct_value('INIT')} to the GRID section of "
+                        f"{cli_error_value(f'{dck.input_deck_name}.DATA')}."
                     )
                 elif output_type == ".EGRID":
-                    print(
-                        f"\nThe {output_file} is not found, try removing the keyword "
-                        f"GRIDFILE in the GRID section in the original deck {dck.input_deck_name}"
-                        ".DATA\n"
+                    pycopm_error(
+                        f"required file {cli_error_value(str(output_file))} was not found; "
+                        f"remove {cli_error_value('GRIDFILE')} from the GRID section of "
+                        f"{cli_error_value(f'{dck.input_deck_name}.DATA')}."
                     )
                 else:
-                    print(
-                        f"\nThe {output_file} is not found, check the input deck "
-                        f"{dck.input_deck_name}.DATA\n"
+                    pycopm_error(
+                        f"required file {cli_error_value(str(output_file))} was not found; "
+                        f"check input deck {cli_error_value(f'{dck.input_deck_name}.DATA')}."
                     )
-                sys.exit()
-        print(
-            f"\nThe initial/dry run of {dck.input_deck_name}.DATA succeeded "
-            f"(see {output_directory}/)"
+        pycopm_success(
+            f"initial dry run succeeded; 3 files ({dry_run_name}.DATA, .EGRID, and .INIT)\n"
+            "                 written to ",
+            str(output_directory),
+            [],
         )
     if dck.execution_mode in ("prep_deck", "deck", "deck_dry", "all"):
         dck.original_deck_name = dck.input_deck_name
@@ -156,23 +171,21 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
         for output_type in output_types:
             output_file = Path(f"{dck.input_deck_name}{output_type}")
             if not output_file.is_file():
-                print(
-                    f"\nThe {output_file} is not found, try running pycopm with "
-                    "-m prep_deck and without -ijk"
+                pycopm_error(
+                    f"required file {cli_error_value(str(output_file))} was not found; "
+                    f"run pycopm with {cli_correct_value('-m prep_deck')} and without "
+                    f"{cli_error_value('-ijk')}."
                 )
-                sys.exit()
         dck.props_keywords = ["permx", "permy", "permz", "poro"]
         dck.base_keywords = dck.props_keywords + ["grid"]
         if dck.refinement_enabled:
-            print("\nInitializing pycopm to generate the refined files, please wait.")
+            pycopm_info("generating the refined files, please wait...")
         elif dck.vicinity_specification:
-            print("\nInitializing pycopm to generate the submodel files, please wait.")
+            pycopm_info("generating the submodel files, please wait...")
         elif dck.grid_transformation:
-            print(
-                "\nInitializing pycopm to generate the transformed files, please wait."
-            )
+            pycopm_info("generating the transformed files, please wait...")
         else:
-            print("\nInitializing pycopm to generate the coarsened files, please wait.")
+            pycopm_info("generating the coarsened files, please wait...")
         _initialize_deck_data(dck)
         dck.original_cell_count = dck.original_nx * dck.original_ny * dck.original_nz
         if dck.transmissibility_coarsening_method > 0:
@@ -190,33 +203,41 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
         if not dck.grid_transformation:
             _create_index_mappings(dck, vicinity, refinement, coarsening)
         if dck.requested_ijk[0]:
-            print(
-                dck.original_to_output_i[dck.requested_ijk[0][0]],
-                dck.original_to_output_j[dck.requested_ijk[0][1]],
-                dck.original_to_output_k[dck.requested_ijk[0][2]],
+            pycopm_success(
+                f"mapped indices: "
+                f"{cli_info_value(str(dck.original_to_output_i[dck.requested_ijk[0]]))}, "
+                f"{cli_info_value(str(dck.original_to_output_j[dck.requested_ijk[1]]))}, "
+                f"{cli_info_value(str(dck.original_to_output_k[dck.requested_ijk[2]]))}",
+                "",
+                [],
             )
-            sys.exit()
+            sys.exit(0)
         modified_deck, wellcind = process_deck(dck, vicinity)
-        print("Processing the mappings")
+        pycopm_info("processing the mappings")
         cr, zc = np.array([]), np.array([])
         if dck.grid_transformation:
-            transform_properties(dck, modified_deck)
+            generated_files.extend(transform_properties(dck, modified_deck))
             transform_grid(dck)
         elif dck.refinement_enabled:
-            refine_properties(dck, refinement, modified_deck)
+            generated_files.extend(refine_properties(dck, refinement, modified_deck))
             refine_grid(dck, refinement)
         elif dck.vicinity_specification:
-            map_vicinity_properties(dck, vicinity, modified_deck)
+            generated_files.extend(
+                map_vicinity_properties(dck, vicinity, modified_deck)
+            )
             extract_vicinity_grid(dck, vicinity)
             apply_boundary_pore_volume_correction(dck, vicinity)
             write_porv(dck, modified_deck)
         else:
-            cluster_minimum, cluster_maximum, removed_cells = coarsen_properties(
-                dck,
-                coarsening,
-                modified_deck,
-                wellcind,
+            cluster_minimum, cluster_maximum, removed_cells, file_names = (
+                coarsen_properties(
+                    dck,
+                    coarsening,
+                    modified_deck,
+                    wellcind,
+                )
             )
+            generated_files.extend(file_names)
             if dck.pore_volume_correction == 1:
                 redistribute_removed_pore_volume(
                     dck,
@@ -226,7 +247,9 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
                     removed_cells,
                 )
             write_porv(dck, modified_deck)
+            generated_files.append(f"{dck.include_prefix}PORV.INC")
             cr, zc = coarsen_corner_point_grid(dck, coarsening)
+        generated_files.append(f"{dck.include_prefix}GRID.INC")
         generated_deck = output_directory / f"{dck.output_deck_name}.DATA"
         generated_deck.write_text(
             "".join(f"{deck_line}\n" for deck_line in modified_deck),
@@ -239,8 +262,10 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
             and dck.egrid_file.count("NNC1")
             and dck.transmissibility_coarsening_method > 0
         ):
-            print("\nCall OPM Flow for a dry run of the generated model.\n")
-            print("\nThis is needed for the nnctrans, please wait.\n")
+            pycopm_info(
+                "calling OPM Flow for a dry run of the generated model, "
+                "needed for the NNC transmissibilities"
+            )
             subprocess.run(
                 [dck.flow_command, generated_deck.name, *flags_dry_run.split()],
                 cwd=output_directory,
@@ -251,9 +276,12 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
                 OpmFile(str(generated_grid)).count("NNC1")
                 or OpmFile(f"{dck.input_deck_name}.EGRID").count("NNC1")
             ) and dck.transmissibility_coarsening_method > 0:
-                map_nnc_transmissibilities(dck, coarsening)
+                generated_files.extend(map_nnc_transmissibilities(dck, coarsening))
             else:
-                print("\nNo nnctrans found.")
+                pycopm_warning("no NNC transmissibilities were found.")
+            generated_grid.unlink()
+            tmp = output_directory / f"{dck.output_deck_name}.INIT"
+            tmp.unlink()
         if dck.coarsening_enabled:
             if dck.dual_porosity_criterion:
                 cr, zc = build_dual_porosity_grid(dck, coarsening, cr, zc)
@@ -287,6 +315,7 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
                     output_directory / f"{dck.include_prefix}NNC.INC",
                     "".join(coarsening.nnc_text),
                 )
+                generated_files.append(f"{dck.include_prefix}NNC.INC")
             elif coarsening.nnc_text != "NNC\n":
                 grid_include_index = modified_deck.index(
                     f"'{dck.include_prefix}GRID.INC' /\n"
@@ -304,28 +333,34 @@ def create_deck(dck: ConfigViaDeck, cmdargs: argparse.Namespace) -> None:
                     output_directory / f"{dck.include_prefix}NNC.INC",
                     "".join(coarsening.nnc_text),
                 )
-        print(
-            f"\nThe generation of files succeeded, see {generated_deck} and "
-            f"{output_directory}/{dck.include_prefix}*.INC\n"
+                generated_files.append(f"{dck.include_prefix}NNC.INC")
+        generated_files.append(f"{dck.output_deck_name}.DATA")
+        pycopm_success(
+            "",
+            str(output_directory),
+            sorted(set(generated_files)),
         )
     if dck.execution_mode in ("deck_dry", "dry", "all"):
-        print("\nCall OPM Flow for a dry run of the generated model.\n")
+        pycopm_info("calling OPM Flow for a dry run of the generated model.")
         completed_process = subprocess.run(
             [dck.flow_command, f"{dck.output_deck_name}.DATA", *flags_dry_run.split()],
             cwd=output_directory,
             check=False,
         )
         if completed_process.returncode != 0:
-            print(
-                "\nThe dry run of the generated model "
-                f"{output_directory}/{dck.output_deck_name}.DATA failed. Check the Flow "
-                "output in the terminal for the error, which might be possible to "
-                f"fix by correcting the input deck {source_deck} or the generated "
-                "deck; otherwise, please raise an issue at "
-                "https://github.com/cssr-tools/pycopm/issues"
+            pycopm_error(
+                "the dry run of "
+                f"{cli_error_value(str(output_directory / (dck.output_deck_name + '.DATA')))} "
+                "failed. Check the OPM Flow output in the terminal. Correct the input "
+                f"deck {cli_error_value(str(source_deck))} or the generated deck; otherwise, "
+                "raise an issue at https://github.com/cssr-tools/pycopm/issues."
             )
         else:
-            print(f"\nThe dryrun results have been written to {output_directory}/")
+            pycopm_success(
+                "dry-run results of the generated deck by pycopm were written to ",
+                str(output_directory),
+                [],
+            )
 
 
 def _correct_fluid_in_place(dck: ConfigViaDeck, modified_deck: list[str]) -> None:
@@ -376,9 +411,9 @@ def _correct_fluid_in_place(dck: ConfigViaDeck, modified_deck: list[str]) -> Non
         "".join(f"{deck_line}\n" for deck_line in deckcorr),
         encoding="utf8",
     )
-    print(
-        f"\nRunning {one_step_deck} and {correction_deck} to correct the "
-        "pore volume\n"
+    pycopm_info(
+        f"running {cli_info_value(str(one_step_deck))} and "
+        f"{cli_info_value(str(correction_deck))} to correct the pore volume."
     )
     subprocess.run(
         [dck.flow_command, str(correction_deck), *flags_one_step.split()],
@@ -446,7 +481,9 @@ def _correct_fluid_in_place(dck: ConfigViaDeck, modified_deck: list[str]) -> Non
     corrected_porv[np.isnan(corrected_porv)] = 0
     dck.output_porv = corrected_porv
     write_porv(dck, modified_deck)
-    print(f"\nRunning {correction_deck} with the corrected pore volume\n")
+    pycopm_info(
+        f"running {cli_info_value(str(correction_deck))} with the corrected pore volume."
+    )
     subprocess.run(
         [dck.flow_command, str(correction_deck), *flags_one_step.split()],
         check=False,

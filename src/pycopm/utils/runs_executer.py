@@ -13,6 +13,7 @@ from pathlib import Path
 from mako.template import Template
 
 from pycopm.config.config import ConfigViaTOML
+from pycopm.utils.terminal import pycopm_info, pycopm_success
 
 
 def run_simulations(cfg: ConfigViaTOML) -> None:
@@ -68,7 +69,7 @@ def run_simulations(cfg: ConfigViaTOML) -> None:
             cwd=project_path,
             check=True,
         )
-    print(f"\nThe simulation results have been written to {project_path}")
+    pycopm_success("the results have been written to ", str(project_path), [])
 
 
 def generate_postprocessing_plots(
@@ -120,7 +121,7 @@ def generate_postprocessing_plots(
     )
     plotting_path = project_path / "jobs" / "plotting.py"
     plotting_path.write_text(rendered_template, encoding="utf8")
-    print("\nRunning the postprocessing methods, please wait.")
+    pycopm_info("running the postprocessing methods, please wait...")
     subprocess.run(
         [sys.executable, str(plotting_path)],
         cwd=project_path,

@@ -1,0 +1,1292 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>pycopm.utils.generate_decks &#8212; pycopm documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=cb8930eaaf36d9849b67" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=d109aa7d" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../../_static/scripts/fontawesome.js?digest=cb8930eaaf36d9849b67"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67" />
+
+    <script src="../../../_static/documentation_options.js?v=602b4562"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=eef4a3d2"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/pycopm/utils/generate_decks';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.4" />
+    <meta name="docbuild:last-update" content="2026-09-09"/>
+  
+    
+    <script src="../../../_static/searchtools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script src="../../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="pycopm documentation - Home"/>
+    <img src="../../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="pycopm documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../related.html">
+    Related projects
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../../contributing.html">
+    Contributing
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../introduction.html">
+    Introduction
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../installation.html">
+    Installation
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../tutorial.html">
+    Tutorial
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../examples.html">
+    Examples
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../theory.html">
+    Theory and methods
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../command-line.html">
+    Command-line reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../related.html">
+    Related projects
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../configuration_file.html">
+    Legacy TOML configuration
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../api.html">
+    Python API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../output_folder.html">
+    Output folder
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../contributing.html">
+    Contributing
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<div class="theme-switch-container dropdown pst-js-only" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Color mode">
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button dropdown-toggle" aria-label="Color mode" data-bs-toggle="dropdown">
+    <i class="theme-switch fa-solid fa-sun fa-lg fa-fw" data-mode="light" title="Light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg fa-fw" data-mode="dark" title="Dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg fa-fw" data-mode="auto" title="System Settings"></i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-end">
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg fa-fw me-1"></i>System Settings</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="light"><i class="fa-solid fa-sun fa-lg fa-fw me-1"></i>Light</button></li>
+    <li><button class="dropdown-item d-flex align-items-center theme-change-button" data-mode="dark"><i class="fa-solid fa-moon fa-lg fa-fw me-1"></i>Dark</button></li>
+  </ul>
+</div></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm/issues/new/choose" title="Report an issue" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-solid fa-bug fa-lg" aria-hidden="true"></i><span class="visually-hidden">Report an issue</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/cssr-tools/pycopm" title="GitHub repository" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i><span class="visually-hidden">GitHub repository</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">pycopm.utils.generate_decks</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for pycopm.utils.generate_decks</h1><div class="highlight"><pre>
+<span></span><span class="c1"># SPDX-FileCopyrightText: 2024-2026 NORCE Research AS</span>
+<span class="c1"># SPDX-License-Identifier: GPL-3.0</span>
+<span class="c1"># pylint: disable=R0912,R0913,R0914,R0915,C0302,R0917,R1702,R0916,R0911,R0801,E1102</span>
+
+<span class="sd">"""Coordinate coarsening, refinement, submodel extraction, and grid transformations."""</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">shutil</span><span class="w"> </span><span class="kn">import</span> <span class="n">copy2</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">cast</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">opm.io.ecl</span><span class="w"> </span><span class="kn">import</span> <span class="n">EclFile</span> <span class="k">as</span> <span class="n">OpmFile</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">opm.io.ecl</span><span class="w"> </span><span class="kn">import</span> <span class="n">EGrid</span> <span class="k">as</span> <span class="n">OpmGrid</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.config.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConfigViaDeck</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.coarsening</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CoarseningMaps</span><span class="p">,</span>
+    <span class="n">build_dual_porosity_grid</span><span class="p">,</span>
+    <span class="n">coarsen_corner_point_grid</span><span class="p">,</span>
+    <span class="n">coarsen_properties</span><span class="p">,</span>
+    <span class="n">create_coarsening_maps</span><span class="p">,</span>
+    <span class="n">map_nnc_transmissibilities</span><span class="p">,</span>
+    <span class="n">redistribute_removed_pore_volume</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.files_writer</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">write_dual_properties</span><span class="p">,</span>
+    <span class="n">write_grid</span><span class="p">,</span>
+    <span class="n">write_include</span><span class="p">,</span>
+    <span class="n">write_porv</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.parser_deck</span><span class="w"> </span><span class="kn">import</span> <span class="n">find_multiplier_keywords</span><span class="p">,</span> <span class="n">process_deck</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.refinement</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">RefinementMaps</span><span class="p">,</span>
+    <span class="n">create_refinement_maps</span><span class="p">,</span>
+    <span class="n">refine_grid</span><span class="p">,</span>
+    <span class="n">refine_properties</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.terminal</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">cli_correct_value</span><span class="p">,</span>
+    <span class="n">cli_error_value</span><span class="p">,</span>
+    <span class="n">cli_info_value</span><span class="p">,</span>
+    <span class="n">pycopm_error</span><span class="p">,</span>
+    <span class="n">pycopm_info</span><span class="p">,</span>
+    <span class="n">pycopm_success</span><span class="p">,</span>
+    <span class="n">pycopm_warning</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.transformation</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">transform_grid</span><span class="p">,</span>
+    <span class="n">transform_properties</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pycopm.utils.vicinity</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">VicinityMaps</span><span class="p">,</span>
+    <span class="n">apply_boundary_pore_volume_correction</span><span class="p">,</span>
+    <span class="n">create_vicinity_maps</span><span class="p">,</span>
+    <span class="n">extract_vicinity_grid</span><span class="p">,</span>
+    <span class="n">map_vicinity_properties</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<div class="viewcode-block" id="create_deck">
+<a class="viewcode-back" href="../../../api/pycopm.utils.generate_decks.html#pycopm.utils.generate_decks.create_deck">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_deck</span><span class="p">(</span><span class="n">dck</span><span class="p">:</span> <span class="n">ConfigViaDeck</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Generate a modified OPM deck and its include files.</span>
+
+<span class="sd">    The selected workflow can preprocess the input deck, coarsen or refine the</span>
+<span class="sd">    grid, extract a vicinity submodel, transform coordinates, and optionally run</span>
+<span class="sd">    a validation dry run.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dck</span>
+<span class="sd">        Deck configuration populated from command-line arguments.</span>
+<span class="sd">    cmdargs</span>
+<span class="sd">        Parsed command arguments used to build coarsening or refinement maps."""</span>
+    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">output_directory</span><span class="p">)</span>
+    <span class="n">source_deck</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_path</span><span class="si">}</span><span class="s2">.DATA"</span><span class="p">)</span>
+    <span class="n">generated_files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">","</span><span class="p">)]</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="p">:</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">_PYCOPM"</span>
+    <span class="n">flags_dry_run</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"--parsing-strictness=low --check-satfunc-consistency=false "</span>
+        <span class="s2">"--enable-dry-run=true --output-mode=none"</span>
+    <span class="p">)</span>
+    <span class="n">output_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">".INIT"</span><span class="p">,</span> <span class="s2">".EGRID"</span><span class="p">]</span>
+    <span class="n">dry_run_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">_PREP_PYCOPM_DRYRUN"</span>
+    <span class="n">dry_run_deck</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dry_run_name</span><span class="si">}</span><span class="s2">.DATA"</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">execution_mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"prep"</span><span class="p">,</span> <span class="s2">"prep_deck"</span><span class="p">,</span> <span class="s2">"all"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">write_explicit_solution</span><span class="p">:</span>
+            <span class="n">output_types</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">".UNRST"</span><span class="p">)</span>
+            <span class="n">modified_deck</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">with</span> <span class="n">source_deck</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">csv_row</span> <span class="ow">in</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">file_handle</span><span class="p">):</span>
+                    <span class="n">deck_line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">csv_row</span><span class="p">)[</span><span class="mi">2</span><span class="p">:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                    <span class="k">if</span> <span class="n">deck_line</span> <span class="o">==</span> <span class="s2">"SCHEDULE"</span><span class="p">:</span>
+                        <span class="n">modified_deck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deck_line</span><span class="p">)</span>
+                        <span class="n">modified_deck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"RPTRST</span><span class="se">\n</span><span class="s2">'BASIC=2'/</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+                        <span class="n">modified_deck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"TSTEP</span><span class="se">\n</span><span class="s2">1*0.0001/</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+                        <span class="k">break</span>
+                    <span class="n">modified_deck</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">deck_line</span><span class="p">)</span>
+            <span class="n">dry_run_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+                <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">modified_deck</span><span class="p">),</span>
+                <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">pycopm_info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"temporary </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="n">dry_run_deck</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2"> created from "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> for the initial run that generates "</span>
+                <span class="s2">"the grid (.EGRID), static (.INIT), and initial (.UNRST) properties."</span>
+            <span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span>
+                    <span class="n">dry_run_deck</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                    <span class="s2">"--output-mode=none"</span><span class="p">,</span>
+                    <span class="s2">"--parsing-strictness=low"</span><span class="p">,</span>
+                    <span class="s2">"--enable-opm-rst-file=1"</span><span class="p">,</span>
+                <span class="p">],</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">output_directory</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">dry_run_deck</span><span class="o">.</span><span class="n">unlink</span><span class="p">(</span><span class="n">missing_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">copy2</span><span class="p">(</span><span class="n">source_deck</span><span class="p">,</span> <span class="n">dry_run_deck</span><span class="p">)</span>
+            <span class="n">pycopm_info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"cloning </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> to "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="n">dry_run_deck</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">copy2</span><span class="p">(</span><span class="n">source_deck</span><span class="p">,</span> <span class="n">dry_run_deck</span><span class="p">)</span>
+            <span class="n">pycopm_info</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"cloning </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> to "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="n">dry_run_deck</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2"> for the initial dry run that "</span>
+                <span class="s2">"generates the grid (.EGRID) and static (.INIT) properties."</span>
+            <span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="n">dry_run_deck</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">flags_dry_run</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">output_directory</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">for</span> <span class="n">output_type</span> <span class="ow">in</span> <span class="n">output_types</span><span class="p">:</span>
+            <span class="n">output_file</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dry_run_name</span><span class="si">}{</span><span class="n">output_type</span><span class="si">}</span><span class="s2">"</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">output_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">".INIT"</span><span class="p">:</span>
+                    <span class="n">pycopm_error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"required file </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">))</span><span class="si">}</span><span class="s2"> was not found; "</span>
+                        <span class="sa">f</span><span class="s2">"add </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'INIT'</span><span class="p">)</span><span class="si">}</span><span class="s2"> to the GRID section of "</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s1">.DATA'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+                    <span class="p">)</span>
+                <span class="k">elif</span> <span class="n">output_type</span> <span class="o">==</span> <span class="s2">".EGRID"</span><span class="p">:</span>
+                    <span class="n">pycopm_error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"required file </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">))</span><span class="si">}</span><span class="s2"> was not found; "</span>
+                        <span class="sa">f</span><span class="s2">"remove </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'GRIDFILE'</span><span class="p">)</span><span class="si">}</span><span class="s2"> from the GRID section of "</span>
+                        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s1">.DATA'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">pycopm_error</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">"required file </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">))</span><span class="si">}</span><span class="s2"> was not found; "</span>
+                        <span class="sa">f</span><span class="s2">"check input deck </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s1">.DATA'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+                    <span class="p">)</span>
+        <span class="n">pycopm_success</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">"initial dry run succeeded; 3 files (</span><span class="si">{</span><span class="n">dry_run_name</span><span class="si">}</span><span class="s2">.DATA, .EGRID, and .INIT)</span><span class="se">\n</span><span class="s2">"</span>
+            <span class="s2">"                 written to "</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span><span class="p">),</span>
+            <span class="p">[],</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">execution_mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"prep_deck"</span><span class="p">,</span> <span class="s2">"deck"</span><span class="p">,</span> <span class="s2">"deck_dry"</span><span class="p">,</span> <span class="s2">"all"</span><span class="p">):</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">original_deck_name</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="n">dry_run_name</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">output_type</span> <span class="ow">in</span> <span class="n">output_types</span><span class="p">:</span>
+            <span class="n">output_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}{</span><span class="n">output_type</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">output_file</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="n">pycopm_error</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"required file </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">))</span><span class="si">}</span><span class="s2"> was not found; "</span>
+                    <span class="sa">f</span><span class="s2">"run pycopm with </span><span class="si">{</span><span class="n">cli_correct_value</span><span class="p">(</span><span class="s1">'-m prep_deck'</span><span class="p">)</span><span class="si">}</span><span class="s2"> and without "</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="s1">'-ijk'</span><span class="p">)</span><span class="si">}</span><span class="s2">."</span>
+                <span class="p">)</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">props_keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"permx"</span><span class="p">,</span> <span class="s2">"permy"</span><span class="p">,</span> <span class="s2">"permz"</span><span class="p">,</span> <span class="s2">"poro"</span><span class="p">]</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">base_keywords</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">props_keywords</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"grid"</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">refinement_enabled</span><span class="p">:</span>
+            <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"generating the refined files, please wait..."</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">vicinity_specification</span><span class="p">:</span>
+            <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"generating the submodel files, please wait..."</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">grid_transformation</span><span class="p">:</span>
+            <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"generating the transformed files, please wait..."</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"generating the coarsened files, please wait..."</span><span class="p">)</span>
+        <span class="n">_initialize_deck_data</span><span class="p">(</span><span class="n">dck</span><span class="p">)</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">original_cell_count</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_nx</span> <span class="o">*</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_ny</span> <span class="o">*</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_nz</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">transmissibility_coarsening_method</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">dck</span><span class="o">.</span><span class="n">props_keywords</span><span class="o">.</span><span class="n">extend</span><span class="p">((</span><span class="s2">"tranx"</span><span class="p">,</span> <span class="s2">"trany"</span><span class="p">,</span> <span class="s2">"tranz"</span><span class="p">))</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">original_active_cell_mask</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_porv</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="n">vicinity</span><span class="p">:</span> <span class="n">VicinityMaps</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">VicinityMaps</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">refinement</span><span class="p">:</span> <span class="n">RefinementMaps</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">RefinementMaps</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">coarsening</span><span class="p">:</span> <span class="n">CoarseningMaps</span> <span class="o">=</span> <span class="n">cast</span><span class="p">(</span><span class="n">CoarseningMaps</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">refinement_enabled</span><span class="p">:</span>
+            <span class="n">refinement</span> <span class="o">=</span> <span class="n">create_refinement_maps</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">vicinity_specification</span><span class="p">:</span>
+            <span class="n">vicinity</span> <span class="o">=</span> <span class="n">create_vicinity_maps</span><span class="p">(</span><span class="n">dck</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">coarsening_enabled</span><span class="p">:</span>
+            <span class="n">coarsening</span> <span class="o">=</span> <span class="n">create_coarsening_maps</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">cmdargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">dck</span><span class="o">.</span><span class="n">grid_transformation</span><span class="p">:</span>
+            <span class="n">_create_index_mappings</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">,</span> <span class="n">refinement</span><span class="p">,</span> <span class="n">coarsening</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">pycopm_success</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"mapped indices: "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">original_to_output_i</span><span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span><span class="si">}</span><span class="s2">, "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">original_to_output_j</span><span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">1</span><span class="p">]]))</span><span class="si">}</span><span class="s2">, "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">original_to_output_k</span><span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">requested_ijk</span><span class="p">[</span><span class="mi">2</span><span class="p">]]))</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="s2">""</span><span class="p">,</span>
+                <span class="p">[],</span>
+            <span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">modified_deck</span><span class="p">,</span> <span class="n">wellcind</span> <span class="o">=</span> <span class="n">process_deck</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">)</span>
+        <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"processing the mappings"</span><span class="p">)</span>
+        <span class="n">cr</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">grid_transformation</span><span class="p">:</span>
+            <span class="n">generated_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">transform_properties</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">))</span>
+            <span class="n">transform_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">refinement_enabled</span><span class="p">:</span>
+            <span class="n">generated_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">refine_properties</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">refinement</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">))</span>
+            <span class="n">refine_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">refinement</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">vicinity_specification</span><span class="p">:</span>
+            <span class="n">generated_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span>
+                <span class="n">map_vicinity_properties</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">extract_vicinity_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">)</span>
+            <span class="n">apply_boundary_pore_volume_correction</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">vicinity</span><span class="p">)</span>
+            <span class="n">write_porv</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cluster_minimum</span><span class="p">,</span> <span class="n">cluster_maximum</span><span class="p">,</span> <span class="n">removed_cells</span><span class="p">,</span> <span class="n">file_names</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">coarsen_properties</span><span class="p">(</span>
+                    <span class="n">dck</span><span class="p">,</span>
+                    <span class="n">coarsening</span><span class="p">,</span>
+                    <span class="n">modified_deck</span><span class="p">,</span>
+                    <span class="n">wellcind</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">generated_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">file_names</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">pore_volume_correction</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">redistribute_removed_pore_volume</span><span class="p">(</span>
+                    <span class="n">dck</span><span class="p">,</span>
+                    <span class="n">coarsening</span><span class="o">.</span><span class="n">cell_groups</span><span class="p">,</span>
+                    <span class="n">cluster_minimum</span><span class="p">,</span>
+                    <span class="n">cluster_maximum</span><span class="p">,</span>
+                    <span class="n">removed_cells</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="n">write_porv</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+            <span class="n">generated_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">PORV.INC"</span><span class="p">)</span>
+            <span class="n">cr</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">coarsen_corner_point_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">coarsening</span><span class="p">)</span>
+        <span class="n">generated_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">GRID.INC"</span><span class="p">)</span>
+        <span class="n">generated_deck</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">.DATA"</span>
+        <span class="n">generated_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+            <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">modified_deck</span><span class="p">),</span>
+            <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">correct_fluid_in_place</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">_correct_fluid_in_place</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">dck</span><span class="o">.</span><span class="n">coarsening_enabled</span>
+            <span class="ow">and</span> <span class="n">dck</span><span class="o">.</span><span class="n">egrid_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"NNC1"</span><span class="p">)</span>
+            <span class="ow">and</span> <span class="n">dck</span><span class="o">.</span><span class="n">transmissibility_coarsening_method</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="p">):</span>
+            <span class="n">pycopm_info</span><span class="p">(</span>
+                <span class="s2">"calling OPM Flow for a dry run of the generated model, "</span>
+                <span class="s2">"needed for the NNC transmissibilities"</span>
+            <span class="p">)</span>
+            <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="n">generated_deck</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="o">*</span><span class="n">flags_dry_run</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+                <span class="n">cwd</span><span class="o">=</span><span class="n">output_directory</span><span class="p">,</span>
+                <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">generated_grid</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">.EGRID"</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">OpmFile</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">generated_grid</span><span class="p">))</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"NNC1"</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">OpmFile</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.EGRID"</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"NNC1"</span><span class="p">)</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="n">dck</span><span class="o">.</span><span class="n">transmissibility_coarsening_method</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">generated_files</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">map_nnc_transmissibilities</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">coarsening</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">pycopm_warning</span><span class="p">(</span><span class="s2">"no NNC transmissibilities were found."</span><span class="p">)</span>
+            <span class="n">generated_grid</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">.INIT"</span>
+            <span class="n">tmp</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">coarsening_enabled</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">dual_porosity_criterion</span><span class="p">:</span>
+                <span class="n">cr</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">build_dual_porosity_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">coarsening</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">zc</span><span class="p">)</span>
+                <span class="n">write_grid</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">cr</span><span class="p">,</span> <span class="n">zc</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="n">write_dual_properties</span><span class="p">(</span>
+                    <span class="n">dck</span><span class="p">,</span>
+                    <span class="n">coarsening</span><span class="p">,</span>
+                    <span class="n">dck</span><span class="o">.</span><span class="n">output_nx</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_ny</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_nz</span><span class="p">,</span>
+                    <span class="n">modified_deck</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">grid_include_index</span> <span class="o">=</span> <span class="n">modified_deck</span><span class="o">.</span><span class="n">index</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">GRID.INC' /</span><span class="se">\n</span><span class="s2">"</span>
+                <span class="p">)</span>
+                <span class="n">modified_deck</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">grid_include_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">"INCLUDE</span><span class="se">\n</span><span class="s2">'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC' /</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">dimension_index</span> <span class="o">=</span> <span class="n">modified_deck</span><span class="o">.</span><span class="n">index</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_nx</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_ny</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_nz</span><span class="si">}</span><span class="s2"> /"</span>
+                <span class="p">)</span>
+                <span class="n">dual_ny</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_ny</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="n">modified_deck</span><span class="p">[</span><span class="n">dimension_index</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_nx</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dual_ny</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_nz</span><span class="si">}</span><span class="s2"> /"</span>
+                <span class="p">)</span>
+                <span class="n">generated_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">modified_deck</span><span class="p">),</span>
+                    <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">coarsening</span><span class="o">.</span><span class="n">nnc_text</span> <span class="o">+=</span> <span class="s2">"/</span><span class="se">\n</span><span class="s2">"</span>
+                <span class="n">write_include</span><span class="p">(</span>
+                    <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC"</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">coarsening</span><span class="o">.</span><span class="n">nnc_text</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">generated_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC"</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">coarsening</span><span class="o">.</span><span class="n">nnc_text</span> <span class="o">!=</span> <span class="s2">"NNC</span><span class="se">\n</span><span class="s2">"</span><span class="p">:</span>
+                <span class="n">grid_include_index</span> <span class="o">=</span> <span class="n">modified_deck</span><span class="o">.</span><span class="n">index</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">"'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">GRID.INC' /</span><span class="se">\n</span><span class="s2">"</span>
+                <span class="p">)</span>
+                <span class="n">modified_deck</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span>
+                    <span class="n">grid_include_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">"INCLUDE</span><span class="se">\n</span><span class="s2">'</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC' /</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">generated_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">modified_deck</span><span class="p">),</span>
+                    <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">coarsening</span><span class="o">.</span><span class="n">nnc_text</span> <span class="o">+=</span> <span class="s2">"/</span><span class="se">\n</span><span class="s2">"</span>
+                <span class="n">write_include</span><span class="p">(</span>
+                    <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC"</span><span class="p">,</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">coarsening</span><span class="o">.</span><span class="n">nnc_text</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="n">generated_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">include_prefix</span><span class="si">}</span><span class="s2">NNC.INC"</span><span class="p">)</span>
+        <span class="n">generated_files</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">.DATA"</span><span class="p">)</span>
+        <span class="n">pycopm_success</span><span class="p">(</span>
+            <span class="s2">""</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span><span class="p">),</span>
+            <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">generated_files</span><span class="p">)),</span>
+        <span class="p">)</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">execution_mode</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"deck_dry"</span><span class="p">,</span> <span class="s2">"dry"</span><span class="p">,</span> <span class="s2">"all"</span><span class="p">):</span>
+        <span class="n">pycopm_info</span><span class="p">(</span><span class="s2">"calling OPM Flow for a dry run of the generated model."</span><span class="p">)</span>
+        <span class="n">completed_process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">.DATA"</span><span class="p">,</span> <span class="o">*</span><span class="n">flags_dry_run</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="n">output_directory</span><span class="p">,</span>
+            <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">completed_process</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pycopm_error</span><span class="p">(</span>
+                <span class="s2">"the dry run of "</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s1">'.DATA'</span><span class="p">)))</span><span class="si">}</span><span class="s2"> "</span>
+                <span class="s2">"failed. Check the OPM Flow output in the terminal. Correct the input "</span>
+                <span class="sa">f</span><span class="s2">"deck </span><span class="si">{</span><span class="n">cli_error_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">source_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> or the generated deck; otherwise, "</span>
+                <span class="s2">"raise an issue at https://github.com/cssr-tools/pycopm/issues."</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">pycopm_success</span><span class="p">(</span>
+                <span class="s2">"dry-run results of the generated deck by pycopm were written to "</span><span class="p">,</span>
+                <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span><span class="p">),</span>
+                <span class="p">[],</span>
+            <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_correct_fluid_in_place">
+<a class="viewcode-back" href="../../../api/pycopm.utils.generate_decks.html#pycopm.utils.generate_decks._correct_fluid_in_place">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_correct_fluid_in_place</span><span class="p">(</span><span class="n">dck</span><span class="p">:</span> <span class="n">ConfigViaDeck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Adjust output pore volume to match input oil and gas in place.</span>
+
+<span class="sd">    Short Flow runs provide the fluid-in-place values used for two successive pore</span>
+<span class="sd">    volume corrections.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dck</span>
+<span class="sd">        Deck configuration whose ``output_porv`` is updated.</span>
+<span class="sd">    modified_deck</span>
+<span class="sd">        Generated deck lines used to create the correction case."""</span>
+    <span class="n">output_directory</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">output_directory</span><span class="p">)</span>
+    <span class="n">flags_one_step</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">"--parsing-strictness=low --check-satfunc-consistency=false "</span>
+        <span class="s2">"--output-mode=none --solver-max-restarts=20 "</span>
+        <span class="s2">"--solver-continue-on-convergence-failure=true "</span>
+        <span class="sa">f</span><span class="s2">"--output-dir=</span><span class="si">{</span><span class="n">output_directory</span><span class="si">}</span><span class="s2">"</span>
+    <span class="p">)</span>
+    <span class="n">threshold</span> <span class="o">=</span> <span class="mf">1e-1</span>
+    <span class="n">deck_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.DATA"</span><span class="p">)</span>
+    <span class="n">deck_lines</span> <span class="o">=</span> <span class="n">deck_file</span><span class="o">.</span><span class="n">read_text</span><span class="p">(</span><span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="n">schedule_index</span> <span class="o">=</span> <span class="n">deck_lines</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"SCHEDULE"</span><span class="p">)</span>
+    <span class="n">deck_lines</span> <span class="o">=</span> <span class="n">deck_lines</span><span class="p">[:</span> <span class="n">schedule_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">"TSTEP"</span><span class="p">,</span>
+        <span class="s2">"0.01 /"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">restart_index</span> <span class="o">=</span> <span class="n">deck_lines</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"RPTRST"</span><span class="p">)</span>
+    <span class="n">restart_options</span> <span class="o">=</span> <span class="n">deck_lines</span><span class="p">[</span><span class="n">restart_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">deck_lines</span><span class="p">[</span><span class="n">restart_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">restart_options</span><span class="si">}</span><span class="s2"> FIP /"</span>
+    <span class="n">one_step_deck</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_1STEP.DATA"</span>
+    <span class="n">correction_deck</span> <span class="o">=</span> <span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_CORR.DATA"</span>
+    <span class="n">one_step_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">deck_lines</span><span class="p">),</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">schedule_index</span> <span class="o">=</span> <span class="n">modified_deck</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"SCHEDULE"</span><span class="p">)</span>
+    <span class="n">deckcorr</span> <span class="o">=</span> <span class="n">modified_deck</span><span class="p">[:</span> <span class="n">schedule_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span>
+        <span class="s2">"TSTEP"</span><span class="p">,</span>
+        <span class="s2">"0.01 /"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">restart_index</span> <span class="o">=</span> <span class="n">deckcorr</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s2">"RPTRST"</span><span class="p">)</span>
+    <span class="n">restart_options</span> <span class="o">=</span> <span class="n">deckcorr</span><span class="p">[</span><span class="n">restart_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">deckcorr</span><span class="p">[</span><span class="n">restart_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">restart_options</span><span class="si">}</span><span class="s2"> FIP /"</span>
+    <span class="n">correction_deck</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">deck_line</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span> <span class="k">for</span> <span class="n">deck_line</span> <span class="ow">in</span> <span class="n">deckcorr</span><span class="p">),</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf8"</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">pycopm_info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"running </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">one_step_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> and "</span>
+        <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">correction_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> to correct the pore volume."</span>
+    <span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">correction_deck</span><span class="p">),</span> <span class="o">*</span><span class="n">flags_one_step</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+        <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">one_step_deck</span><span class="p">),</span> <span class="o">*</span><span class="n">flags_one_step</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+        <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">reference_restart</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_1STEP.UNRST"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">corrected_restart</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_CORR.UNRST"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">corrected_init</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_CORR.INIT"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">reference_fip_gas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reference_restart</span><span class="p">[</span><span class="s2">"FIPGAS"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">reference_fip_oil</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">reference_restart</span><span class="p">[</span><span class="s2">"FIPOIL"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">corrected_porv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_init</span><span class="p">[</span><span class="s2">"PORV"</span><span class="p">])</span>
+    <span class="n">corrected_fip_gas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_restart</span><span class="p">[</span><span class="s2">"FIPGAS"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">corrected_fip_oil</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_restart</span><span class="p">[</span><span class="s2">"FIPOIL"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">active_porv</span> <span class="o">=</span> <span class="n">corrected_porv</span><span class="p">[</span><span class="n">corrected_porv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">correction_factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">reference_fip_oil</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">corrected_fip_oil</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">low_oil_cells</span> <span class="o">=</span> <span class="n">corrected_fip_oil</span> <span class="o">&lt;=</span> <span class="n">threshold</span>
+    <span class="n">high_oil_cells</span> <span class="o">=</span> <span class="n">corrected_fip_oil</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="n">active_porv</span><span class="p">[</span><span class="n">low_oil_cells</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span>
+        <span class="n">correction_factor</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">active_porv</span><span class="p">[</span><span class="n">high_oil_cells</span><span class="p">])</span>
+        <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">low_oil_cells</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">active_porv</span><span class="p">[</span><span class="n">high_oil_cells</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">correction_factor</span>
+    <span class="n">corrected_porv</span><span class="p">[</span><span class="n">corrected_porv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">active_porv</span>
+    <span class="n">corrected_porv</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">corrected_porv</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">output_porv</span> <span class="o">=</span> <span class="n">corrected_porv</span>
+    <span class="n">write_porv</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">correction_deck</span><span class="p">),</span> <span class="o">*</span><span class="n">flags_one_step</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+        <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">corrected_restart</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_CORR.UNRST"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">corrected_init</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span>
+        <span class="nb">str</span><span class="p">(</span><span class="n">output_directory</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">output_deck_name</span><span class="si">}</span><span class="s2">_CORR.INIT"</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">corrected_porv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_init</span><span class="p">[</span><span class="s2">"PORV"</span><span class="p">])</span>
+    <span class="n">corrected_fip_gas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_restart</span><span class="p">[</span><span class="s2">"FIPGAS"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">corrected_fip_oil</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_restart</span><span class="p">[</span><span class="s2">"FIPOIL"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">corrected_sgas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">corrected_restart</span><span class="p">[</span><span class="s2">"SGAS"</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">active_porv</span> <span class="o">=</span> <span class="n">corrected_porv</span><span class="p">[</span><span class="n">corrected_porv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">high_gas_cells</span> <span class="o">=</span> <span class="n">corrected_sgas</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="n">low_oil_cells</span> <span class="o">=</span> <span class="n">corrected_fip_oil</span> <span class="o">&lt;=</span> <span class="n">threshold</span>
+    <span class="n">correction_factor</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">reference_fip_gas</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">corrected_fip_gas</span><span class="p">)</span>
+    <span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">corrected_fip_gas</span><span class="p">[</span><span class="n">high_gas_cells</span><span class="p">])</span>
+    <span class="n">active_porv</span><span class="p">[</span><span class="n">low_oil_cells</span><span class="p">]</span> <span class="o">-=</span> <span class="p">(</span>
+        <span class="n">correction_factor</span>
+        <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">active_porv</span><span class="p">[</span><span class="n">high_gas_cells</span><span class="p">])</span>
+        <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">low_oil_cells</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">active_porv</span><span class="p">[</span><span class="n">high_gas_cells</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">correction_factor</span>
+    <span class="n">corrected_porv</span><span class="p">[</span><span class="n">corrected_porv</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">active_porv</span>
+    <span class="n">corrected_porv</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">corrected_porv</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">output_porv</span> <span class="o">=</span> <span class="n">corrected_porv</span>
+    <span class="n">write_porv</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="n">modified_deck</span><span class="p">)</span>
+    <span class="n">pycopm_info</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"running </span><span class="si">{</span><span class="n">cli_info_value</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">correction_deck</span><span class="p">))</span><span class="si">}</span><span class="s2"> with the corrected pore volume."</span>
+    <span class="p">)</span>
+    <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">dck</span><span class="o">.</span><span class="n">flow_command</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">correction_deck</span><span class="p">),</span> <span class="o">*</span><span class="n">flags_one_step</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span>
+        <span class="n">check</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="_create_index_mappings">
+<a class="viewcode-back" href="../../../api/pycopm.utils.generate_decks.html#pycopm.utils.generate_decks._create_index_mappings">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_create_index_mappings</span><span class="p">(</span>
+    <span class="n">dck</span><span class="p">:</span> <span class="n">ConfigViaDeck</span><span class="p">,</span>
+    <span class="n">vicinity</span><span class="p">:</span> <span class="n">VicinityMaps</span><span class="p">,</span>
+    <span class="n">refinement</span><span class="p">:</span> <span class="n">RefinementMaps</span><span class="p">,</span>
+    <span class="n">coarsening</span><span class="p">:</span> <span class="n">CoarseningMaps</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Create original-to-output mappings for each grid axis.</span>
+
+<span class="sd">    Depending on the selected workflow, the mappings represent coarse cells,</span>
+<span class="sd">    submodel indices, or the first and last cells created by refinement.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dck</span>
+<span class="sd">        Deck configuration updated with the index mappings.</span>
+<span class="sd">    vicinity</span>
+<span class="sd">        Vicinity bounds for submodel extraction.</span>
+<span class="sd">    refinement</span>
+<span class="sd">        Per-axis refinement values.</span>
+<span class="sd">    coarsening</span>
+<span class="sd">        Per-axis coarsening values."""</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">refinement_enabled</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">ref_dir</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">"i"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="n">refinement</span><span class="o">.</span><span class="n">x</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"j"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="n">refinement</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"k"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">,</span> <span class="n">refinement</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+        <span class="p">):</span>
+            <span class="n">original_size</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_n</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">dck</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">original_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">dck</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"original_to_first_refined_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">original_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">dck</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"original_to_last_refined_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">original_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">next_index</span> <span class="o">=</span> <span class="mi">2</span>
+            <span class="k">for</span> <span class="n">original_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="p">):</span>
+                <span class="n">midpoint_count</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="n">refinement_factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">ref_dir</span><span class="p">[</span><span class="n">original_index</span><span class="p">])</span>
+                <span class="k">for</span> <span class="n">refinement_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">refinement_factor</span><span class="p">):</span>
+                    <span class="n">next_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="k">if</span> <span class="n">refinement_index</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">midpoint_count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span><span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">next_index</span> <span class="o">-</span> <span class="n">midpoint_count</span>
+                <span class="p">)</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_first_refined_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span>
+                    <span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">next_index</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">midpoint_count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">refinement_factor</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span>
+                <span class="p">)</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">next_index</span> <span class="o">-</span> <span class="mi">1</span>
+                <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_last_refined_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span>
+                    <span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">next_index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">elif</span> <span class="n">dck</span><span class="o">.</span><span class="n">vicinity_specification</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">dimension_name</span><span class="p">,</span> <span class="n">minimum_index</span><span class="p">,</span> <span class="n">maximum_index</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">"i"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">min_i</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">max_i</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"j"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">min_j</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">max_j</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"k"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">min_k</span><span class="p">,</span> <span class="n">vicinity</span><span class="o">.</span><span class="n">max_k</span><span class="p">),</span>
+        <span class="p">):</span>
+            <span class="n">original_size</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_n</span><span class="si">{</span><span class="n">dimension_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">dck</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">original_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">mapped_index</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="n">original_size</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">original_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">original_size</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">minimum_index</span> <span class="o">&lt;=</span> <span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">maximum_index</span><span class="p">:</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span>
+                        <span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="n">mapped_index</span>
+                    <span class="n">mapped_index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"output_n</span><span class="si">{</span><span class="n">dimension_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span> <span class="n">mapped_index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">index_name</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">coa_dir</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="p">(</span><span class="s2">"i"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">,</span> <span class="n">coarsening</span><span class="o">.</span><span class="n">x</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"j"</span><span class="p">,</span> <span class="s2">"y"</span><span class="p">,</span> <span class="n">coarsening</span><span class="o">.</span><span class="n">y</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">"k"</span><span class="p">,</span> <span class="s2">"z"</span><span class="p">,</span> <span class="n">coarsening</span><span class="o">.</span><span class="n">z</span><span class="p">),</span>
+        <span class="p">):</span>
+            <span class="n">original_size</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_n</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+            <span class="nb">setattr</span><span class="p">(</span>
+                <span class="n">dck</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">original_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">mapped_index</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">original_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_n</span><span class="si">{</span><span class="n">direction</span><span class="si">}</span><span class="s2">"</span><span class="p">)):</span>
+                <span class="n">source_index</span> <span class="o">=</span> <span class="n">original_index</span> <span class="o">+</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span><span class="n">source_index</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span>
+                        <span class="n">source_index</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="n">mapped_index</span>
+                    <span class="n">mapped_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">coa_dir</span><span class="p">[</span><span class="n">source_index</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span>
+                        <span class="n">source_index</span> <span class="o">+</span> <span class="mi">1</span>
+                    <span class="p">]</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">dck</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"original_to_output_</span><span class="si">{</span><span class="n">index_name</span><span class="si">}</span><span class="s2">"</span><span class="p">)[</span><span class="n">source_index</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="_initialize_deck_data">
+<a class="viewcode-back" href="../../../api/pycopm.utils.generate_decks.html#pycopm.utils.generate_decks._initialize_deck_data">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">_initialize_deck_data</span><span class="p">(</span><span class="n">dck</span><span class="p">:</span> <span class="n">ConfigViaDeck</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">"""Load dry-run grid and property data into the deck configuration.</span>
+
+<span class="sd">    The function opens EGRID, INIT, and optional restart files, determines grid</span>
+<span class="sd">    dimensions, and collects available property keywords.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dck</span>
+<span class="sd">        Deck configuration updated with OPM files, dimensions, and keyword lists."""</span>
+    <span class="n">special_properties</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"swatinit"</span><span class="p">,</span>
+        <span class="s2">"sowcr"</span><span class="p">,</span>
+        <span class="s2">"sogcr"</span><span class="p">,</span>
+        <span class="s2">"swcr"</span><span class="p">,</span>
+        <span class="s2">"sgu"</span><span class="p">,</span>
+        <span class="s2">"swl"</span><span class="p">,</span>
+        <span class="s2">"krwr"</span><span class="p">,</span>
+        <span class="s2">"krw"</span><span class="p">,</span>
+        <span class="s2">"krorw"</span><span class="p">,</span>
+        <span class="s2">"krorg"</span><span class="p">,</span>
+        <span class="s2">"kro"</span><span class="p">,</span>
+        <span class="s2">"krgr"</span><span class="p">,</span>
+        <span class="s2">"krg"</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">egrid_file</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.EGRID"</span><span class="p">)</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">grid_model</span> <span class="o">=</span> <span class="n">OpmGrid</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.EGRID"</span><span class="p">)</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.INIT"</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">property_name</span> <span class="ow">in</span> <span class="n">special_properties</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">property_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()):</span>
+            <span class="n">dck</span><span class="o">.</span><span class="n">props_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span>
+            <span class="n">dck</span><span class="o">.</span><span class="n">special_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span>
+    <span class="n">multipliers_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"multx"</span><span class="p">,</span> <span class="s2">"multx-"</span><span class="p">,</span> <span class="s2">"multy"</span><span class="p">,</span> <span class="s2">"multy-"</span><span class="p">,</span> <span class="s2">"multz"</span><span class="p">,</span> <span class="s2">"multz-"</span><span class="p">]</span>
+    <span class="n">maindeckmultflt</span><span class="p">,</span> <span class="n">multipliers_values</span> <span class="o">=</span> <span class="n">find_multiplier_keywords</span><span class="p">(</span><span class="n">dck</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">mlt_val</span><span class="p">,</span> <span class="n">mlt_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">multipliers_values</span><span class="p">,</span> <span class="n">multipliers_names</span><span class="p">):</span>
+        <span class="n">keyword</span> <span class="o">=</span> <span class="n">mlt_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">keyword</span><span class="p">):</span>
+            <span class="n">multiplier_deck</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="p">[</span><span class="n">keyword</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">multiplier_deck</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">mlt_val</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">maindeckmultflt</span><span class="p">):</span>
+                <span class="n">dck</span><span class="o">.</span><span class="n">props_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mlt_name</span><span class="p">)</span>
+                <span class="n">dck</span><span class="o">.</span><span class="n">multipliers_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mlt_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">property_name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"multnum"</span><span class="p">,</span> <span class="s2">"fluxnum"</span><span class="p">):</span>
+        <span class="n">keyword</span> <span class="o">=</span> <span class="n">property_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">keyword</span><span class="p">):</span>
+            <span class="n">property_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="p">[</span><span class="n">keyword</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">property_values</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">dck</span><span class="o">.</span><span class="n">grids_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">property_name</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">"thconr"</span><span class="p">,</span> <span class="s2">"disperc"</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">property_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()):</span>
+            <span class="n">dck</span><span class="o">.</span><span class="n">grids_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">property_name</span> <span class="ow">in</span> <span class="p">(</span>
+        <span class="s2">"endnum"</span><span class="p">,</span>
+        <span class="s2">"eqlnum"</span><span class="p">,</span>
+        <span class="s2">"fipnum"</span><span class="p">,</span>
+        <span class="s2">"imbnum"</span><span class="p">,</span>
+        <span class="s2">"miscnum"</span><span class="p">,</span>
+        <span class="s2">"opernum"</span><span class="p">,</span>
+        <span class="s2">"pvtnum"</span><span class="p">,</span>
+        <span class="s2">"rocknum"</span><span class="p">,</span>
+        <span class="s2">"satnum"</span><span class="p">,</span>
+    <span class="p">):</span>
+        <span class="n">keyword</span> <span class="o">=</span> <span class="n">property_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">keyword</span><span class="p">):</span>
+            <span class="n">property_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="p">[</span><span class="n">keyword</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">property_values</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">dck</span><span class="o">.</span><span class="n">regions_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">original_nx</span><span class="p">,</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_ny</span><span class="p">,</span> <span class="n">dck</span><span class="o">.</span><span class="n">original_nz</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">grid_model</span><span class="o">.</span><span class="n">dimension</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">output_nx</span><span class="p">,</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_ny</span><span class="p">,</span> <span class="n">dck</span><span class="o">.</span><span class="n">output_nz</span> <span class="o">=</span> <span class="n">dck</span><span class="o">.</span><span class="n">grid_model</span><span class="o">.</span><span class="n">dimension</span>
+    <span class="n">dck</span><span class="o">.</span><span class="n">original_porv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">dck</span><span class="o">.</span><span class="n">init_file</span><span class="p">[</span><span class="s2">"PORV"</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">write_explicit_solution</span><span class="p">:</span>
+        <span class="n">dck</span><span class="o">.</span><span class="n">restart_file</span> <span class="o">=</span> <span class="n">OpmFile</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">dck</span><span class="o">.</span><span class="n">input_deck_name</span><span class="si">}</span><span class="s2">.UNRST"</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">property_name</span> <span class="ow">in</span> <span class="p">(</span>
+            <span class="s2">"sgas"</span><span class="p">,</span>
+            <span class="s2">"soil"</span><span class="p">,</span>
+            <span class="s2">"swat"</span><span class="p">,</span>
+            <span class="s2">"rs"</span><span class="p">,</span>
+            <span class="s2">"rv"</span><span class="p">,</span>
+            <span class="s2">"rsw"</span><span class="p">,</span>
+            <span class="s2">"rvw"</span><span class="p">,</span>
+            <span class="s2">"pressure"</span><span class="p">,</span>
+            <span class="s2">"sbiof"</span><span class="p">,</span>
+            <span class="s2">"scalc"</span><span class="p">,</span>
+            <span class="s2">"smicr"</span><span class="p">,</span>
+            <span class="s2">"soxyg"</span><span class="p">,</span>
+            <span class="s2">"surea"</span><span class="p">,</span>
+            <span class="s2">"ssol"</span><span class="p">,</span>
+            <span class="s2">"spoly"</span><span class="p">,</span>
+            <span class="s2">"surf"</span><span class="p">,</span>
+            <span class="s2">"saltp"</span><span class="p">,</span>
+            <span class="s2">"salt"</span><span class="p">,</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="n">dck</span><span class="o">.</span><span class="n">restart_file</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">property_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()):</span>
+                <span class="n">dck</span><span class="o">.</span><span class="n">solution_keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">property_name</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=cb8930eaaf36d9849b67"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=cb8930eaaf36d9849b67"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2024-2026, NORCE Research AS.
+      <br/>
+    
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.21.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

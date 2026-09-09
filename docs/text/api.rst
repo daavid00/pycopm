@@ -1,7 +1,7 @@
-=================
-pycopm Python API
-=================
+.. _api-reference:
 
+Python API
+==========
 The main script for the **pycopm** executable is located in the core folder. The different 
 jobs called by ERT are located in the jobs folder. The reference_simulation folder contains
 the generated files after running Flow in the norne and drogon case in the opm-test folder. 
@@ -11,6 +11,9 @@ grid refinement, grid coarsening, submodels, and transformations.
 
 .. figure:: figs/contents.png
 
-   Files in the pyocpm package.
+   Files in the pycopm package.
 
-.. include:: modules.rst
+.. toctree::
+   :maxdepth: 2
+
+   api/modules

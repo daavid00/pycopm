@@ -114,7 +114,7 @@ def transform_grid(dck: ConfigViaDeck) -> None:
     write_grid(dck, cr, zc, False)
 
 
-def transform_properties(dck: ConfigViaDeck, modified_deck: list[str]) -> None:
+def transform_properties(dck: ConfigViaDeck, modified_deck: list[str]) -> list[str]:
     """Rewrite reservoir properties for a transformed grid.
 
     Property values are unchanged because transformations modify only geometry.
@@ -124,7 +124,13 @@ def transform_properties(dck: ConfigViaDeck, modified_deck: list[str]) -> None:
     dck
         Deck configuration containing source properties and output dimensions.
     modified_deck
-        Deck lines updated with generated property includes."""
+        Deck lines updated with generated property includes.
+
+    Returns
+    -------
+    generated_files
+        Names of the written include files."""
+    generated_files = []
     property_names = (
         dck.props_keywords
         + dck.regions_keywords
@@ -161,3 +167,5 @@ def transform_properties(dck: ConfigViaDeck, modified_deck: list[str]) -> None:
                 modified_deck,
                 True,
             )
+            generated_files.append(f"{dck.include_prefix}{property_name.upper()}.INC")
+    return generated_files
