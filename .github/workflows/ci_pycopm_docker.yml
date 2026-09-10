@@ -1,7 +1,9 @@
 name: Docker
 
 on:
- pull_request:
+ push:
+   branches:
+     - main
    
 jobs:
   run-pycopm-docker:
