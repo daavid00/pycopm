@@ -1,5 +1,4 @@
 cff-version: "1.2.0"
-title: "pycopm: An open-source tool to tailor OPM Flow geological models"
 authors:
 - family-names: Landa-Marbán
   given-names: David
@@ -8,14 +7,26 @@ contact:
 - family-names: Landa-Marbán
   given-names: David
   orcid: "https://orcid.org/0000-0002-3343-1005"
-message: "If you use this software, please cite it as below."
+doi: 10.6084/m9.figshare.33321138.v2
+message: If you use this software, please cite our article in the
+  Journal of Open Source Software.
 preferred-citation:
   authors:
   - family-names: Landa-Marbán
     given-names: David
     orcid: "https://orcid.org/0000-0002-3343-1005"
-  title: "pycopm: An open-source tool to tailor OPM Flow geological models"
-  year: 2026
-  doi: 10.48550/arXiv.2602.11777
-  journal: arXiv preprint
+  date-published: 2026-09-09
+  doi: 10.21105/joss.10124
+  issn: 2475-9066
+  issue: 125
+  journal: Journal of Open Source Software
+  publisher:
+    name: Open Journals
+  start: 10124
+  title: "pycopm: An open-source tool to tailor OPM Flow geological
+    models"
   type: article
+  url: "https://joss.theoj.org/papers/10.21105/joss.10124"
+  volume: 11
+title: "pycopm: An open-source tool to tailor OPM Flow geological
+  models"

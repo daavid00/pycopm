@@ -4,6 +4,7 @@
 <a href="https://www.python.org/"><img src="https://img.shields.io/badge/python-3.12%20to%203.14-blue.svg"></a>
 [![Code style](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.10124/status.svg)](https://doi.org/10.21105/joss.10124)
 <img src="docs/text/figs/pycopm.png" width="900" height="380">
 
 # pycopm: An open-source tool to tailor OPM Flow geological models. 
@@ -54,7 +55,7 @@ See the [_examples_](https://cssr-tools.github.io/pycopm/examples.html) in the [
 
 ## Citing
 
-* Landa-Marbán, D., 2026. pycopm: An open-source tool to tailor OPM Flow geological models. [https://arxiv.org/abs/2602.11777](https://arxiv.org/abs/2602.11777).
+* Landa-Marbán, D., 2026. pycopm: An open-source tool to tailor OPM Flow geological models. Journal of Open Source Software, 11(125), 10124, https://doi.org/10.21105/joss.10124.
 
 ## Publications
 The following is a list of manuscripts in which _pycopm_ is used:

@@ -105,9 +105,8 @@ Citation
 
 If **pycopm** contributes to published work, cite the project paper:
 
-   Landa-Marbán, D. (2026). *pycopm: An open-source tool to tailor OPM Flow
-   geological models*. arXiv:2602.11777.
-   https://doi.org/10.48550/arXiv.2602.11777.
+   Landa-Marbán, D. 2026. *pycopm: An open-source tool to tailor OPM Flow
+   geological models*. Journal of Open Source Software, 11(125), 10124, https://doi.org/10.21105/joss.10124
 
 Where to continue
 -----------------
